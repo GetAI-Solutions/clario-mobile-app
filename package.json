@@ -15,6 +15,7 @@
     "@react-navigation/stack": "^6.4.1",
     "axios": "^1.7.2",
     "expo": "~51.0.22",
+    "expo-barcode-scanner": "~13.0.1",
     "expo-camera": "~15.0.14",
     "expo-constants": "^16.0.2",
     "expo-file-system": "~17.0.1",
@@ -26,6 +27,7 @@
     "react-async-hook": "^4.0.0",
     "react-dom": "18.2.0",
     "react-native": "0.74.3",
+    "react-native-animatable": "^1.4.0",
     "react-native-camera": "^4.2.1",
     "react-native-country-codes-picker": "^2.3.5",
     "react-native-country-picker-modal": "^2.0.0",
@@ -40,8 +42,7 @@
     "react-native-web": "~0.19.10",
     "react-select-country-list": "^2.2.3",
     "react-world-flags": "^1.6.0",
-    "world-countries": "^5.0.0",
-    "expo-barcode-scanner": "~13.0.1"
+    "world-countries": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
