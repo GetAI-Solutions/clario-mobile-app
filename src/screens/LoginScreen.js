@@ -28,7 +28,7 @@ const Login = () => {
 
   const handleLogin = () => {
     // Assuming login is successful
-    navigation.navigate('NoProductHistory');
+    navigation.navigate('MainScreen');
   };
 
   const togglePasswordVisibility = () => {

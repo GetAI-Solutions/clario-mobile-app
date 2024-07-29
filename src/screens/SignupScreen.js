@@ -4,14 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import CountryPicker from 'react-native-country-picker-modal';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Header from '../components/Header';
 
-const SignupPhone = () => {
+const SignupPhone = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({ cca2: 'ET', name: 'Ethiopia', callingCode: ['251'] });
-  const navigation = useNavigation();
 
   const handlePhoneNumberChange = (text) => {
     setPhoneNumber(text);
@@ -43,11 +43,7 @@ const SignupPhone = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation}/>
       <View style={styles.content}>
         <Text style={styles.title}>Create an Account</Text>
         <Text style={styles.subtitle}>Enter your mobile number to verify your account</Text>
@@ -126,16 +122,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000',
-    paddingBottom: 8,
-    marginBottom: 16,
-  },
   content: {
-    marginTop: 16,
+    marginTop: 8,
     flex: 1,
   },
   title: {
