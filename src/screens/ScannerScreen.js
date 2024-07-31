@@ -9,11 +9,10 @@ const ScannerScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null); 
   const [hasPermission, setHasPermission] = useState(null);
-  const [camera, setCamera] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
@@ -45,7 +44,6 @@ const ScannerScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Camera
         style={StyleSheet.absoluteFillObject}
-        ref={(ref) => setCamera(ref)}
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         type={Camera.Constants.Type.back}
       >
@@ -55,7 +53,7 @@ const ScannerScreen = ({ navigation }) => {
             {error ? (
               <>
                 <Text style={styles.errorText}>{error}</Text>
-                <TouchableOpacity onPress={() => setScanned(false)} style={styles.retryButton}>
+                <TouchableOpacity onPress={() => { setScanned(false); setError(null); }} style={styles.retryButton}>
                   <Text style={styles.retryButtonText}>Try another barcode</Text>
                 </TouchableOpacity>
               </>
