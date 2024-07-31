@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
-import { Camera, CameraConstants } from 'expo-camera';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Camera } from 'expo-camera';
+import { ProductContext } from '../../context/ProductContext';
 
-const ScannerScreen = ({ navigation, route }) => {
-  const { setProducts } = route.params;
+const ScannerScreen = ({ navigation }) => {
+  const { setProducts } = useContext(ProductContext);
   const [scanned, setScanned] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null); 
@@ -45,13 +46,13 @@ const ScannerScreen = ({ navigation, route }) => {
       <Camera
         style={StyleSheet.absoluteFillObject}
         ref={(ref) => setCamera(ref)}
-        onBarCodeScanned={scanned? undefined : handleBarCodeScanned}
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         type={Camera.Constants.Type.back}
       >
         {loading && <ActivityIndicator size="large" color="#fff" />}
-        {scanned &&!loading && (
+        {scanned && !loading && (
           <View style={styles.overlay}>
-            {error? (
+            {error ? (
               <>
                 <Text style={styles.errorText}>{error}</Text>
                 <TouchableOpacity onPress={() => setScanned(false)} style={styles.retryButton}>
