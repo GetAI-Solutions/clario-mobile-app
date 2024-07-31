@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CountryPicker from 'react-native-country-picker-modal';
+import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Login = () => {
@@ -10,8 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [countryCode, setCountryCode] = useState('ET');
-  const [callingCode, setCallingCode] = useState('251');
+  const [showCountryPicker, setShowCountryPicker] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+251', name: 'Ethiopia' });
+
   const navigation = useNavigation();
 
   const handlePhoneNumberChange = (text) => {
@@ -51,19 +52,12 @@ const Login = () => {
         <View style={styles.inputContainer}>
           <Text style={styles.label} htmlFor="phoneNumber">Phone</Text>
           <View style={styles.phoneInputContainer}>
-            <CountryPicker
-              countryCode={countryCode}
-              withFilter
-              withFlag
-              withCallingCode
-              withEmoji
-              onSelect={(country) => {
-                setCountryCode(country.cca2);
-                setCallingCode(country.callingCode[0]);
-              }}
-              containerButtonStyle={styles.countryPickerButton}
-            />
-            <Text style={styles.callingCode}>+{callingCode}</Text>
+            <TouchableOpacity
+              onPress={() => setShowCountryPicker(true)}
+              style={styles.countryPickerButton}
+            >
+              <Text>{selectedCountry.dial_code}</Text>
+            </TouchableOpacity>
             <TextInput
               id="phoneNumber"
               style={styles.phoneInput}
@@ -121,15 +115,22 @@ const Login = () => {
         onPress={handleLogin}
         style={[
           styles.loginButton,
-          ((!phoneNumber || !password) && isPhoneLogin) &&
-          styles.disabledButton,
-          ((!email || !password) && !isPhoneLogin) &&
-          styles.disabledButton
+          ((!phoneNumber || !password) && isPhoneLogin) && styles.disabledButton,
+          ((!email || !password) && !isPhoneLogin) && styles.disabledButton
         ]}
         disabled={(isPhoneLogin && (!phoneNumber || !password)) || (!isPhoneLogin && (!email || !password))}
       >
         <Text style={styles.buttonText}>Log in</Text>
       </TouchableOpacity>
+
+      <CountryPicker
+        show={showCountryPicker}
+        pickerButtonOnPress={(country) => {
+          setSelectedCountry({ dial_code: country.dial_code, name: country.name.en });
+          setShowCountryPicker(false);
+        }}
+        style={{ modal: { height: '80%' } }} // Adjust the modal height
+      />
     </View>
   );
 };
@@ -241,10 +242,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     position: 'absolute',
-    bottom: 20, // adjust this value to your liking
+    bottom: 20,
     left: 0,
     right: 0,
-    marginHorizontal: 20, // add some horizontal margin
+    marginHorizontal: 20,
   },
   buttonText: {
     color: '#FFFFFF',

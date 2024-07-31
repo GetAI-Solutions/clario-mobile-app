@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CountryPicker from 'react-native-country-picker-modal';
+import { CountryPicker } from 'react-native-country-codes-picker';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from '../components/Header';
@@ -11,7 +11,8 @@ const SignupPhone = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({ cca2: 'ET', name: 'Ethiopia', callingCode: ['251'] });
+  const [showCountryPicker, setShowCountryPicker] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+251', name: 'Ethiopia' });
 
   const handlePhoneNumberChange = (text) => {
     setPhoneNumber(text);
@@ -37,7 +38,7 @@ const SignupPhone = ({ navigation }) => {
     setShowModal(false);
     navigation.navigate('EmailSignup', {
       phoneNumber,
-      dialCode: `+${selectedCountry.callingCode[0]}`
+      dialCode: selectedCountry.dial_code
     });
   };
 
@@ -49,13 +50,12 @@ const SignupPhone = ({ navigation }) => {
         <Text style={styles.subtitle}>Enter your mobile number to verify your account</Text>
 
         <View style={styles.inputWrapper}>
-          <CountryPicker
-            countryCode={selectedCountry.cca2}
-            withFlag
-            withCallingCode
-            onSelect={country => setSelectedCountry(country)}
-            containerButtonStyle={styles.countryPicker}
-          />
+          <TouchableOpacity
+            onPress={() => setShowCountryPicker(true)}
+            style={styles.countryPicker}
+          >
+            <Text>{selectedCountry.dial_code}</Text>
+          </TouchableOpacity>
           <TextInput
             style={styles.input}
             placeholder="Mobile Number"
@@ -96,7 +96,7 @@ const SignupPhone = ({ navigation }) => {
             </TouchableOpacity>
             <Image source={require('../../assets/images/pop.png')} style={styles.modalImage} />
             <Text style={styles.modalTitle}>Confirm Your Phone Number</Text>
-            <Text style={styles.modalText}>Is this correct? +{selectedCountry.callingCode[0]} {phoneNumber}</Text>
+            <Text style={styles.modalText}>Is this correct? {selectedCountry.dial_code} {phoneNumber}</Text>
             <Button 
               mode="contained" 
               onPress={handleContinue} 
@@ -111,6 +111,15 @@ const SignupPhone = ({ navigation }) => {
           </View>
         </View>
       </Modal>
+
+      <CountryPicker
+        show={showCountryPicker}
+        pickerButtonOnPress={(country) => {
+          setSelectedCountry({ dial_code: country.dial_code, name: country.name.en });
+          setShowCountryPicker(false);
+        }}
+        style={{ modal: { height: '80%' } }} // Adjust the modal height
+      />
     </View>
   );
 };
@@ -147,6 +156,7 @@ const styles = StyleSheet.create({
   },
   countryPicker: {
     marginRight: 8,
+    paddingVertical: 10,
   },
   input: {
     flex: 1,
