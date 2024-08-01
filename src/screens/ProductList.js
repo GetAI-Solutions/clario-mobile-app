@@ -44,12 +44,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    padding: 14,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
   productName: {
     fontSize: 16,
+    color: '#008080'
   },
   actions: {
     flexDirection: 'row',
