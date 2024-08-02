@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -79,14 +78,14 @@ const SignupPhone = ({ navigation }) => {
         </View>
       </View>
 
-      <Button
+      <TouchableOpacity
         mode="contained"
         onPress={handleSignUpClick}
         disabled={!phoneNumber || !password}
         style={[styles.button, (!phoneNumber || !password) ? styles.disabledButton : styles.activeButton]}
       >
         Sign up
-      </Button>
+      </TouchableOpacity>
 
       <Modal visible={showModal} transparent animationType="slide">
         <View style={styles.modalOverlay}>
@@ -97,10 +96,10 @@ const SignupPhone = ({ navigation }) => {
             <Image source={require('../../assets/images/pop.png')} style={styles.modalImage} />
             <Text style={styles.modalTitle}>Confirm Your Phone Number</Text>
             <Text style={styles.modalText}>Is this correct? {selectedCountry.dial_code} {phoneNumber}</Text>
-            <Button 
+            <Button
               mode="contained" 
               onPress={handleContinue} 
-              buttonColor="#319795" 
+              buttonColor="#3299a8" 
               style={styles.modalButton}
             >
               Continue
@@ -167,9 +166,15 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   button: {
+    backgroundColor: '#3299a8',
+    borderRadius: 28,
+    alignItems: 'center',
     paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 24,
+    position: 'absolute',
+    bottom: 40, // adjust this value to your liking
+    left: 0,
+    right: 0,
+    marginHorizontal: 20,
   },
   disabledButton: {
     backgroundColor: '#9ca3af',
@@ -213,7 +218,7 @@ const styles = StyleSheet.create({
   modalButton: {
     width: '100%',
     paddingVertical: 12,
-    borderRadius: 8,
+    borderRadius: 48,
     marginBottom: 8,
     color: '#319795',
   },

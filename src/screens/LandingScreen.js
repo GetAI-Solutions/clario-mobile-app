@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
   signupButton: {
     width: '100%',
     paddingVertical: 12,
-    backgroundColor: '#319795',
-    borderRadius: 8,
+    backgroundColor: '#3299a8',
+    borderRadius: 20,
     marginBottom: 16,
   },
   signupButtonText: {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderColor: '#319795',
     borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 20,
     marginBottom: 16,
   },
   loginButtonText: {

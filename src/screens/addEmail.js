@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import countryList from 'react-select-country-list';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Header from '../components/Header';
 
-import Flag from 'react-world-flags';
 
-const AddEmail = () => {
+const AddEmail = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('ET');
-  const navigation = useNavigation();
   const route = useRoute();
   const { phoneNumber, dialCode } = route.params || {};
   
@@ -37,11 +35,7 @@ const AddEmail = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation}/>
       <View style={styles.content}>
         <Text style={styles.title}>Add your email</Text>
         <Text style={styles.subtitle}>You can use your email to login to your account.</Text>
@@ -108,14 +102,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000',
-    paddingBottom: 8,
-    marginBottom: 16,
-  },
   content: {
     flex: 1,
     justifyContent: 'center',
@@ -166,12 +152,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: '#14B8A6',
+    backgroundColor: '#3299a8',
     borderRadius: 24,
     alignItems: 'center',
     paddingVertical: 12,
     position: 'absolute',
-    bottom: 20, // adjust this value to your liking
+    bottom: 40, // adjust this value to your liking
     left: 0,
     right: 0,
     marginHorizontal: 20,

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { useRoute } from '@react-navigation/native';
+import Header from '../components/Header';
 
 
 
-const VerifyPhone = () => {
+const VerifyPhone = ({ navigation }) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
-  const navigation = useNavigation();
   const route = useRoute();
   const { phoneNumber, dialCode } = route.params || {};
 
@@ -35,11 +34,7 @@ const VerifyPhone = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation}/>
       <View style={styles.content}>
         <Text style={styles.title}>Confirm Your Phone Number</Text>
         <Text style={styles.subtitle}>We've sent a code to {dialCode} {phoneNumber}</Text>
@@ -80,14 +75,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7fafc',
     paddingHorizontal: 16,
     paddingLeft: 16,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000',
-    paddingBottom: 8,
-    marginBottom: 16,
   },
   content: {
     flex: 1,
@@ -138,12 +125,12 @@ const styles = StyleSheet.create({
     color: '#319795',
   },
   verifyButton: {
-    backgroundColor: '#14B8A6',
+    backgroundColor: '#3299a8',
     borderRadius: 24,
     alignItems: 'center',
     paddingVertical: 12,
     position: 'absolute',
-    bottom: 20, // adjust this value to your liking
+    bottom: 40, // adjust this value to your liking
     left: 0,
     right: 0,
     marginHorizontal: 20,

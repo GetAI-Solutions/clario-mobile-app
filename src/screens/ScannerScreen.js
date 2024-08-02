@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Camera } from 'expo-camera';
-import { ProductContext } from '../../context/ProductContext';
+import { ProductContext } from '../context/ProductContext';
 
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
