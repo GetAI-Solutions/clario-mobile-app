@@ -24,7 +24,7 @@ export default function AppNavigator() {
       <Stack.Screen name="Signup" component={SignupPhone} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
       <Stack.Screen name="NoProductHistory" component={NoProductHistoryScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="VerifyPhone" component={VerifyPhone} options={{ headerShown: false }} />
+      <Stack.Screen name="VerifyEmail" component={VerifyPhone} options={{ headerShown: false }} />
       <Stack.Screen name="EmailSignup" component={AddEmail} options={{ headerShown: false }} />
       <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
       <Stack.Screen name="UploadScreen" component={UploadScreen} options={{ headerShown: false }} />

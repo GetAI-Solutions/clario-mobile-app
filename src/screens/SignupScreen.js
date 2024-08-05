@@ -21,8 +21,14 @@ const SignupPhone = ({ navigation }) => {
     setPassword(text);
   };
 
-  const handleSignUpClick = () => {
-    setShowModal(true);
+  const handleContinueClick = () => {
+    // Check if phone number and password are filled
+    if (phoneNumber && password) {
+      setShowModal(true);
+    } else {
+      // Optionally show an error message if inputs are not valid
+      alert("Please enter a valid phone number and password.");
+    }
   };
 
   const handleEditClick = () => {
@@ -37,13 +43,14 @@ const SignupPhone = ({ navigation }) => {
     setShowModal(false);
     navigation.navigate('EmailSignup', {
       phoneNumber,
-      dialCode: selectedCountry.dial_code
+      dialCode: selectedCountry.dial_code,
+      password
     });
   };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation}/>
+      <Header navigation={navigation} />
       <View style={styles.content}>
         <Text style={styles.title}>Create an Account</Text>
         <Text style={styles.subtitle}>Enter your mobile number to verify your account</Text>
@@ -80,11 +87,11 @@ const SignupPhone = ({ navigation }) => {
 
       <TouchableOpacity
         mode="contained"
-        onPress={handleSignUpClick}
+        onPress={handleContinueClick}
         disabled={!phoneNumber || !password}
         style={[styles.button, (!phoneNumber || !password) ? styles.disabledButton : styles.activeButton]}
       >
-        Sign up
+        Continue
       </TouchableOpacity>
 
       <Modal visible={showModal} transparent animationType="slide">
@@ -97,15 +104,15 @@ const SignupPhone = ({ navigation }) => {
             <Text style={styles.modalTitle}>Confirm Your Phone Number</Text>
             <Text style={styles.modalText}>Is this correct? {selectedCountry.dial_code} {phoneNumber}</Text>
             <Button
-              mode="contained" 
-              onPress={handleContinue} 
-              buttonColor="#3299a8" 
+              mode="contained"
+              onPress={handleContinue}
+              buttonColor="#3299a8"
               style={styles.modalButton}
             >
-              Continue
+              <Text>Continue</Text>
             </Button>
             <Button mode="outlined" onPress={handleEditClick} style={styles.modalButton}>
-              Edit
+            <Text>Edit</Text>
             </Button>
           </View>
         </View>

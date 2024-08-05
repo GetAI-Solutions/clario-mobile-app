@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { config, BASEURL } from '../services/api';
+import axios from 'axios';
 
 const Login = () => {
   const [isPhoneLogin, setIsPhoneLogin] = useState(true);
@@ -12,6 +14,8 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showCountryPicker, setShowCountryPicker] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+251', name: 'Ethiopia' });
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const navigation = useNavigation();
 
@@ -27,13 +31,40 @@ const Login = () => {
     setPassword(text);
   };
 
-  const handleLogin = () => {
-    // Assuming login is successful
-    navigation.navigate('MainScreen');
-  };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      const loginData = {
+        email: isPhoneLogin ? undefined : email,
+        password: password,
+        login_type: isPhoneLogin ? undefined : 'email',
+        phone_no: isPhoneLogin ? `${selectedCountry.dial_code}${phoneNumber}` : '',
+      };
+
+      console.log("user info..", loginData)
+
+      const response = await axios.post(`${BASEURL}/login`, loginData, config);
+      console.log(response);
+
+      if (response.status === 200) {
+        navigation.navigate('MainScreen');
+      } else {
+        Alert.alert('Login Failed', response.data.message || 'Invalid credentials. Please try again.');
+      }
+    } catch (error) {
+      let errorMessage = 'An unexpected error occurred. Please try again.';
+      if (error.response) {
+        errorMessage = error.response.data.message || errorMessage;
+      }
+      Alert.alert('Error', errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -120,7 +151,11 @@ const Login = () => {
         ]}
         disabled={(isPhoneLogin && (!phoneNumber || !password)) || (!isPhoneLogin && (!email || !password))}
       >
-        <Text style={styles.buttonText}>Log in</Text>
+        {isLoading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Log in</Text>
+        )}
       </TouchableOpacity>
 
       <CountryPicker
