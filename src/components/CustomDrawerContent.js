@@ -19,11 +19,11 @@ const CustomDrawerContent = (props) => {
         <Text style={styles.name}>John Doe</Text>
       </View>
       <DrawerItem
-        label="Main"
+        label="Home"
         icon={({ focused, color, size }) => (
           <Icon name={focused ? 'home' : 'home-outline'} size={size} color={color} />
         )}
-        onPress={() => navigation.navigate('MainContent')}
+        onPress={() => navigation.navigate('MainScreen')}
       />
       <DrawerItem
         label="Profile"

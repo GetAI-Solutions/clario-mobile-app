@@ -5,8 +5,9 @@ import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { config, BASEURL } from '../services/api';
 import axios from 'axios';
+import Header from '../components/Header';
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [isPhoneLogin, setIsPhoneLogin] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
@@ -17,7 +18,6 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const navigation = useNavigation();
 
   const handlePhoneNumberChange = (text) => {
     setPhoneNumber(text);
@@ -69,11 +69,7 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation} />
       <View style={styles.head}>
         <Text style={styles.title}>Log in to your account</Text>
         <Text style={styles.subtitle}>Enter your number or email with password</Text>
@@ -176,14 +172,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f4f6',
     paddingHorizontal: 16,
     paddingVertical: 16,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000000',
-    paddingBottom: 8,
-    marginBottom: 16,
   },
   head: {
     textAlign: 'left'

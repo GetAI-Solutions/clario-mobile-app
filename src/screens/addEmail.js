@@ -4,7 +4,7 @@ import { useRoute } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import countryList from 'react-select-country-list';
 import Header from '../components/Header';
-import axios from 'axios'; // Import axios for API calls
+import axios from 'axios'; 
 import api, { BASEURL, config } from '../services/api';
 
 
@@ -12,7 +12,7 @@ const AddEmail = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false)
   const [fullName, setFullName] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('ET'); // Default selected country
+  const [selectedCountry, setSelectedCountry] = useState('ET'); 
   const route = useRoute();
   const { phoneNumber, dialCode, password } = route.params || {}; // Get the passed props
 
@@ -140,7 +140,7 @@ const AddEmail = ({ navigation }) => {
           style={[styles.button, (!email || !fullName) && styles.disabledButton]}
           disabled={!email || !fullName}
         >
-          {isLoading ? <ActivityIndicator /> : <Text style={styles.buttonText}>Signup</Text>}
+          {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Signup</Text>}
         </TouchableOpacity>
       </View>
     </View>

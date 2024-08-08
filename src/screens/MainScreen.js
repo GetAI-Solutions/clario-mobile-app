@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DrawerButton from '../components/DrawerButton';
 
 const MainScreen = ({ navigation }) => {
   const [products, setProducts] = useState([]);
@@ -17,19 +18,10 @@ const MainScreen = ({ navigation }) => {
     navigation.navigate('ScannerScreen', { setProducts });
   };
 
-  const toggleDrawer = () => {
-    navigation.toggleDrawer();
-  };
-
   return (
     <View style={styles.container}>
       {/* Custom Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleDrawer} style={styles.hamburgerButton}>
-          <Icon name="menu" size={28} color="#000" />
-        </TouchableOpacity>
-      </View>
-
+      <DrawerButton navigation={navigation} />
       {/* Content */}
       {loading && <ActivityIndicator size="large" color="#0000ff" />}
       {products.length === 0 ? (
@@ -54,15 +46,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
   },
   hamburgerButton: {
     marginRight: 20,

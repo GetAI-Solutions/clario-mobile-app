@@ -10,7 +10,6 @@ const ChatbotScreen = ({ navigation, route }) => {
   const flatListRef = useRef(null);
 
   useEffect(() => {
-    // Bot initiates the conversation
     const initialMessage = {
       type: 'bot',
       text: `You've discovered ${product.name}! Would you like to know more about its usage, benefits, reviews?`,
