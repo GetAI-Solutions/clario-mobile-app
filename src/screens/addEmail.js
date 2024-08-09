@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
@@ -22,6 +22,8 @@ const AddEmail = ({ navigation }) => {
     setEmail(text);
   };
 
+  
+
   const handleFullNameChange = (text) => {
     setFullName(text);
   };
@@ -37,56 +39,81 @@ const AddEmail = ({ navigation }) => {
             phone_no: `${dialCode}${phoneNumber}`,
             country: countries.find((country) => country.value === selectedCountry).label,
         };
-        console.log(data);
+
+        console.log("Signup Data:", data);
 
         const signupResponse = await axios.post(`${BASEURL}/signup`, data);
 
         if (signupResponse.status === 200) {
-            console.log(signupResponse.data);
-            const otpData = { email: email }
-            console.log(otpData)
-            const otpResponse = await axios.post(`${BASEURL}/send-otp`, otpData)
+            console.log("Signup Successful:", signupResponse.data);
 
-            if(otpResponse.status === 200) {
-              setIsLoading(false);
-              Alert.alert('Success', 'Signup successful and OTP sent to your email!')
-              navigation.navigate('VerifyEmail', { email, phoneNumber: `${dialCode}${phoneNumber}` })
+            // Prepare data for OTP request
+            const otpData = new URLSearchParams();
+            otpData.append('email', email);
+
+            // Send OTP request
+            const otpResponse = await axios.post(`${BASEURL}/send-otp`, otpData, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            });
+
+            console.log("OTP Response:", otpResponse.data);
+
+            if (otpResponse.status === 200) {
+                const { otp } = otpResponse.data;
+                Alert.alert('Success', 'Signup successful and OTP sent to your email!');
+                navigation.navigate('VerifyEmail', { email, otp, phoneNumber: `${dialCode}${phoneNumber}` });
             } else {
-              console.log('OTP error', otpResponse.status, otpResponse.data)
-              setIsLoading(false)
-              Alert.alert("An error occured, could not send OTP")
+                console.log('OTP Error:', otpResponse.status, otpResponse.data);
+                Alert.alert("An error occurred", "Could not send OTP. Please try again.");
             }
-
         } else {
-            console.log("An error occurred", signupResponse.status, signupResponse.data);
-            setIsLoading(false);
-            Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+            console.log("Signup Error:", signupResponse.status, signupResponse.data);
+            Alert.alert('Error', 'An unexpected error occurred during signup. Please try again.');
         }
     } catch (error) {
-        setIsLoading(false);
         if (error.response) {
-            if (error.response.status === 400) {
-                Alert.alert('Error', error.response.data.message || 'Bad Request. Please check your input.');
-            } else if (error.response.status === 401) {
-                Alert.alert('Unauthorized', 'You are not authorized to perform this action.');
-            } else if (error.response.status === 403) {
-                Alert.alert('Forbidden', 'You do not have permission to perform this action.');
-            } else if (error.response.status === 404) {
-                Alert.alert('Not Found', 'The requested resource was not found.');
-            } else if (error.response.status === 500) {
-                Alert.alert('Server Error', 'An error occurred on the server. Please try again later.');
-            } else {
-                Alert.alert('Error', error.response.data.message || 'An unexpected error occurred. Please try again.');
+            console.log("Error Response:", error.response);
+            const status = error.response.status;
+            const message = error.response.data.message || 'An unexpected error occurred. Please try again.';
+
+            switch (status) {
+                case 400:
+                    Alert.alert('Error', message || 'Bad Request. Please check your input.');
+                    break;
+                case 401:
+                    Alert.alert('Unauthorized', 'You are not authorized to perform this action.');
+                    break;
+                case 403:
+                    Alert.alert('Forbidden', 'You do not have permission to perform this action.');
+                    break;
+                case 404:
+                    Alert.alert('Not Found', 'The requested resource was not found.');
+                    break;
+                case 422:
+                    Alert.alert('Unprocessable Entity', 'The provided data was invalid.');
+                    break;
+                case 500:
+                    Alert.alert('Server Error', 'An error occurred on the server. Please try again later.');
+                    break;
+                default:
+                    Alert.alert('Error', message);
             }
         } else if (error.request) {
-            console.log('Request error', error.request);
+            console.log('Request Error:', error.request);
             Alert.alert('Network Error', 'No response received from the server. Please check your internet connection.');
         } else {
-            console.log('Error', error.message);
+            console.log('Error:', error.message);
             Alert.alert('Error', error.message || 'An error occurred. Please try again.');
         }
+    } finally {
+        setIsLoading(false);
     }
 };
+
+
+
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />

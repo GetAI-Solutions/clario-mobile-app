@@ -36,8 +36,8 @@ const UploadScreen = ({ navigation }) => {
       quality: 1,
     });
 
-    const API_KEY = ''
-
+    const API_KEY = process.env.API_KEY
+    
     if (!result.canceled) {
       setLoading(true);
       setError(null);

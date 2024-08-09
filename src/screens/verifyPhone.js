@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 
-
-
 const VerifyPhone = ({ navigation }) => {
-  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [entered_otp, setEnetered_otp] = useState(['', '', '', '', '', '']);
   const route = useRoute();
-  const { phoneNumber, dialCode, email } = route.params || {};
+  const { phoneNumber, dialCode, email, otp } = route.params || {};
 
   const handleChange = (text, index) => {
-    const newOtp = [...otp];
+    const newOtp = [...entered_otp];
     newOtp[index] = text;
-    setOtp(newOtp);
+    setEnetered_otp(newOtp);
 
     // Automatically focus the next input field
     if (text && index < 5) {
@@ -23,28 +28,37 @@ const VerifyPhone = ({ navigation }) => {
   };
 
   const handleSubmit = () => {
-    const enteredOtp = otp.join('');
-    navigation.navigate('Login', {
-      phoneNumber,
-      dialCode,
-      email,
-    });
+    const enteredOtp = entered_otp.join('').trim();
+    const serverOtpStr = String(otp).trim();
+  
     console.log('Entered OTP:', enteredOtp);
-    // Implement OTP verification logic here
+    console.log('Server OTP:', serverOtpStr);
+  
+    if (enteredOtp === serverOtpStr) {
+      Alert.alert('Success', 'OTP verified successfully!');
+      console.log('Navigating to Login');
+      navigation.navigate('Login', {
+        phoneNumber,
+        dialCode,
+        email,
+      });
+    } else {
+      Alert.alert('Error', 'Invalid OTP. Please try again.');
+    }
   };
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation}/>
+      <Header navigation={navigation} />
       <View style={styles.content}>
         <Text style={styles.title}>Confirm Your Email</Text>
         <Text style={styles.subtitle}>We've sent a code to {email}</Text>
 
         <View style={styles.otpContainer}>
-          {otp.map((digit, index) => (
+          {entered_otp.map((digit, index) => (
             <TextInput
               key={index}
-              ref={input => (this[`otp-input-${index}`] = input)}
+              ref={(input) => (this[`otp-input-${index}`] = input)}
               style={styles.otpInput}
               maxLength={1}
               value={digit}
@@ -60,8 +74,11 @@ const VerifyPhone = ({ navigation }) => {
 
         <TouchableOpacity
           onPress={handleSubmit}
-          style={[styles.verifyButton, !otp.every(digit => digit) && styles.disabledButton]}
-          disabled={!otp.every(digit => digit)}
+          style={[
+            styles.verifyButton,
+            !entered_otp.every((digit) => digit) && styles.disabledButton,
+          ]}
+          disabled={!entered_otp.every((digit) => digit)}
         >
           <Text style={styles.verifyButtonText}>Verify</Text>
         </TouchableOpacity>
