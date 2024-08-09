@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ActivityIndicator, Image, Text, TouchableOpacity } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, StyleSheet, ActivityIndicator, Image, Text } from 'react-native';
 import Footer from '../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
-import Icon from 'react-native-vector-icons/Ionicons';
 import DrawerButton from '../components/DrawerButton';
+import ProductContext from '../context/ProductContext';
 
 const MainScreen = ({ navigation }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { products, loading } = useContext(ProductContext);
+
+  useEffect(() => {
+    console.log("Products in MainScreen:", products); 
+  }, [products]);
 
   const handleUpload = () => {
-    navigation.navigate('UploadScreen', { setProducts });
+    navigation.navigate('UploadScreen');
   };
 
   const handleScan = () => {
-    navigation.navigate('ScannerScreen', { setProducts });
+    navigation.navigate('ScannerScreen');
   };
 
   return (
@@ -23,19 +26,19 @@ const MainScreen = ({ navigation }) => {
       {/* Custom Header */}
       <DrawerButton navigation={navigation} />
       {/* Content */}
-      {loading && <ActivityIndicator size="large" color="#0000ff" />}
-      {products.length === 0 ? (
+      {loading ? (
+        <ActivityIndicator size="large" color="#007bff" />
+      ) : products.length === 0 ? (
         <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
       ) : (
         <>
           <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
             <Image source={require('../../assets/images/Frame.png')} style={styles.logo} />
           </View>
-          <Text style={styles.title}>Scanned Products</Text>
-          <ProductList products={products} setProducts={setProducts} navigation={navigation} />
+            <Text style={styles.title}>Scanned Products</Text>
+          <ProductList navigation={navigation} />
         </>
       )}
-
       {/* Footer */}
       <Footer onUpload={handleUpload} onScan={handleScan} />
     </View>
@@ -47,18 +50,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
-  hamburgerButton: {
-    marginRight: 20,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    margin: 8,
-  },
+
   logo: {
     width: 100,
     height: 100,
     resizeMode: 'contain',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
+    paddingLeft: 5,
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { 
   View, 
   Text, 
@@ -13,13 +13,14 @@ import * as Notifications from 'expo-notifications';
 import axios from 'axios'; 
 import { BASEURL, PRODUCT_API_URL } from '../services/api';
 import Header from '../components/Header';
+import ProductContext from '../context/ProductContext';
 
-const UploadScreen = ({ navigation, route }) => {
-  const { setProducts } = route.params;
+const UploadScreen = ({ navigation }) => {  
+  const { setProducts } = useContext(ProductContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
-  const [statusMessage, setStatusMessage] = useState(''); // State for status messages
+  const [statusMessage, setStatusMessage] = useState(''); 
 
   
 
@@ -35,12 +36,12 @@ const UploadScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
-    const API_KEY = 'key'
+    const API_KEY = ''
 
     if (!result.canceled) {
       setLoading(true);
       setError(null);
-      setStatusMessage('Extracting barcode...'); // Set message when extraction starts
+      setStatusMessage('Extracting barcode...'); 
 
       try {
         const formData = new FormData();
@@ -52,7 +53,7 @@ const UploadScreen = ({ navigation, route }) => {
 
         formData.append('file', await fetchImageFromUri(result.assets[0].uri));
 
-        formData.append('id', '1234'); 
+        formData.append('id', '12344675'); 
 
         console.log(formData.values());
         console.log(formData.entries());
@@ -74,29 +75,27 @@ const UploadScreen = ({ navigation, route }) => {
           navigate('ProductNotFound')
         }
 
-        setStatusMessage('Barcode detected! Retrieving product details...'); // Set message after barcode detection
+        setStatusMessage('Barcode detected! Retrieving product details...'); 
 
         const productResponse = await axios.get(
           `${PRODUCT_API_URL}${barcode}?key=${API_KEY}`
         );
 
         const productData = productResponse.data;
+        console.log(productData)
 
         if (productData && productData.product) {
+          console.log("Adding product to context:", productData.product);
           setProduct(productData.product);
           setProducts((prev) => [...prev, productData.product]);
 
-          // Send a notification
           sendNotification('Product uploaded successfully!');
 
-          // Navigate to Product Details Screen
           navigation.navigate('ProductDetails', { product: productData.product });
         } else {
-          // Navigate to Product Not Found Screen
           navigation.navigate('ProductNotFound');
         }
       } catch (err) {
-        // Handle different error responses
         console.error(err); // Log the error for debugging
         if (err.response) {
           switch (err.response.status) {

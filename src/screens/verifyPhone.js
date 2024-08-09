@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 
@@ -8,7 +8,7 @@ import Header from '../components/Header';
 const VerifyPhone = ({ navigation }) => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const route = useRoute();
-  const { phoneNumber, dialCode } = route.params || {};
+  const { phoneNumber, dialCode, email } = route.params || {};
 
   const handleChange = (text, index) => {
     const newOtp = [...otp];
@@ -27,6 +27,7 @@ const VerifyPhone = ({ navigation }) => {
     navigation.navigate('Login', {
       phoneNumber,
       dialCode,
+      email,
     });
     console.log('Entered OTP:', enteredOtp);
     // Implement OTP verification logic here
@@ -36,8 +37,8 @@ const VerifyPhone = ({ navigation }) => {
     <View style={styles.container}>
       <Header navigation={navigation}/>
       <View style={styles.content}>
-        <Text style={styles.title}>Confirm Your Phone Number</Text>
-        <Text style={styles.subtitle}>We've sent a code to {dialCode} {phoneNumber}</Text>
+        <Text style={styles.title}>Confirm Your Email</Text>
+        <Text style={styles.subtitle}>We've sent a code to {email}</Text>
 
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (

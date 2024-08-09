@@ -1,44 +1,57 @@
-
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserContext from '../context/UserContext'; 
 
 const CustomDrawerContent = (props) => {
   const { navigation } = props;
+  const { user, setUser } = useContext(UserContext); 
 
-  const handleLogout = () => {
-    // Implement logout logic here
-    navigation.navigate('Login'); // Navigate to login screen
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('userData'); 
+      setUser(null); 
+      navigation.navigate('Login'); // Navigate to login screen
+    } catch (error) {
+      console.error('Error logging out: ', error);
+    }
   };
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
       <View style={styles.header}>
-        <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.profileImage} />
-        <Text style={styles.name}>John Doe</Text>
+        <Image
+          source={{ uri: user?.profileImage || 'https://via.placeholder.com/150' }}
+          style={styles.profileImage}
+        />
+        <Text style={styles.name}>{user?.name || 'Guest'}</Text>
+        <Text style={styles.email}>{user?.email || 'guest@example.com'}</Text>
       </View>
-      <DrawerItem
-        label="Home"
-        icon={({ focused, color, size }) => (
-          <Icon name={focused ? 'home' : 'home-outline'} size={size} color={color} />
-        )}
-        onPress={() => navigation.navigate('MainScreen')}
-      />
-      <DrawerItem
-        label="Profile"
-        icon={({ focused, color, size }) => (
-          <Icon name={focused ? 'person' : 'person-outline'} size={size} color={color} />
-        )}
-        onPress={() => navigation.navigate('Profile')}
-      />
-      <DrawerItem
-        label="Settings"
-        icon={({ focused, color, size }) => (
-          <Icon name={focused ? 'settings' : 'settings-outline'} size={size} color={color} />
-        )}
-        onPress={() => navigation.navigate('Settings')}
-      />
+      <View style={styles.menuContainer}>
+        <DrawerItem
+          label="Home"
+          icon={({ focused, color, size }) => (
+            <Icon name={focused ? 'home' : 'home-outline'} size={size} color={color} />
+          )}
+          onPress={() => navigation.navigate('MainScreen')}
+        />
+        <DrawerItem
+          label="Profile"
+          icon={({ focused, color, size }) => (
+            <Icon name={focused ? 'person' : 'person-outline'} size={size} color={color} />
+          )}
+          onPress={() => navigation.navigate('Profile')}
+        />
+        <DrawerItem
+          label="Settings"
+          icon={({ focused, color, size }) => (
+            <Icon name={focused ? 'settings' : 'settings-outline'} size={size} color={color} />
+          )}
+          onPress={() => navigation.navigate('Settings')}
+        />
+      </View>
       <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
@@ -47,30 +60,51 @@ const CustomDrawerContent = (props) => {
 };
 
 const styles = StyleSheet.create({
+  drawerContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   header: {
     alignItems: 'center',
-    paddingVertical: 20,
-    backgroundColor: '#f5f5f5',
+    paddingVertical: 30,
+    backgroundColor: '#3299a8',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
   profileImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
+    borderWidth: 3,
+    borderColor: '#fff',
   },
   name: {
-    marginTop: 10,
-    fontSize: 18,
+    marginTop: 15,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: '#fff',
+  },
+  email: {
+    fontSize: 14,
+    color: '#f9f9f9',
+    marginBottom: 10,
+  },
+  menuContainer: {
+    marginTop: 15,
   },
   logoutButton: {
-    marginTop: 20,
-    padding: 10,
+    marginTop: 25,
+    padding: 15,
     backgroundColor: '#f44',
     alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 20,
+    borderRadius: 10,
   },
   logoutText: {
     color: '#fff',
     fontWeight: 'bold',
+    fontSize: 16,
   },
 });
 

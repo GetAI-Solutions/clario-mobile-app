@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import countryList from 'react-select-country-list';
 import Header from '../components/Header';
 import axios from 'axios'; 
-import api, { BASEURL, config } from '../services/api';
+import  { BASEURL } from '../services/api';
 
 
 const AddEmail = ({ navigation }) => {
@@ -14,7 +14,7 @@ const AddEmail = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('ET'); 
   const route = useRoute();
-  const { phoneNumber, dialCode, password } = route.params || {}; // Get the passed props
+  const { phoneNumber, dialCode, password } = route.params || {}; 
 
   const countries = countryList().getData();
 
@@ -27,7 +27,6 @@ const AddEmail = ({ navigation }) => {
   };
 
 
-  // if(isLoading) return <ActivityIndicator />
   const handleSignup = async () => {
     setIsLoading(true);
     try {
@@ -40,24 +39,32 @@ const AddEmail = ({ navigation }) => {
         };
         console.log(data);
 
-        const response = await axios.post(`${BASEURL}/signup`, data, config);
+        const signupResponse = await axios.post(`${BASEURL}/signup`, data);
 
-        if (response.status === 200) {
-            // Handle success
-            console.log(response.data);
-            setIsLoading(false);
-            Alert.alert('Success', 'Signup successful!');
-            navigation.navigate('VerifyEmail', { email, phoneNumber: `${dialCode}${phoneNumber}` });
+        if (signupResponse.status === 200) {
+            console.log(signupResponse.data);
+            const otpData = { email: email }
+            console.log(otpData)
+            const otpResponse = await axios.post(`${BASEURL}/send-otp`, otpData)
+
+            if(otpResponse.status === 200) {
+              setIsLoading(false);
+              Alert.alert('Success', 'Signup successful and OTP sent to your email!')
+              navigation.navigate('VerifyEmail', { email, phoneNumber: `${dialCode}${phoneNumber}` })
+            } else {
+              console.log('OTP error', otpResponse.status, otpResponse.data)
+              setIsLoading(false)
+              Alert.alert("An error occured, could not send OTP")
+            }
+
         } else {
-            // Handle unexpected response
-            console.log("An error occurred", response.status, response.data);
+            console.log("An error occurred", signupResponse.status, signupResponse.data);
             setIsLoading(false);
             Alert.alert('Error', 'An unexpected error occurred. Please try again.');
         }
     } catch (error) {
         setIsLoading(false);
         if (error.response) {
-            // Server responded with a status other than 200 range
             if (error.response.status === 400) {
                 Alert.alert('Error', error.response.data.message || 'Bad Request. Please check your input.');
             } else if (error.response.status === 401) {
@@ -72,11 +79,9 @@ const AddEmail = ({ navigation }) => {
                 Alert.alert('Error', error.response.data.message || 'An unexpected error occurred. Please try again.');
             }
         } else if (error.request) {
-            // Request was made but no response was received
             console.log('Request error', error.request);
             Alert.alert('Network Error', 'No response received from the server. Please check your internet connection.');
         } else {
-            // Something else happened while setting up the request
             console.log('Error', error.message);
             Alert.alert('Error', error.message || 'An error occurred. Please try again.');
         }

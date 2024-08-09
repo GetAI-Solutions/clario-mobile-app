@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { config, BASEURL } from '../services/api';
+import { BASEURL } from '../services/api';
 import axios from 'axios';
 import Header from '../components/Header';
+import UserContext from '../context/UserContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Login = ({ navigation }) => {
   const [isPhoneLogin, setIsPhoneLogin] = useState(true);
@@ -14,8 +16,9 @@ const Login = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCountryPicker, setShowCountryPicker] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+251', name: 'Ethiopia' });
+  const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+233', name: 'Ghana' });
   const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(UserContext);
 
 
 
@@ -48,10 +51,13 @@ const Login = ({ navigation }) => {
 
       console.log("user info..", loginData)
 
-      const response = await axios.post(`${BASEURL}/login`, loginData, config);
+      const response = await axios.post(`${BASEURL}/login`, loginData);
       console.log(response);
 
       if (response.status === 200) {
+        const userData = response.data; 
+        await AsyncStorage.setItem('userData', JSON.stringify(userData)); 
+        setUser(userData); 
         navigation.navigate('MainScreen');
       } else {
         Alert.alert('Login Failed', response.data.message || 'Invalid credentials. Please try again.');

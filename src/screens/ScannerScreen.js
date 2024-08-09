@@ -1,34 +1,77 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
-import { Camera, CameraView } from 'expo-camera';
-import { ProductContext } from '../context/ProductContext'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Platform } from 'react-native';
+import { CameraView } from 'expo-camera'; 
+import ProductContext  from '../context/ProductContext';
+
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
-  const [scanned, setScanned] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
-  const cameraRef = useRef(CameraView);
+  const cameraRef = useRef(null);
 
   useEffect(() => {
-    (async () => {
+    const requestPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
-    })();
+    };
+
+    if (Platform.OS === 'android' || Platform.OS === 'ios') {
+      requestPermissions();
+    }
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setLoading(true);
-    setScanned(true);
-    setTimeout(() => {
-      setLoading(false);
-      if (data === 'valid-barcode') {
-        setProducts(prev => [...prev, { name: 'Product Name', barcode: data }]);
-        navigation.navigate('Chatbot', { product: { name: 'Product Name', barcode: data } });
-      } else {
-        setError('Product not found');
+  const handleCapture = async () => {
+    if (cameraRef.current) {
+      setLoading(true);
+      try {
+        const photo = await cameraRef.current.takePictureAsync();
+        const formData = new FormData();
+        formData.append('file', {
+          uri: photo.uri,
+          type: 'image/jpeg',
+          name: 'photo.jpg',
+        });
+
+        // Example of making API requests
+        const barcodeResponse = await axios.post(
+          `${BASEURL}/upload-barcode`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+
+        const barcode = barcodeResponse.data.product_id;
+
+        if (!barcode) {
+          Alert.alert('Error', 'Product not found');
+          setError('Product not found');
+          setLoading(false);
+          return;
+        }
+
+        const productResponse = await axios.get(
+          `${PRODUCT_API_URL}${barcode}?key=${API_KEY}`
+        );
+
+        const productData = productResponse.data;
+
+        if (productData && productData.product) {
+          setProducts(prev => [...prev, productData.product]);
+          navigation.navigate('ProductDetails', { product: productData.product });
+        } else {
+          navigation.navigate('ProductNotFound');
+        }
+      } catch (err) {
+        console.error(err);
+        setError('An error occurred. Please try again.');
+      } finally {
+        setLoading(false);
       }
-    }, 2000);
+    }
   };
 
   if (hasPermission === null) {
@@ -44,38 +87,27 @@ const ScannerScreen = ({ navigation }) => {
       <CameraView
         ref={cameraRef}
         style={styles.cameraView}
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={({ data }) => handleCapture(data)}
         facing="back"
       >
         {loading && <ActivityIndicator size="large" color="#fff" />}
-        {scanned && !loading && (
+        {error && (
           <View style={styles.overlay}>
-            {error ? (
-              <>
-                <Text style={styles.errorText}>{error}</Text>
-                <TouchableOpacity
-                  onPress={() => {
-                    setScanned(false);
-                    setError(null);
-                  }}
-                  style={styles.retryButton}
-                >
-                  <Text style={styles.retryButtonText}>Try another barcode</Text>
-                </TouchableOpacity>
-              </>
-            ) : (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Chatbot')}
-                style={styles.chatbotButton}
-              >
-                <Text style={styles.chatbotButtonText}>Proceed to Chatbot</Text>
-              </TouchableOpacity>
-            )}
+            <Text style={styles.errorText}>{error}</Text>
+            <TouchableOpacity
+              onPress={() => setError(null)}
+              style={styles.retryButton}
+            >
+              <Text style={styles.retryButtonText}>Try Again</Text>
+            </TouchableOpacity>
           </View>
         )}
-        {!scanned && !loading && (
+        {!loading && !error && (
           <View style={styles.scanPrompt}>
             <Text style={styles.scanText}>Place the barcode inside the frame</Text>
+            <TouchableOpacity onPress={handleCapture} style={styles.captureButton}>
+              <Text style={styles.captureButtonText}>Capture Barcode</Text>
+            </TouchableOpacity>
           </View>
         )}
       </CameraView>
@@ -118,15 +150,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
-  chatbotButton: {
-    backgroundColor: '#00ff00',
-    padding: 10,
-    borderRadius: 5,
-  },
-  chatbotButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
   scanPrompt: {
     position: 'absolute',
     top: '40%',
@@ -137,6 +160,16 @@ const styles = StyleSheet.create({
   scanText: {
     color: '#fff',
     fontSize: 18,
+  },
+  captureButton: {
+    backgroundColor: '#00ff00',
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  captureButtonText: {
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

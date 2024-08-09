@@ -1,19 +1,37 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import ProductContext from '../context/ProductContext';
 
-const ProductList = ({ products, setProducts, navigation }) => {
-  const handleDelete = (index) => {
-    const newProducts = products.filter((_, i) => i !== index);
-    setProducts(newProducts);
-  };
+const ProductList = ({ navigation }) => {
+  const { products, deleteProduct } = useContext(ProductContext);
+
+  console.log("Products in ProductList:", products);
 
   const handleChatbot = (product) => {
     navigation.navigate('Chatbot', { product });
   };
 
+  const handleDelete = (index) => {
+    Alert.alert( 
+      'Delete Product',
+      'Are you sure you want to delete this product?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => deleteProduct(index),
+        },
+      ]
+    );
+  };
+
   const renderItem = ({ item, index }) => (
-    <View style={styles.productContainer}>
+     <View style={styles.productContainer}>
       <Text style={styles.productName}>{item.name}</Text>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => handleChatbot(item)}>
