@@ -2,11 +2,10 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { BASEURL } from '../services/api';
-import axios from 'axios';
+import { loginUser } from '../services/authService';
+import { storeUserData } from '../utils/storageUtils';
 import Header from '../components/Header';
 import UserContext from '../context/UserContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Login = ({ navigation }) => {
@@ -49,28 +48,26 @@ const Login = ({ navigation }) => {
         phone_no: isPhoneLogin ? `${selectedCountry.dial_code}${phoneNumber}` : '',
       };
 
-      console.log("user info..", loginData)
+      const userData = await loginUser(loginData);
 
-      const response = await axios.post(`${BASEURL}/login`, loginData);
-      console.log(response);
-
-      if (response.status === 200) {
-        const userData = response.data; 
-        await AsyncStorage.setItem('userData', JSON.stringify(userData)); 
-        setUser(userData); 
+      if (userData) {
+        await storeUserData(userData);
+        setUser(userData);
         navigation.navigate('MainScreen');
-      } else {
-        Alert.alert('Login Failed', response.data.message || 'Invalid credentials. Please try again.');
       }
     } catch (error) {
-      let errorMessage = 'An unexpected error occurred. Please try again.';
-      if (error.response) {
-        errorMessage = error.response.data.message || errorMessage;
-      }
-      Alert.alert('Error', errorMessage);
+      handleError(error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleError = (error) => {
+    let errorMessage = 'An unexpected error occurred. Please try again.';
+    if (error.response) {
+      errorMessage = error.response.data.message || errorMessage;
+    }
+    Alert.alert('Error', errorMessage);
   };
 
   return (

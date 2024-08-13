@@ -6,9 +6,9 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const { product } = route.params;
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  const truncatedDescription = product.description.length > 150
-    ? product.description.slice(0, 150) + '...'
-    : product.description;
+  const truncatedDescription = product.product_summary.length > 150
+    ? product.product_summary.slice(0, 150) + '...'
+    : product.product_summary;
 
   const toggleDrawer = () => {
     navigation.toggleDrawer();
@@ -26,12 +26,12 @@ const ProductDetailsScreen = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
-        <Image source={{ uri: product.imageUrl }} style={styles.productImage} />
+        <Image source={ product.imageUri ? { uri: product.imageUrl } : require('../../assets/images/pop.png')} style={styles.productImage} />
         <Text style={styles.productName}>{product.name}</Text>
         <Text style={styles.productDescription}>
-          {showFullDescription ? product.description : truncatedDescription}
+          {showFullDescription ? product.product_summary : truncatedDescription}
         </Text>
-        {product.description.length > 150 && (
+        {product.product_summary.length > 150 && (
           <TouchableOpacity onPress={toggleDescription}>
             <Text style={styles.readMoreText}>
               {showFullDescription ? 'Read Less' : 'Read More'}

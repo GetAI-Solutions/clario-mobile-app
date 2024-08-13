@@ -13,7 +13,7 @@ const CustomDrawerContent = (props) => {
     try {
       await AsyncStorage.removeItem('userData'); 
       setUser(null); 
-      navigation.navigate('Login'); // Navigate to login screen
+      navigation.navigate('Login'); 
     } catch (error) {
       console.error('Error logging out: ', error);
     }
@@ -26,7 +26,7 @@ const CustomDrawerContent = (props) => {
           source={{ uri: user?.profileImage || 'https://via.placeholder.com/150' }}
           style={styles.profileImage}
         />
-        <Text style={styles.name}>{user?.name || 'Guest'}</Text>
+        <Text style={styles.name}>{user?.user_name || 'Guest'}</Text>
         <Text style={styles.email}>{user?.email || 'guest@example.com'}</Text>
       </View>
       <View style={styles.menuContainer}>
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 45,
     borderWidth: 3,
     borderColor: '#fff',
+    backgroundColor: 'transparent'
   },
   name: {
     marginTop: 15,

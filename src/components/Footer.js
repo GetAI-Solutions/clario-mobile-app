@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center', // Center the buttons horizontally
         padding: 16,
-        paddingBottom: 32, // Move the buttons upwards by increasing the bottom padding
+        paddingBottom: 64, // Move the buttons upwards by increasing the bottom padding
         backgroundColor: '#f3f4f6',
       },
       button: {
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#319795', // Background color for the circle
         borderRadius: 50, // Making the background a circle
         padding: 10,
-        marginBottom: 8,
+        marginBottom: 16,
       },
       icon: {
         width: 30,

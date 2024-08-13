@@ -1,28 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
-  ActivityIndicator, 
-  Image, 
-  Platform 
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as Notifications from 'expo-notifications';
-import axios from 'axios'; 
-import { BASEURL, PRODUCT_API_URL } from '../services/api';
+import { uploadBarcode, getProductSummary } from '../services/apiService';
+import { fetchImageFromUri } from '../utils/imageUtils';
+import { registerForPushNotificationsAsync, sendNotification } from '../utils/notificationUtils';
 import Header from '../components/Header';
 import ProductContext from '../context/ProductContext';
 
-const UploadScreen = ({ navigation }) => {  
+const UploadScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
-  const [statusMessage, setStatusMessage] = useState(''); 
-
-  
+  const [statusMessage, setStatusMessage] = useState('');
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -36,124 +26,67 @@ const UploadScreen = ({ navigation }) => {
       quality: 1,
     });
 
-    const API_KEY = process.env.API_KEY
-    
     if (!result.canceled) {
       setLoading(true);
       setError(null);
-      setStatusMessage('Extracting barcode...'); 
+      setStatusMessage('Extracting barcode...');
 
       try {
         const formData = new FormData();
-        const fetchImageFromUri = async (uri) => {
-          const response = await fetch(uri);
-          const blob = await response.blob();
-          return blob;
-        };
-
         formData.append('file', await fetchImageFromUri(result.assets[0].uri));
+        formData.append('id', '12344675');
 
-        formData.append('id', '12344675'); 
+        const barcodeData = await uploadBarcode(formData);
+        const bar_code = barcodeData.product_id;
 
-        console.log(formData.values());
-        console.log(formData.entries());
-
-        const barcodeResponse = await axios.post(
-          `${BASEURL}/upload-barcode`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data', 
-            },
-          }
-        );
-
-        const barcode = barcodeResponse.data.product_id; 
-
-        if(!barcode) {
-          setLoading(true)
-          navigate('ProductNotFound')
+        if (!bar_code) {
+          setLoading(true);
+          navigate('ProductNotFound');
         }
 
-        setStatusMessage('Barcode detected! Retrieving product details...'); 
+        setStatusMessage('Barcode detected! Retrieving product details...');
 
-        const productResponse = await axios.get(
-          `${PRODUCT_API_URL}${barcode}?key=${API_KEY}`
-        );
-
-        const productData = productResponse.data;
-        console.log(productData)
+        const productData = await getProductSummary(bar_code);
 
         if (productData && productData.product) {
-          console.log("Adding product to context:", productData.product);
           setProduct(productData.product);
           setProducts((prev) => [...prev, productData.product]);
-
           sendNotification('Product uploaded successfully!');
-
           navigation.navigate('ProductDetails', { product: productData.product });
         } else {
           navigation.navigate('ProductNotFound');
         }
       } catch (err) {
-        console.error(err); // Log the error for debugging
-        if (err.response) {
-          switch (err.response.status) {
-            case 400:
-              setError('Invalid barcode format.');
-              break;
-            case 401:
-              setError('Unauthorized access. Please check your API key.');
-              break;
-            case 404:
-              navigation.navigate('ProductNotFound');
-              break;
-            case 429:
-              setError('Too many requests. Please try again later.');
-              break;
-            default:
-              setError('An error occurred. Please try again.');
-          }
-        } else {
-          setError('Network error. Please check your connection.');
-        }
+        console.error(err);
+        handleError(err);
       } finally {
         setLoading(false);
-        setStatusMessage(''); // Clear status message once loading is complete
+        setStatusMessage('');
       }
     }
   };
 
-  const registerForPushNotificationsAsync = async () => {
-    if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
+  const handleError = (err) => {
+    if (err.response) {
+      switch (err.response.status) {
+        case 400:
+          setError('Invalid barcode format.');
+          break;
+        case 401:
+          setError('Unauthorized access. Please check your API key.');
+          break;
+        case 404:
+          navigation.navigate('ProductNotFound');
+          break;
+        case 429:
+          setError('Too many requests. Please try again later.');
+          break;
+        default:
+          setError('An error occurred. Please try again.');
+      }
+    } else {
+      setError('Network error. Please check your connection.');
     }
-
-    if (Platform.OS === 'ios') {
-      await Notifications.requestPermissionsAsync({
-        ios: {
-          allowAlert: true,
-          allowBadge: true,
-          allowSound: true,
-        },
-      });
-    }
-  };
-
-  const sendNotification = async (message) => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Product Upload',
-        body: message,
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 1 },
-    });
   };
 
   return (
