@@ -7,6 +7,7 @@ import FullNameInput from '../components/FullNameInput';
 import CountryPickerComponent from '../components/CountryPickerComponent';
 import countryList from 'react-select-country-list';
 import { signup, sendOtp } from '../services/authService';
+import { Picker } from '@react-native-picker/picker';
 
 const AddEmail = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ const AddEmail = ({ navigation }) => {
   const route = useRoute();
   const { phoneNumber, dialCode, password } = route.params || {};
   const countries = countryList().getData();
+  const [ preferredLanguage, setPreferredLanguage ] = useState('en')
 
   const handleSignup = async () => {
     setIsLoading(true);
@@ -26,6 +28,7 @@ const AddEmail = ({ navigation }) => {
         password,
         phone_no: `${dialCode}${phoneNumber}`,
         country: countries.find((country) => country.value === selectedCountry).label,
+        preferred_language: preferredLanguage,
       };
 
       console.log("Signup Data:", data);
@@ -42,7 +45,7 @@ const AddEmail = ({ navigation }) => {
         if (otpResponse.status === 200) {
           const { otp } = otpResponse.data;
           Alert.alert('Success', 'Signup successful and OTP sent to your email!');
-          navigation.navigate('VerifyEmail', { email, otp, phoneNumber: `${dialCode}${phoneNumber}` });
+          navigation.navigate('VerifyEmail', { email, otp, phoneNumber: `${dialCode}${phoneNumber}`, preferredLanguage });
         } else {
           console.log('OTP Error:', otpResponse.status, otpResponse.data);
           Alert.alert("An error occurred", "Could not send OTP. Please try again.");
@@ -110,6 +113,19 @@ const AddEmail = ({ navigation }) => {
           countries={countries}
         />
 
+        <View style={styles.languagePickerContainer}>
+          <Text style={styles.languageLabel}>Preferred Language</Text>
+          <Picker
+            selectedValue={preferredLanguage}
+            onValueChange={(itemValue) => setPreferredLanguage(itemValue)}
+            style={styles.languagePicker}
+          >
+            <Picker.Item label="English" value="en" />
+            <Picker.Item label="French" value="fr" />
+            <Picker.Item label="Swahili" value="sw" />
+          </Picker>
+        </View>
+
         <TouchableOpacity
           onPress={handleSignup}
           style={[styles.button, (!email || !fullName) && styles.disabledButton]}
@@ -146,7 +162,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   button: {
-    backgroundColor: '#3299a8',
+    backgroundColor: '#2c7391',
     borderRadius: 24,
     alignItems: 'center',
     paddingVertical: 12,
@@ -164,6 +180,23 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: '#E5E7EB',
+  },
+  languagePickerContainer: {
+    marginVertical: 20,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+  },
+  languageLabel: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#333',
+  },
+  languagePicker: {
+    height: 50,
+    color: '#000',
   },
 });
 

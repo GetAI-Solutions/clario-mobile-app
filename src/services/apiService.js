@@ -10,7 +10,7 @@ export const uploadBarcode = async (formData) => {
 
 export const getProductSummary = async (bar_code) => {
   const response = await axios.post(
-    `${BASEURL}/get-ai-service/get-product-summary`,
+    `${BASEURL}/get-product-summary`,
     new URLSearchParams({ bar_code }),
     {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Image, Text } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Image, Text, SafeAreaView } from 'react-native';
 import Footer from '../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
 import DrawerButton from '../components/DrawerButton';
 import ProductContext from '../context/ProductContext';
+import { LanguageContext } from '../context/LanguageContext';
 
 const MainScreen = ({ navigation }) => {
   const { products, loading } = useContext(ProductContext);
+  const { translations } = useContext(LanguageContext)
 
   useEffect(() => {
     console.log("Products in MainScreen:", products); 
@@ -22,7 +24,7 @@ const MainScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Custom Header */}
       <DrawerButton navigation={navigation} />
       {/* Content */}
@@ -35,20 +37,20 @@ const MainScreen = ({ navigation }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
             <Image source={require('../../assets/images/Frame.png')} style={styles.logo} />
           </View>
-            <Text style={styles.title}>Scanned Products</Text>
+            <Text style={styles.title}>{translations['Scanned Products'] || 'No translation found'}</Text>
           <ProductList navigation={navigation} />
         </>
       )}
       {/* Footer */}
       <Footer onUpload={handleUpload} onScan={handleScan} />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F0F0F0',
   },
 
   logo: {
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: '#333',
-    paddingLeft: 5,
+    paddingLeft: 15,
   },
 });
 

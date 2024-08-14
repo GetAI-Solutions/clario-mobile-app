@@ -32,7 +32,7 @@ const ProductList = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => (
      <View style={styles.productContainer}>
-      <Text style={styles.productName}>{item.name}</Text>
+      <Text style={styles.productName}>{item.product_name}</Text>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => handleChatbot(item)}>
           <Image source={require('../../assets/images/chatbot.png')} style={styles.icon} />
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: 16,
-    color: '#008080'
+    color: '#2c7391'
   },
   actions: {
     flexDirection: 'row',

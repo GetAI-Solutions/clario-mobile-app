@@ -6,6 +6,8 @@ import { fetchImageFromUri } from '../utils/imageUtils';
 import { registerForPushNotificationsAsync, sendNotification } from '../utils/notificationUtils';
 import Header from '../components/Header';
 import ProductContext from '../context/ProductContext';
+import UserContext from '../context/UserContext';
+import { LanguageContext } from '../context/LanguageContext';
 
 const UploadScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
@@ -13,6 +15,8 @@ const UploadScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
+  const { user, setUser } = useContext(UserContext)
+  const { translations } = useContext(LanguageContext)
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -34,14 +38,16 @@ const UploadScreen = ({ navigation }) => {
       try {
         const formData = new FormData();
         formData.append('file', await fetchImageFromUri(result.assets[0].uri));
-        formData.append('id', '12344675');
+        formData.append('id', user.uid);
 
         const barcodeData = await uploadBarcode(formData);
-        const bar_code = barcodeData.product_id;
+        const bar_code = barcodeData.product_barcode;
+        console.log(bar_code)
+        console.log(user.uid)
 
         if (!bar_code) {
           setLoading(true);
-          navigate('ProductNotFound');
+          navigation.navigate('ProductNotFound');
         }
 
         setStatusMessage('Barcode detected! Retrieving product details...');
@@ -49,10 +55,11 @@ const UploadScreen = ({ navigation }) => {
         const productData = await getProductSummary(bar_code);
 
         if (productData && productData.product) {
-          setProduct(productData.product);
-          setProducts((prev) => [...prev, productData.product]);
+          const product = productData.product
+          setProduct(product);
+          setProducts((prev) => [...prev, product]);
           sendNotification('Product uploaded successfully!');
-          navigation.navigate('ProductDetails', { product: productData.product });
+          navigation.navigate('ProductDetails', { product });
         } else {
           navigation.navigate('ProductNotFound');
         }
@@ -95,7 +102,7 @@ const UploadScreen = ({ navigation }) => {
       <View style={styles.content}>
         {!product && !loading && !error && (
           <TouchableOpacity onPress={handleImagePick} style={styles.uploadButton}>
-            <Text style={styles.uploadButtonText}>Upload Image</Text>
+            <Text style={styles.uploadButtonText}>{translations['Upload Image']}</Text>
           </TouchableOpacity>
         )}
         {loading && (
@@ -108,7 +115,7 @@ const UploadScreen = ({ navigation }) => {
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{error}</Text>
             <TouchableOpacity onPress={handleImagePick} style={styles.retryButton}>
-              <Text style={styles.retryButtonText}>Try another image</Text>
+              <Text style={styles.retryButtonText}>{translations['Try another image']}</Text>
             </TouchableOpacity>
           </View>
         )}

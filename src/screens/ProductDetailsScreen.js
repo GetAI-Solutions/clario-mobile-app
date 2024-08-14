@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { LanguageContext } from '../context/LanguageContext';
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { product } = route.params;
+  const { translations } = useContext(LanguageContext);
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const truncatedDescription = product.product_summary.length > 150
@@ -22,27 +24,32 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={toggleDrawer} style={styles.hamburgerButton}>
-          <Icon name="menu" size={28} color="#000" />
+          <Icon name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.content}>
-        <Image source={ product.imageUri ? { uri: product.imageUrl } : require('../../assets/images/pop.png')} style={styles.productImage} />
-        <Text style={styles.productName}>{product.name}</Text>
-        <Text style={styles.productDescription}>
-          {showFullDescription ? product.product_summary : truncatedDescription}
-        </Text>
-        {product.product_summary.length > 150 && (
-          <TouchableOpacity onPress={toggleDescription}>
-            <Text style={styles.readMoreText}>
-              {showFullDescription ? 'Read Less' : 'Read More'}
-            </Text>
-          </TouchableOpacity>
-        )}
+        <View style={styles.productContainer}>
+          <Image 
+            source={product.image_url && product.image_url !== "soon" ? { uri: product.imageurl } : require('../../assets/images/else.png')} 
+            style={styles.productImage} 
+          />
+          <Text style={styles.productName}>{product.product_name}</Text>
+          <Text style={styles.productDescription}>
+            {showFullDescription ? product.product_summary : truncatedDescription}
+          </Text>
+          {product.product_summary.length > 150 && (
+            <TouchableOpacity onPress={toggleDescription}>
+              <Text style={styles.readMoreText}>
+                {showFullDescription ? translations['Read Less'] : translations['Read More']}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
         <TouchableOpacity
           onPress={() => navigation.navigate('Chatbot', { product })}
           style={styles.chatbotButton}
         >
-          <Text style={styles.chatbotButtonText}>Find More Details in Chatbot</Text>
+          <Text style={styles.chatbotButtonText}>{translations['Proceed to Chatbot']}</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -52,6 +59,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
   },
   header: {
     flexDirection: 'row',
@@ -69,9 +77,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  productContainer: {
+    alignItems: 'center',
+    backgroundColor: '#F8F8F8',
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 3,
+    marginBottom: 20,
+    borderColor: '#2c7391',
+  },
   productImage: {
-    width: '100%',
-    height: 300,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
     marginBottom: 20,
   },
@@ -83,28 +104,30 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   productDescription: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#666',
     marginBottom: 10,
     textAlign: 'center',
   },
   readMoreText: {
-    fontSize: 16,
-    color: '#319795',
+    fontSize: 14,
+    color: '#2c7391',
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'right',
   },
   chatbotButton: {
-    backgroundColor: '#319795',
+    backgroundColor: '#2c7391',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 50,
     width: '80%',
     alignItems: 'center',
+    alignSelf: 'center',
   },
   chatbotButtonText: {
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
+    fontWeight: '600',
   },
 });
 

@@ -26,14 +26,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center', // Center the buttons horizontally
         padding: 16,
         paddingBottom: 64, // Move the buttons upwards by increasing the bottom padding
-        backgroundColor: '#f3f4f6',
+        backgroundColor: '#F0F0F0',
       },
       button: {
         alignItems: 'center',
         marginHorizontal: 20, // Adjust this value to control the spacing between the buttons
       },
       iconWrapper: {
-        backgroundColor: '#319795', // Background color for the circle
+        backgroundColor: '#2c7391', // Background color for the circle
         borderRadius: 50, // Making the background a circle
         padding: 10,
         marginBottom: 16,

@@ -91,7 +91,8 @@ const SignupPhone = ({ navigation }) => {
         disabled={!phoneNumber || !password}
         style={[styles.button, (!phoneNumber || !password) ? styles.disabledButton : styles.activeButton]}
       >
-        Continue
+        <Text>Continue</Text>
+        
       </TouchableOpacity>
 
       <Modal visible={showModal} transparent animationType="slide">
@@ -106,7 +107,7 @@ const SignupPhone = ({ navigation }) => {
             <Button
               mode="contained"
               onPress={handleContinue}
-              buttonColor="#3299a8"
+              buttonColor="#2c7391"
               style={styles.modalButton}
             >
               <Text>Continue</Text>
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   button: {
-    backgroundColor: '#3299a8',
+    backgroundColor: '#2c7391',
     borderRadius: 28,
     alignItems: 'center',
     paddingVertical: 12,
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#9ca3af',
   },
   activeButton: {
-    backgroundColor: '#319795',
+    backgroundColor: '#2c7391',
   },
   modalOverlay: {
     flex: 1,
@@ -227,7 +228,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 48,
     marginBottom: 8,
-    color: '#319795',
+    color: '#2c7391',
   },
 });
 

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   userMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#3299a8',
+    backgroundColor: '#2c7391',
     borderTopRightRadius: 0,
   },
   botMessage: {
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     padding: 1,
-    backgroundColor: '#3299a8'
+    backgroundColor: '#2c7391'
   },
   sendIcon: {
     width: 24,

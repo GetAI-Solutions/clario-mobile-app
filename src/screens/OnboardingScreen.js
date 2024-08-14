@@ -27,7 +27,7 @@ const OnboardingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3299a8',
+    backgroundColor: '#2c7391',
     justifyContent: 'center',
     alignItems: 'center',
   },
