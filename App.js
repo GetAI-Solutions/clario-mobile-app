@@ -5,23 +5,27 @@ import { ProductProvider } from './src/context/ProductContext'
 import { UserProvider } from './src/context/UserContext';
 import { LanguageProvider } from './src/context/LanguageContext';
 import { ThemeProvider } from './src/context/ThemeContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 
 export default function App() {
 
   return (
-    <LanguageProvider>
-      <UserProvider>
-       <ThemeProvider>
-        <ProductProvider>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
-        </ProductProvider>
-       </ThemeProvider>
-      
-    </UserProvider>
-    </LanguageProvider>
+    <SafeAreaProvider style={{flex: 1}}>
+        <LanguageProvider>
+        <UserProvider>
+        <ThemeProvider>
+          <ProductProvider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+          </ProductProvider>
+        </ThemeProvider>
+        
+      </UserProvider>
+      </LanguageProvider>
+    </SafeAreaProvider>
+    
     
     
   );
