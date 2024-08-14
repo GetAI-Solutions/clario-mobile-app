@@ -1,9 +1,40 @@
 import React, { useContext, useState } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../context/ThemeContext';
 
 const Footer = ({ onUpload, onScan }) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+  const { theme } = useTheme();
+
+  const styles = StyleSheet.create({
+    footer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      padding: 16,
+      paddingBottom: 64,
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+    },
+    button: {
+      alignItems: 'center',
+      marginHorizontal: 20,
+    },
+    iconWrapper: {
+      backgroundColor: theme === 'dark' ? '#333' : '#2c7391',
+      borderRadius: 50,
+      padding: 10,
+      marginBottom: 16,
+    },
+    icon: {
+      width: 30,
+      height: 30,
+      tintColor: theme === 'dark' ? '#fff' : 'white',
+    },
+    label: {
+      fontSize: 14,
+      color: theme === 'dark' ? '#fff' : '#000',
+    },
+  });
 
   return (
     <View style={styles.footer}>
@@ -22,34 +53,5 @@ const Footer = ({ onUpload, onScan }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-    footer: {
-        flexDirection: 'row',
-        justifyContent: 'center', // Center the buttons horizontally
-        padding: 16,
-        paddingBottom: 64, // Move the buttons upwards by increasing the bottom padding
-        backgroundColor: '#F0F0F0',
-      },
-      button: {
-        alignItems: 'center',
-        marginHorizontal: 20, // Adjust this value to control the spacing between the buttons
-      },
-      iconWrapper: {
-        backgroundColor: '#2c7391', // Background color for the circle
-        borderRadius: 50, // Making the background a circle
-        padding: 10,
-        marginBottom: 16,
-      },
-      icon: {
-        width: 30,
-        height: 30,
-        tintColor: 'white', // Ensuring the icon is visible on the background
-      },
-      label: {
-        fontSize: 14,
-        color: '#000',
-      },
-});
 
 export default Footer;

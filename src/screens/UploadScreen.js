@@ -8,6 +8,7 @@ import Header from '../components/Header';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from '../context/ThemeContext';
 
 const UploadScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
@@ -15,8 +16,9 @@ const UploadScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
-  const { user, setUser } = useContext(UserContext)
-  const { t } = useTranslation()
+  const { user } = useContext(UserContext);
+  const { t } = useTranslation();
+  const { theme } = useTheme();
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -39,11 +41,11 @@ const UploadScreen = ({ navigation }) => {
         const formData = new FormData();
         formData.append('file', await fetchImageFromUri(result.assets[0].uri));
         formData.append('id', user.uid);
+        console.log(user.uid)
 
         const barcodeData = await uploadBarcode(formData);
         const bar_code = barcodeData.product_barcode;
         console.log(bar_code)
-        console.log(user.uid)
 
         if (!bar_code) {
           setLoading(true);
@@ -55,7 +57,7 @@ const UploadScreen = ({ navigation }) => {
         const productData = await getProductSummary(bar_code);
 
         if (productData && productData.product) {
-          const product = productData.product
+          const product = productData.product;
           setProduct(product);
           setProducts((prev) => [...prev, product]);
           sendNotification(t('Product uploaded successfully!'));
@@ -77,24 +79,71 @@ const UploadScreen = ({ navigation }) => {
     if (err.response) {
       switch (err.response.status) {
         case 400:
-          setError('Invalid barcode format.');
+          setError(t('Invalid barcode format.'));
           break;
         case 401:
-          setError('Unauthorized access. Please check your API key.');
+          setError(t('Unauthorized access. Please check your API key.'));
           break;
         case 404:
           navigation.navigate('ProductNotFound');
           break;
         case 429:
-          setError('Too many requests. Please try again later.');
+          setError(t('Too many requests. Please try again later.'));
           break;
         default:
-          setError('An error occurred. Please try again.');
+          setError(t('An error occurred. Please try again.'));
       }
     } else {
-      setError('Network error. Please check your connection.');
+      setError(t('Network error. Please check your connection.'));
     }
   };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+    },
+    content: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    uploadButton: {
+      backgroundColor: '#319795',
+      padding: 10,
+      borderRadius: 5,
+      marginTop: 20,
+    },
+    uploadButtonText: {
+      color: '#FFF',
+      fontSize: 16,
+    },
+    loadingContainer: {
+      alignItems: 'center',
+    },
+    statusText: {
+      color: theme === 'dark' ? '#FFF' : '#333',
+      marginTop: 10,
+    },
+    errorContainer: {
+      alignItems: 'center',
+      marginTop: 20,
+    },
+    errorText: {
+      color: '#FF0000',
+      marginBottom: 20,
+      fontSize: 18,
+    },
+    retryButton: {
+      backgroundColor: '#FF0000',
+      padding: 10,
+      borderRadius: 5,
+    },
+    retryButtonText: {
+      color: '#FFF',
+      fontSize: 16,
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -108,7 +157,7 @@ const UploadScreen = ({ navigation }) => {
         {loading && (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color="#4CAF50" />
-            <Text style={styles.statusText}>{statusMessage}</Text> {/* Display status message */}
+            <Text style={styles.statusText}>{statusMessage}</Text>
           </View>
         )}
         {error && !loading && (
@@ -123,54 +172,5 @@ const UploadScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  hamburgerIcon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  uploadButton: {
-    backgroundColor: '#319795',
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  uploadButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  errorContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  errorText: {
-    color: '#ff0000',
-    marginBottom: 20,
-    fontSize: 18,
-  },
-  retryButton: {
-    backgroundColor: '#ff0000',
-    padding: 10,
-    borderRadius: 5,
-  },
-  retryButtonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-});
 
 export default UploadScreen;
