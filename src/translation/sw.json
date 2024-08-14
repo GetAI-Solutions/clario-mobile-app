@@ -48,5 +48,16 @@
     "Scan or upload to": "Piga picha au sogeza kwenye",
     "get started": "Anza",
     "Scan or upload an image of your products'": "Piga picha au sogeza picha ya bidhaa zako",
-    "to identify your product": "kutambua bidhaa yako"
+    "to identify your product": "kutambua bidhaa yako",
+    "Upload": "Pakia",
+    "Scan": "Skani",
+    "Guest": "Mgeni",
+    "guest@example.com": "mgeni@example.com",
+    "No access to camera": "Hakuna ufikiaji kwa kamera",
+    "Product not found": "Bidhaa haijapatikana",
+    "Try Again": "Jaribu tena",
+    "Place the barcode inside the frame": "Weka barakoa kwenye fremu",
+    "Capture Barcode": "Kamata barakoa",
+    "Product Upload": "Kuhamisha bidhaa",
+    "Barcode detected! Retrieving product details...": "Barakoa imedetectwa! Kuchukua taarifa za bidhaa..."
 }

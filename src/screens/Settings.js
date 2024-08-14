@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
 import { View, Text, Switch, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Header from '../components/Header'; 
-import { LanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 const SettingsScreen = ({ navigation }) => {
-  const { translations } = useContext(LanguageContext)
+  const { t } = useTranslation()
 
   return (
     <View style={styles.container}>
       <Header navigation={navigation}/>
-      <Text style={styles.title}>{translations['Settings']}</Text>
+      <Text style={styles.title}>{t('Settings')}</Text>
       <View style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/bell.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Notifications']}</Text>
+          <Text style={styles.optionText}>{t('Notifications')}</Text>
         </View>
         <Switch />
       </View>
@@ -21,14 +21,14 @@ const SettingsScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/lock.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Account & Security']}</Text>
+          <Text style={styles.optionText}>{t('Account & Security')}</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/languages.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Languages']}</Text>
+          <Text style={styles.optionText}>{t('Languages')}</Text>
         </View>
         <Image source={require('../../assets/images/dropdown.png')} style={styles.icon} />
       </TouchableOpacity>
@@ -36,28 +36,28 @@ const SettingsScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/mode.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Dark Mode']}</Text>
+          <Text style={styles.optionText}>{t('Dark Mode')}</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/share.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Share App']}</Text>
+          <Text style={styles.optionText}>{t('Share App')}</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/star.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Rate GetAI']}</Text>
+          <Text style={styles.optionText}>{t('Rate GetAI')}</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/analyze.png')} style={styles.icon} />
-          <Text style={styles.optionText}>{translations['Terms and Conditions']}</Text>
+          <Text style={styles.optionText}>{t('Terms and Conditions')}</Text>
         </View>
       </TouchableOpacity>
     </View>

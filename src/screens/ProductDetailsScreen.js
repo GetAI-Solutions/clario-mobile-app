@@ -1,11 +1,12 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { LanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
+import Header from '../components/Header';
+
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { product } = route.params;
-  const { translations } = useContext(LanguageContext);
+  const { t } = useTranslation()
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   const truncatedDescription = product.product_summary.length > 150
@@ -22,11 +23,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={toggleDrawer} style={styles.hamburgerButton}>
-          <Icon name="arrow-back" size={28} color="#000" />
-        </TouchableOpacity>
-      </View>
+        <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.productContainer}>
           <Image 
@@ -40,7 +37,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
           {product.product_summary.length > 150 && (
             <TouchableOpacity onPress={toggleDescription}>
               <Text style={styles.readMoreText}>
-                {showFullDescription ? translations['Read Less'] : translations['Read More']}
+                {showFullDescription ? t('Read Less') : t('Read More')}
               </Text>
             </TouchableOpacity>
           )}
@@ -49,7 +46,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
           onPress={() => navigation.navigate('Chatbot', { product })}
           style={styles.chatbotButton}
         >
-          <Text style={styles.chatbotButtonText}>{translations['Proceed to Chatbot']}</Text>
+          <Text style={styles.chatbotButtonText}>{t('Proceed to Chatbot')}</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -60,15 +57,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
   },
   hamburgerButton: {
     marginRight: 20,

@@ -7,20 +7,17 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { switchLanguage } = useContext(LanguageContext)
+  const { switchLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     const loadUserData = async () => {
       try {
         const userData = await AsyncStorage.getItem('userData');
-        console.log(userData)
         if (userData) {
           const parsedUser = JSON.parse(userData);
-          console.log(parsedUser.preferred_language)
           setUser(parsedUser);
           if (parsedUser.preferred_language) {
-            const normalizedLang = parsedUser.preferred_language.toLowerCase()
-            switchLanguage(normalizedLang);
+            switchLanguage(parsedUser.preferred_language.toLowerCase());
           }
         }
       } catch (error) {
@@ -31,8 +28,7 @@ export const UserProvider = ({ children }) => {
     };
   
     loadUserData();
-  }, []);
-  
+  }, [switchLanguage]);
 
   return (
     <UserContext.Provider value={{ user, setUser, loading }}>

@@ -4,10 +4,12 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UserContext from '../context/UserContext'; 
+import { useTranslation } from 'react-i18next';
 
 const CustomDrawerContent = (props) => {
   const { navigation } = props;
   const { user, setUser } = useContext(UserContext); 
+  const { t } = useTranslation()
 
   const handleLogout = async () => {
     try {
@@ -26,26 +28,26 @@ const CustomDrawerContent = (props) => {
           source={{ uri: user?.profileImage || 'https://via.placeholder.com/150' }}
           style={styles.profileImage}
         />
-        <Text style={styles.name}>{user?.user_name || 'Guest'}</Text>
-        <Text style={styles.email}>{user?.email || 'guest@example.com'}</Text>
+        <Text style={styles.name}>{user?.user_name || t('Guest')}</Text>
+        <Text style={styles.email}>{user?.email || t('guest@example.com')}</Text>
       </View>
       <View style={styles.menuContainer}>
         <DrawerItem
-          label="Home"
+          label={t("Home")}
           icon={({ focused, color, size }) => (
             <Icon name={focused ? 'home' : 'home-outline'} size={size} color={color} />
           )}
           onPress={() => navigation.navigate('MainScreen')}
         />
         <DrawerItem
-          label="Profile"
+          label={t("Profile")}
           icon={({ focused, color, size }) => (
             <Icon name={focused ? 'person' : 'person-outline'} size={size} color={color} />
           )}
           onPress={() => navigation.navigate('Profile')}
         />
         <DrawerItem
-          label="Settings"
+          label={t("Settings")}
           icon={({ focused, color, size }) => (
             <Icon name={focused ? 'settings' : 'settings-outline'} size={size} color={color} />
           )}
@@ -53,7 +55,7 @@ const CustomDrawerContent = (props) => {
         />
       </View>
       <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-        <Text style={styles.logoutText}>Logout</Text>
+        <Text style={styles.logoutText}>{t('Logout')}</Text>
       </TouchableOpacity>
     </DrawerContentScrollView>
   );

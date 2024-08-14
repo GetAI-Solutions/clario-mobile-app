@@ -5,11 +5,11 @@ import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
 import DrawerButton from '../components/DrawerButton';
 import ProductContext from '../context/ProductContext';
-import { LanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 const MainScreen = ({ navigation }) => {
   const { products, loading } = useContext(ProductContext);
-  const { translations } = useContext(LanguageContext)
+  const { t } = useTranslation()
 
   useEffect(() => {
     console.log("Products in MainScreen:", products); 
@@ -37,7 +37,7 @@ const MainScreen = ({ navigation }) => {
           <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
             <Image source={require('../../assets/images/Frame.png')} style={styles.logo} />
           </View>
-            <Text style={styles.title}>{translations['Scanned Products'] || 'No translation found'}</Text>
+            <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>
           <ProductList navigation={navigation} />
         </>
       )}

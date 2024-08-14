@@ -2,11 +2,12 @@ import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { LanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
+
 
 const ProductNotFoundScreen = ({ navigation }) => {
   const [productName, setProductName] = useState('');
-  const { translations } = useContext(LanguageContext)
+  const { t } = useTranslation()
 
   const handleSearch = () => {
     console.log('Searching for:', productName);
@@ -28,15 +29,15 @@ const ProductNotFoundScreen = ({ navigation }) => {
           <Image source={require('../../assets/images/placard.png')} style={styles.placardImage} />
           <Image source={require('../../assets/images/person.png')} style={styles.personImage} />
         </View>
-        <Text style={styles.messageText}>{translations['We Couldn\'t Find Your Product']}</Text>
+        <Text style={styles.messageText}>{t('We Couldn\'t Find Your Product')}</Text>
         <Text style={styles.suggestionText}>
-          {translations['We might not have your product yet, try searching by name.']}
+          {t('We might not have your product yet, try searching by name.')}
         </Text>
 
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            placeholder={translations['Enter name of product']}
+            placeholder={t('Enter name of product')}
 
             value={productName}
             onChangeText={setProductName}

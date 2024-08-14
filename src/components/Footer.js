@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const Footer = ({ onUpload, onScan }) => {
+  const { t } = useTranslation()
+
   return (
     <View style={styles.footer}>
       <TouchableOpacity onPress={onUpload} style={styles.button}>
         <View style={styles.iconWrapper}>
           <Image source={require('../../assets/images/upload.png')} style={styles.icon} />
         </View>
-        <Text style={styles.label}>Upload</Text>
+        <Text style={styles.label}>{t('Upload')}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={onScan} style={styles.button}>
         <View style={styles.iconWrapper}>
           <Image source={require('../../assets/images/scan.png')} style={styles.icon} />
         </View>
-        <Text style={styles.label}>Scan</Text>
+        <Text style={styles.label}>{t('Scan')}</Text>
       </TouchableOpacity>
     </View>
   );

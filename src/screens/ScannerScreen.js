@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Platform } from 'react-native';
 import { CameraView } from 'expo-camera'; 
 import ProductContext  from '../context/ProductContext';
+import { useTranslation } from 'react-i18next';
 
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
@@ -9,6 +10,7 @@ const ScannerScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const cameraRef = useRef(null);
+  const { t } = useTranslation()
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -47,8 +49,8 @@ const ScannerScreen = ({ navigation }) => {
         const barcode = barcodeResponse.data.product_id;
 
         if (!barcode) {
-          Alert.alert('Error', 'Product not found');
-          setError('Product not found');
+          Alert.alert(t('Error'), t('Product not found'));
+          setError(t('Product not found'));
           setLoading(false);
           return;
         }
@@ -67,7 +69,7 @@ const ScannerScreen = ({ navigation }) => {
         }
       } catch (err) {
         console.error(err);
-        setError('An error occurred. Please try again.');
+        setError(t('An error occurred. Please try again.'));
       } finally {
         setLoading(false);
       }
@@ -79,7 +81,7 @@ const ScannerScreen = ({ navigation }) => {
   }
 
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>{t('No access to camera')}</Text>;
   }
 
   return (
@@ -98,15 +100,15 @@ const ScannerScreen = ({ navigation }) => {
               onPress={() => setError(null)}
               style={styles.retryButton}
             >
-              <Text style={styles.retryButtonText}>Try Again</Text>
+              <Text style={styles.retryButtonText}>{t('Try Again')}</Text>
             </TouchableOpacity>
           </View>
         )}
         {!loading && !error && (
           <View style={styles.scanPrompt}>
-            <Text style={styles.scanText}>Place the barcode inside the frame</Text>
+            <Text style={styles.scanText}>{t('Place the barcode inside the frame')}</Text>
             <TouchableOpacity onPress={handleCapture} style={styles.captureButton}>
-              <Text style={styles.captureButtonText}>Capture Barcode</Text>
+              <Text style={styles.captureButtonText}>{t('Capture Barcode')}</Text>
             </TouchableOpacity>
           </View>
         )}

@@ -7,7 +7,7 @@ import { registerForPushNotificationsAsync, sendNotification } from '../utils/no
 import Header from '../components/Header';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
-import { LanguageContext } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 const UploadScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
@@ -16,7 +16,7 @@ const UploadScreen = ({ navigation }) => {
   const [product, setProduct] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
   const { user, setUser } = useContext(UserContext)
-  const { translations } = useContext(LanguageContext)
+  const { t } = useTranslation()
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -33,7 +33,7 @@ const UploadScreen = ({ navigation }) => {
     if (!result.canceled) {
       setLoading(true);
       setError(null);
-      setStatusMessage('Extracting barcode...');
+      setStatusMessage(t('Extracting barcode...'));
 
       try {
         const formData = new FormData();
@@ -50,7 +50,7 @@ const UploadScreen = ({ navigation }) => {
           navigation.navigate('ProductNotFound');
         }
 
-        setStatusMessage('Barcode detected! Retrieving product details...');
+        setStatusMessage(t('Barcode detected! Retrieving product details...'));
 
         const productData = await getProductSummary(bar_code);
 
@@ -58,7 +58,7 @@ const UploadScreen = ({ navigation }) => {
           const product = productData.product
           setProduct(product);
           setProducts((prev) => [...prev, product]);
-          sendNotification('Product uploaded successfully!');
+          sendNotification(t('Product uploaded successfully!'));
           navigation.navigate('ProductDetails', { product });
         } else {
           navigation.navigate('ProductNotFound');
@@ -102,7 +102,7 @@ const UploadScreen = ({ navigation }) => {
       <View style={styles.content}>
         {!product && !loading && !error && (
           <TouchableOpacity onPress={handleImagePick} style={styles.uploadButton}>
-            <Text style={styles.uploadButtonText}>{translations['Upload Image']}</Text>
+            <Text style={styles.uploadButtonText}>{t('Upload Image')}</Text>
           </TouchableOpacity>
         )}
         {loading && (
@@ -115,7 +115,7 @@ const UploadScreen = ({ navigation }) => {
           <View style={styles.errorContainer}>
             <Text style={styles.errorText}>{error}</Text>
             <TouchableOpacity onPress={handleImagePick} style={styles.retryButton}>
-              <Text style={styles.retryButtonText}>{translations['Try another image']}</Text>
+              <Text style={styles.retryButtonText}>{t('Try another image')}</Text>
             </TouchableOpacity>
           </View>
         )}

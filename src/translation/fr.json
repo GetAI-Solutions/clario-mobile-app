@@ -48,5 +48,16 @@
     "Scan or upload to": "Scanner ou télécharger pour",
     "get started": "Commencer",
     "Scan or upload an image of your products'": "Scanner ou télécharger une image de vos produits",
-    "to identify your product": "pour identifier votre produit"
+    "to identify your product": "pour identifier votre produit",
+    "Upload": "Télécharger",
+    "Scan": "Scanner",
+    "Guest": "Invité",
+    "guest@example.com": "invité@example.com",
+    "No access to camera": "Pas d'accès à la caméra",
+    "Product not found": "Produit non trouvé",
+    "Try Again": "Réessayer",
+    "Place the barcode inside the frame": "Placez le code à barres dans le cadre",
+    "Capture Barcode": "Capturer le code à barres",
+    "Product Upload": "Téléchargement de produit",
+    "Barcode detected! Retrieving product details...": "Code à barres détecté ! Récupération des détails du produit..."
   }

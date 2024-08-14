@@ -2,9 +2,11 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Header from '../components/Header'; 
 import UserContext from '../context/UserContext';
+import { useTranslation } from 'react-i18next';
 
 const AccountSecurityScreen = ({ navigation }) => {
     const { user, setUser } = useContext(UserContext)
+    const { t } = useTranslation()
 
   const [fullName, setFullName] = useState(user.user_name);
   const [email, setEmail] = useState(user.email);
@@ -17,7 +19,7 @@ const AccountSecurityScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation}/>
-      <Text style={styles.title}>Account & Security</Text>
+      <Text style={styles.title}>{t('Account & Security')}</Text>
 
       <View style={styles.profileContainer}>
         <Image 
@@ -25,12 +27,12 @@ const AccountSecurityScreen = ({ navigation }) => {
           style={styles.profileImage}
         />
         <TouchableOpacity style={styles.changePictureButton}>
-          <Text style={styles.changePictureText}>Change Picture</Text>
+          <Text style={styles.changePictureText}>{t('Change Picture')}</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Full Name</Text>
+        <Text style={styles.label}>{t('Full Name')}</Text>
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
@@ -38,14 +40,14 @@ const AccountSecurityScreen = ({ navigation }) => {
             onChangeText={setFullName}
           />
           <Image 
-            source={require('../../assets/images/edit_icon.png')} // Placeholder for edit icon
+            source={require('../../assets/images/edit_icon.png')} 
             style={styles.icon}
           />
         </View>
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email</Text>
+        <Text style={styles.label}>{t('Email')}</Text>
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
@@ -61,7 +63,7 @@ const AccountSecurityScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Phone Number</Text>
+        <Text style={styles.label}>{t('Phone Number')}</Text>
         <View style={styles.inputWrapper}>
           <TextInput
             style={styles.input}
@@ -77,7 +79,7 @@ const AccountSecurityScreen = ({ navigation }) => {
       </View>
 
       <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-        <Text style={styles.saveButtonText}>Save Changes</Text>
+        <Text style={styles.saveButtonText}>{t('Save Changes')}</Text>
       </TouchableOpacity>
     </View>
   );
