@@ -11,7 +11,7 @@ const ProductList = ({ navigation }) => {
   console.log("Products in ProductList:", products);
 
   const handleChatbot = (product) => {
-    navigation.navigate('Chatbot', { product });
+    navigation.navigate('ProductDetails', { product });
   };
 
   const handleDelete = (index) => {

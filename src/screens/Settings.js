@@ -1,12 +1,21 @@
-import React from 'react';
-import { View, Text, Switch, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, Switch, TouchableOpacity, Image, StyleSheet, Modal } from 'react-native';
 import Header from '../components/Header'; 
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
+import UserContext from '../context/UserContext';
 
 const SettingsScreen = ({ navigation }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
+  const { user, setUser } = useContext(UserContext);
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  const handleLanguageChange = (language) => {
+    i18n.changeLanguage(language); // Change language
+    setUser((prevUser) => ({ ...prevUser, preferred_language: language })); // Update user context
+    setLanguageModalVisible(false); // Close modal after selection
+  };
 
   return (
     <View style={[styles.container, theme === 'light' ? lightStyles.container : darkStyles.container]}>
@@ -21,20 +30,32 @@ const SettingsScreen = ({ navigation }) => {
         <Switch />
       </View>
 
-      <TouchableOpacity style={styles.option}>
-        <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/lock.png')} style={styles.icon} />
-          <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Account & Security')}</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.option}>
+      <TouchableOpacity style={styles.option} onPress={() => setLanguageModalVisible(true)}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/languages.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Languages')}</Text>
         </View>
-        <Image source={require('../../assets/images/dropdown.png')} style={styles.icon} />
+        <Image source={require('../../assets/images/dropdown.png')} style={[styles.icon, { tintColor: theme === 'dark' ? 'fff' : null }]} />
       </TouchableOpacity>
+
+      <Modal visible={languageModalVisible} transparent animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity onPress={() => handleLanguageChange('en')}>
+              <Text style={styles.modalText}>English</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('fr')}>
+              <Text style={styles.modalText}>French</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('sw')}>
+              <Text style={styles.modalText}>Swahili</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setLanguageModalVisible(false)}>
+              <Text style={styles.modalCancel}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       <View style={styles.option}>
         <View style={styles.optionLeft}>
@@ -125,6 +146,28 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     resizeMode: 'contain',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: 300,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 18,
+    marginVertical: 10,
+  },
+  modalCancel: {
+    fontSize: 18,
+    color: 'red',
+    marginTop: 10,
   },
 });
 
