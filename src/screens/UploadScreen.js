@@ -25,12 +25,17 @@ const UploadScreen = ({ navigation }) => {
   }, []);
 
   const handleImagePick = async () => {
+    console.log('handleImagePick called');
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
+      allowsEditing: false,
       aspect: [4, 3],
       quality: 1,
     });
+
+    console.log('ImagePicker result:', result);
+    console.log('Image URI:', result.assets[0].uri);
+
 
     if (!result.canceled) {
       setLoading(true);
@@ -41,6 +46,7 @@ const UploadScreen = ({ navigation }) => {
         const formData = new FormData();
         formData.append('file', await fetchImageFromUri(result.assets[0].uri));
         formData.append('id', user.uid);
+        console.log('formData:', formData);
         console.log(user.uid)
 
         const barcodeData = await uploadBarcode(formData);
@@ -77,13 +83,14 @@ const UploadScreen = ({ navigation }) => {
   };
 
   const handleError = (err) => {
+    console.error('Error details:', { err } );
     if (err.response) {
       switch (err.response.status) {
         case 400:
-          setError(t('Invalid barcode format.'));
+          navigation.navigate('ProductNotFound')
           break;
         case 401:
-          setError(t('Unauthorized access. Please check your API key.'));
+          setError(t('Unauthorized access.'));
           break;
         case 404:
           navigation.navigate('ProductNotFound');
