@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ScrollView, Modal } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 import EmailInput from '../components/EmailInput';
@@ -14,10 +14,12 @@ const AddEmail = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('ET');
+  const [preferredLanguage, setPreferredLanguage] = useState('en');
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
   const route = useRoute();
   const { phoneNumber, dialCode, password } = route.params || {};
   const countries = countryList().getData();
-  const [ preferredLanguage, setPreferredLanguage ] = useState('en')
 
   const handleSignup = async () => {
     setIsLoading(true);
@@ -31,27 +33,19 @@ const AddEmail = ({ navigation }) => {
         preferred_language: preferredLanguage,
       };
 
-      console.log("Signup Data:", data);
-
       const signupResponse = await signup(data);
 
       if (signupResponse.status === 200) {
-        console.log("Signup Successful:", signupResponse.data);
-
         const otpResponse = await sendOtp(email);
-
-        console.log("OTP Response:", otpResponse.data);
 
         if (otpResponse.status === 200) {
           const { otp } = otpResponse.data;
           Alert.alert('Success', 'Signup successful and OTP sent to your email!');
           navigation.navigate('VerifyEmail', { email, otp, phoneNumber: `${dialCode}${phoneNumber}`, preferredLanguage });
         } else {
-          console.log('OTP Error:', otpResponse.status, otpResponse.data);
           Alert.alert("An error occurred", "Could not send OTP. Please try again.");
         }
       } else {
-        console.log("Signup Error:", signupResponse.status, signupResponse.data);
         Alert.alert('Error', 'An unexpected error occurred during signup. Please try again.');
       }
     } catch (error) {
@@ -63,7 +57,6 @@ const AddEmail = ({ navigation }) => {
 
   const handleError = (error) => {
     if (error.response) {
-      console.log("Error Response:", error.response);
       const status = error.response.status;
       const message = error.response.data.message || 'An unexpected error occurred. Please try again.';
 
@@ -90,10 +83,8 @@ const AddEmail = ({ navigation }) => {
           Alert.alert('Error', message);
       }
     } else if (error.request) {
-      console.log('Request Error:', error.request);
       Alert.alert('Network Error', 'No response received from the server. Please check your internet connection.');
     } else {
-      console.log('Error:', error.message);
       Alert.alert('Error', error.message || 'An error occurred. Please try again.');
     }
   };
@@ -101,7 +92,7 @@ const AddEmail = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Add your email</Text>
         <Text style={styles.subtitle}>You can use your email to login to your account.</Text>
 
@@ -113,18 +104,12 @@ const AddEmail = ({ navigation }) => {
           countries={countries}
         />
 
-        <View style={styles.languagePickerContainer}>
-          <Text style={styles.languageLabel}>Preferred Language</Text>
-          <Picker
-            selectedValue={preferredLanguage}
-            onValueChange={(itemValue) => setPreferredLanguage(itemValue)}
-            style={styles.languagePicker}
-          >
-            <Picker.Item label="English" value="en" />
-            <Picker.Item label="French" value="fr" />
-            <Picker.Item label="Swahili" value="sw" />
-          </Picker>
-        </View>
+        <TouchableOpacity
+          style={styles.languageButton}
+          onPress={() => setLanguageModalVisible(true)}
+        >
+          <Text style={styles.languageButtonText}>Select Language</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleSignup}
@@ -133,7 +118,35 @@ const AddEmail = ({ navigation }) => {
         >
           {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Signup</Text>}
         </TouchableOpacity>
-      </View>
+      </ScrollView>
+
+      <Modal
+        visible={languageModalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setLanguageModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.languageLabel}>Preferred Language</Text>
+            <Picker
+              selectedValue={preferredLanguage}
+              onValueChange={(itemValue) => setPreferredLanguage(itemValue)}
+              style={styles.languagePicker}
+            >
+              <Picker.Item label="English" value="en" />
+              <Picker.Item label="French" value="fr" />
+              <Picker.Item label="Swahili" value="sw" />
+            </Picker>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setLanguageModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -142,12 +155,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
   },
   content: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   title: {
     fontSize: 20,
@@ -166,12 +177,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     alignItems: 'center',
     paddingVertical: 12,
-    justifyContent: "center",
-    position: 'absolute',
-    bottom: 40,
-    left: 0,
-    right: 0,
-    marginHorizontal: 20,
+    marginTop: 20,
   },
   buttonText: {
     color: '#FFFFFF',
@@ -181,13 +187,28 @@ const styles = StyleSheet.create({
   disabledButton: {
     backgroundColor: '#E5E7EB',
   },
-  languagePickerContainer: {
-    marginVertical: 20,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
+  languageButton: {
+    backgroundColor: '#ddd',
     padding: 10,
+    borderRadius: 8,
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  languageButtonText: {
+    color: '#333',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
   },
   languageLabel: {
     fontSize: 16,
@@ -195,8 +216,16 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   languagePicker: {
-    height: 50,
-    color: '#000',
+    width: '100%',
+  },
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: '#2c7391',
+    padding: 10,
+    borderRadius: 8,
+  },
+  closeButtonText: {
+    color: '#fff',
   },
 });
 

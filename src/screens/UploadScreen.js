@@ -54,7 +54,8 @@ const UploadScreen = ({ navigation }) => {
 
         setStatusMessage(t('Barcode detected! Retrieving product details...'));
 
-        const productData = await getProductSummary(bar_code);
+        const productData = await getProductSummary(bar_code, user.uid);
+        // I want user.uid to be part of the request body of the above route. But here is the case that the getProductSummary you are seeing there was imported from another file. Where do I make the changes for it to take two parameters? Dot that for me
 
         if (productData && productData.product) {
           const product = productData.product;

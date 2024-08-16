@@ -4,6 +4,10 @@ import Header from '../components/Header';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
+import { BASEURL } from '../services/api';
+import axios from 'axios';
+
+
 
 const SettingsScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
@@ -11,10 +15,28 @@ const SettingsScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
 
-  const handleLanguageChange = (language) => {
-    i18n.changeLanguage(language); // Change language
-    setUser((prevUser) => ({ ...prevUser, preferred_language: language })); // Update user context
-    setLanguageModalVisible(false); // Close modal after selection
+  const handleLanguageChange = async (language) => {
+    i18n.changeLanguage(language); 
+    setUser((prevUser) => ({ ...prevUser, preferred_language: language }));
+
+    try {
+      const response = await axios.patch(`${BASEURL}/update-preferred-language`, 
+        `userID=${user.uid}&preferred_language=${language}`, 
+        {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }
+      );
+      
+  
+      if (response.status === 200) {
+        console.log('Language preference updated successfully');
+      } else {
+        console.error('Failed to update language preference');
+      }
+    } catch (error) {
+      console.error('Error updating language preference:', error);
+    }
+    setLanguageModalVisible(false); 
   };
 
   return (

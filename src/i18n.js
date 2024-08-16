@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import en from './translation/en.json'
 import fr from './translation/fr.json'
 import sw from './translation/sw.json'
+import 'intl-pluralrules'
 
 i18n
   .use(initReactI18next)

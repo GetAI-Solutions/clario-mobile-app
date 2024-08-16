@@ -9,7 +9,7 @@ import UserContext from '../context/UserContext';
 
 
 const Login = ({ navigation }) => {
-  const [isPhoneLogin, setIsPhoneLogin] = useState(true);
+  const [isPhoneLogin, setIsPhoneLogin] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,11 +48,14 @@ const Login = ({ navigation }) => {
         phone_no: isPhoneLogin ? `${selectedCountry.dial_code}${phoneNumber}` : '',
       };
 
+      console.log(loginData)
+
       const userData = await loginUser(loginData);
 
       if (userData) {
         await storeUserData(userData);
         setUser(userData);
+        await AsyncStorage.removeItem(`products_${userData.uid}`);
         navigation.navigate('MainScreen');
       }
     } catch (error) {
@@ -64,9 +67,19 @@ const Login = ({ navigation }) => {
 
   const handleError = (error) => {
     let errorMessage = 'An unexpected error occurred. Please try again.';
+  
     if (error.response) {
-      errorMessage = error.response.data.message || errorMessage;
+      if (error.response.status === 401) {
+        errorMessage = 'Invalid email or password.';
+      } else if (error.response.status === 500) {
+        errorMessage = 'Server error. Please try again later.';
+      } else {
+        errorMessage = error.response.data.message || errorMessage;
+      }
+    } else {
+      errorMessage = 'Network error. Please check your connection.';
     }
+  
     Alert.alert('Error', errorMessage);
   };
 

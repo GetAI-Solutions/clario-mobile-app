@@ -13,20 +13,30 @@
     },
     "ios": {
       "supportsTablet": true,
-      "permissions": ["CAMERA"]
+      "permissions": [
+        "CAMERA"
+      ]
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "permissions": ["CAMERA"]
-      }
+        "permissions": [
+          "CAMERA"
+        ]
+      },
+      "package": "com.steveazo.getai"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2e680c45-74cb-4eb5-b60d-4435fe7291c7"
+      }
+    }
   }
 }

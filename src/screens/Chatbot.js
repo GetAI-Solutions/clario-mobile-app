@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, FlatList, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
+import { BASEURL } from '../services/api';
+import axios from 'axios';
+import UserContext from '../context/UserContext';
 
 const ChatbotScreen = ({ navigation, route }) => {
   const { product } = route.params;
@@ -10,6 +13,7 @@ const ChatbotScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const flatListRef = useRef(null);
   const { theme } = useTheme();
+  const { user } = useContext(UserContext)
 
   const styles = StyleSheet.create({
     container: {
@@ -85,12 +89,12 @@ const ChatbotScreen = ({ navigation, route }) => {
   useEffect(() => {
     const initialMessage = {
       type: 'bot',
-      text: `You've discovered ${product.name}! Would you like to know more about its usage, benefits, reviews?`,
+      text: `You've discovered ${product.product_name}! Would you like to know more about its usage, benefits, or reviews?`,
     };
     setMessages([initialMessage]);
   }, [product]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (inputText.trim()) {
       const newMessage = {
         type: 'user',
@@ -99,17 +103,44 @@ const ChatbotScreen = ({ navigation, route }) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setInputText('');
       setLoading(true);
-      setTimeout(() => {
+
+      try {
+        console.log('user_id: ', user.uid)
+        console.log('product_barcode: ', product.product_barcode)
+        console.log('user_message', inputText)
+        const response = await axios.post(`${BASEURL}/chat`, {
+          userID: user.uid,
+          bar_code: `${product.product_barcode}`,
+          user_message: inputText,
+        }
+      );
+
+      if(response.status === 200){
+        console.log(response.data)
+
         const botMessage = {
           type: 'bot',
-          text: `Sure! Here are some details about ${product.name}.`,
+          text: response.data.model_resp,
         };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
+      } else{
+        throw new Error("there was an error")
+        console.log(response.data)
+      }
+
+        
+      } catch (error) {
+        console.error(error);
+        const errorMessage = {
+          type: 'bot',
+          text: 'Sorry, something went wrong. Please try again later.',
+        };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      } finally {
         setLoading(false);
-      }, 2000);
+      }
     }
   };
-
   const renderMessage = ({ item }) => (
     <View
       style={[
