@@ -18,4 +18,3 @@ export const getProductSummary = async (bar_code, userID) => {
   );
   return response.data;
 };
-

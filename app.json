@@ -22,10 +22,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "permissions": [
-          "CAMERA"
+          "CAMERA",
+          "INTERNET", 
+          "ACCESS_NETWORK_STATE"
         ]
       },
-      "package": "com.steveazo.getai"
+      "package": "com.steveazo.getai",
+      "networkSecurityConfig": "<domain-config cleartextTrafficPermitted=\"true\" />",
+      "usesCleartextTraffic": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
