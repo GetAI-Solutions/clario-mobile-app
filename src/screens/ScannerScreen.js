@@ -55,6 +55,8 @@ const ScannerScreen = ({ navigation }) => {
           return;
         }
 
+        const API_KEY = 'nothing'
+
         const productResponse = await axios.get(
           `${PRODUCT_API_URL}${barcode}?key=${API_KEY}`
         );

@@ -6,7 +6,7 @@ import { loginUser } from '../services/authService';
 import { storeUserData } from '../utils/storageUtils';
 import Header from '../components/Header';
 import UserContext from '../context/UserContext';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const [isPhoneLogin, setIsPhoneLogin] = useState(false);
