@@ -59,5 +59,9 @@
     "Place the barcode inside the frame": "Placez le code à barres dans le cadre",
     "Capture Barcode": "Capturer le code à barres",
     "Product Upload": "Téléchargement de produit",
-    "Barcode detected! Retrieving product details...": "Code à barres détecté ! Récupération des détails du produit..."
+    "Barcode detected! Retrieving product details...": "Code à barres détecté ! Récupération des détails du produit...",
+    "discoveredProductPrefix": "Vous avez découvert",
+    "discoveredProductSuffix": "! Voulez-vous en savoir plus sur son utilisation, ses avantages ou ses avis?",
+    "Sorry, something went wrong. Please try again later.": "Désolé, quelque chose s'est mal passé. Veuillez réessayer plus tard.",
+    "What do you want to know?": "Que voulez-vous savoir ?"
   }

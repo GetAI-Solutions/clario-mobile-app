@@ -14,7 +14,7 @@ export const LanguageProvider = ({ children }) => {
         i18n.changeLanguage(lang); // Update i18n language
       }
     });
-  }, []);
+  });
 
   const switchLanguage = (lang) => {
     setLanguage(lang);

@@ -40,6 +40,7 @@ const AddEmail = ({ navigation }) => {
 
         if (otpResponse.status === 200) {
           const { otp } = otpResponse.data;
+          console.log(otp)
           Alert.alert('Success', 'Signup successful and OTP sent to your email!');
           navigation.navigate('VerifyEmail', { email, otp, phoneNumber: `${dialCode}${phoneNumber}`, preferredLanguage });
         } else {

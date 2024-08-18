@@ -61,5 +61,9 @@
     "Capture Barcode": "Capture Barcode",
     "Barcode detected! Retrieving product details...": "Barcode detected! Retrieving product details...",
     "An error occurred. Please try again.": "An error occurred. Please try again.",
-    "Product Upload": "Product Upload"
+    "Product Upload": "Product Upload",
+    "discoveredProductPrefix": "You've discovered",
+    "discoveredProductSuffix": "! Would you like to know more about its usage, benefits, or reviews?",
+    "Sorry, something went wrong. Please try again later.": "Sorry, something went wrong. Please try again later.",
+    "What do you want to know?": "What do you want to know?"
   }

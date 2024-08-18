@@ -59,5 +59,9 @@
     "Place the barcode inside the frame": "Weka barakoa kwenye fremu",
     "Capture Barcode": "Kamata barakoa",
     "Product Upload": "Kuhamisha bidhaa",
-    "Barcode detected! Retrieving product details...": "Barakoa imedetectwa! Kuchukua taarifa za bidhaa..."
+    "Barcode detected! Retrieving product details...": "Barakoa imedetectwa! Kuchukua taarifa za bidhaa...",
+    "discoveredProductPrefix": "Umeanzisha",
+    "discoveredProductSuffix": "! Je, unataka kujua zaidi kuhusu matumizi yake, manufaa au mapitio?",
+    "Sorry, something went wrong. Please try again later.": "Samahani, kuna tatizo. Tafadhali jaribu tena baadaye.",
+    "What do you want to know?": "Unataka kujua nini?"
 }

@@ -11,7 +11,10 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true);
+      if (user) {
+        setLoading(true);
+      }
+      
       try {
         const storedProducts = await AsyncStorage.getItem(`products_${user?.uid}`);
         if (storedProducts) {

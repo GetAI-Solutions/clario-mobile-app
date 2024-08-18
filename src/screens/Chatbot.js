@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
 import { BASEURL } from '../services/api';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import UserContext from '../context/UserContext';
 
 const ChatbotScreen = ({ navigation, route }) => {
@@ -14,6 +15,7 @@ const ChatbotScreen = ({ navigation, route }) => {
   const flatListRef = useRef(null);
   const { theme } = useTheme();
   const { user } = useContext(UserContext)
+  const { t } = useTranslation()
 
   const styles = StyleSheet.create({
     container: {
@@ -89,7 +91,7 @@ const ChatbotScreen = ({ navigation, route }) => {
   useEffect(() => {
     const initialMessage = {
       type: 'bot',
-      text: `You've discovered ${product.product_name}! Would you like to know more about its usage, benefits, or reviews?`,
+      text: `${t('discoveredProductPrefix')} ${product.product_name} ${t('discoveredProductSuffix')}`,
     };
     setMessages([initialMessage]);
   }, [product]);
@@ -133,7 +135,7 @@ const ChatbotScreen = ({ navigation, route }) => {
         console.error(error);
         const errorMessage = {
           type: 'bot',
-          text: 'Sorry, something went wrong. Please try again later.',
+          text: t('Sorry, something went wrong. Please try again later.'),
         };
         setMessages((prevMessages) => [...prevMessages, errorMessage]);
       } finally {
@@ -181,7 +183,7 @@ const ChatbotScreen = ({ navigation, route }) => {
         <View style={styles.inputArea}>
           <TextInput 
             style={styles.textInput} 
-            placeholder="What do you want to know?" 
+            placeholder={t("What do you want to know?")}
             placeholderTextColor={theme === 'dark' ? '#aaa' : '#666'} // Added placeholder color
             value={inputText}
             onChangeText={setInputText}
