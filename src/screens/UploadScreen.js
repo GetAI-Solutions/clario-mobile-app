@@ -81,29 +81,54 @@ const UploadScreen = ({ navigation }) => {
     }
   };
 
-  const handleError = (err) => {
-    console.error('Error details:', { err } );
-    if (err.response) {
-      switch (err.response.status) {
-        case 400:
-          navigation.navigate('ProductNotFound')
-          break;
-        case 401:
-          setError(t('Unauthorized access.'));
-          break;
-        case 404:
-          navigation.navigate('ProductNotFound');
-          break;
-        case 429:
-          setError(t('Too many requests. Please try again later.'));
-          break;
-        default:
-          setError(t('An error occurred. Please try again.'));
-      }
-    } else {
-      setError(t('Network error. Please check your connection.'));
+
+const handleError = (err) => {
+  console.error('Error details:', { err });
+
+  if (err.response) {
+    switch (err.response.status) {
+      case 400:
+        navigation.navigate('ProductNotFound');
+        break;
+      case 401:
+        setError(t('Unauthorized access.'));
+        break;
+      case 403:
+        setError(t('Forbidden access.'));
+        break;
+      case 404:
+        navigation.navigate('ProductNotFound');
+        break;
+      case 408:
+        setError(t('Request timeout.'));
+        break;
+      case 422:
+        setError(t('Validation error. Please check your input.'));
+        break;
+      case 429:
+        setError(t('Too many requests. Please try again later.'));
+        break;
+      case 500:
+        setError(t('Internal server error.'));
+        break;
+      case 502:
+        setError(t('Bad gateway.'));
+        break;
+      case 503:
+        setError(t('Service unavailable.'));
+        break;
+      case 504:
+        setError(t('Gateway timeout.'));
+        break;
+      default:
+        setError(t('An error occurred. Please try again.'));
     }
-  };
+  } else if (err.request) {
+    setError(t('Network error. Please check your connection.'));
+  } else {
+    setError(t('Unknown error. Please try again.'));
+  }
+};
 
   const styles = StyleSheet.create({
     container: {
