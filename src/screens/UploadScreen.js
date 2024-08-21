@@ -4,6 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { uploadBarcode, getProductSummary } from '../services/apiService';
 import { fetchImageFromUri } from '../utils/imageUtils';
 import { registerForPushNotificationsAsync, sendNotification } from '../utils/notificationUtils';
+import { Platform } from 'react-native';
+import * as ImageManipulator from 'expo-image-manipulator';
 import Header from '../components/Header';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
@@ -29,39 +31,56 @@ const UploadScreen = ({ navigation }) => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
-      aspect: [4, 3],
       quality: 1,
+      ...(Platform.OS === 'web' ? { aspect: [4, 3] } : {}), 
     });
-
+  
     console.log('ImagePicker result:', result);
-    console.log('Image URI:', result.assets[0].uri);
-
-
+  
     if (!result.canceled) {
-      setLoading(true);
-      setError(null);
-      setStatusMessage(t('Extracting barcode...'));
-
       try {
-        const formData = new FormData();
-        formData.append('file', await fetchImageFromUri(result.assets[0].uri));
+        setLoading(true);
+        setError(null);
+        setStatusMessage(t('Extracting barcode...'));
+  
+        let formData = new FormData();
+  
+        if (Platform.OS === 'web') {
+          // Web-specific logic
+          const imageBlob = await fetchImageFromUri(result.assets[0].uri);
+          formData.append('file', imageBlob);
+        } else {
+          // Android-specific logic
+          setStatusMessage(t('Resizing image...'));
+          const manipResult = await ImageManipulator.manipulateAsync(
+            result.assets[0].uri,
+            [{ resize: { width: 800, height: 600 } }],
+            { compress: 0.8, format: ImageManipulator.SaveFormat.JPEG }
+          );
+          console.log('Resized image:', manipResult.uri);
+          formData.append('file', {
+            uri: manipResult.uri,
+            name: 'image.jpg',
+            type: 'image/jpeg',
+          });
+        }
+  
         formData.append('id', user.uid);
         console.log('formData:', formData);
-        console.log(user.uid)
-
+  
         const barcodeData = await uploadBarcode(formData);
         const bar_code = barcodeData.product_barcode;
-        console.log(bar_code)
-
+        console.log(bar_code);
+  
         if (!bar_code) {
-          setLoading(true);
           navigation.navigate('ProductNotFound');
+          return;
         }
-
+  
         setStatusMessage(t('Barcode detected! Retrieving product details...'));
-
+  
         const productData = await getProductSummary(bar_code, user.uid);
-
+  
         if (productData && productData.product) {
           const product = productData.product;
           setProduct(product);
@@ -72,7 +91,7 @@ const UploadScreen = ({ navigation }) => {
           navigation.navigate('ProductNotFound');
         }
       } catch (err) {
-        console.error(err);
+        console.error('Upload error:', err);
         handleError(err);
       } finally {
         setLoading(false);
