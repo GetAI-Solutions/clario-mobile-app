@@ -4,6 +4,7 @@ import { BarcodeScanner } from 'expo-barcode-scanner';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
+import { getProductSummary } from '../services/apiService';
 
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
