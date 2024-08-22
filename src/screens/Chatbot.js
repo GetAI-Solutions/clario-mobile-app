@@ -6,6 +6,7 @@ import { BASEURL } from '../services/api';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import UserContext from '../context/UserContext';
+import TypingIndicator from '../components/TypingIndicator';
 
 const ChatbotScreen = ({ navigation, route }) => {
   const { product } = route.params;
@@ -33,8 +34,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       padding: 10,
       borderRadius: 8,
       backgroundColor: theme === 'dark' ? '#555' : '#fff',
-      overflow: 'hidden', 
-      textAlign: 'justify', 
+      wordWrap: 'break-word',
     },
     userMessage: {
       alignSelf: 'flex-end',
@@ -181,7 +181,12 @@ const ChatbotScreen = ({ navigation, route }) => {
           onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
           onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
         />
-        
+        {loading && (
+          <View >
+            <TypingIndicator />
+          </View>
+        )}
+
         {/* Input area remains visible */}
         <View style={styles.inputArea}>
           <TextInput 
@@ -200,14 +205,6 @@ const ChatbotScreen = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-      
-      {loading && (
-        <ActivityIndicator
-          size="large"
-          color={theme === 'dark' ? '#fff' : '#0000ff'}
-          style={styles.loadingIndicator}
-        />
-      )}
     </View>
   );
 };
