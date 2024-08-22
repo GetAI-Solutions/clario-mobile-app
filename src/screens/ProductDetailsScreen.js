@@ -22,6 +22,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     container: {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFFFFF',
+      paddingHorizontal: 20,
     },
     content: {
       alignItems: 'center',

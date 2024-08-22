@@ -21,6 +21,9 @@ const SignupPhone = ({ navigation }) => {
     setPassword(text);
   };
 
+
+  
+
   const handleContinueClick = () => {
     // Check if phone number and password are filled
     if (phoneNumber && password) {

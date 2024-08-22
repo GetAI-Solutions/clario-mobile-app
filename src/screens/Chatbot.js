@@ -21,6 +21,7 @@ const ChatbotScreen = ({ navigation, route }) => {
     container: {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#f5f5f5',
+      paddingHorizontal: 20,
     },
     messageArea: {
       paddingHorizontal: 16,
