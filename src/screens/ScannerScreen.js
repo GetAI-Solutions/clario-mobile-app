@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Platform } from 'react-native';
-import { BarcodeScanner } from 'expo-barcode-scanner';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
@@ -17,16 +17,16 @@ const ScannerScreen = ({ navigation }) => {
 
   useEffect(() => {
     const requestPermissions = async () => {
-      const { status } = await BarcodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
+      if (Platform.OS === 'android' || Platform.OS === 'ios') {
+        const { status } = await BarCodeScanner.requestPermissionsAsync();
+        setHasPermission(status === 'granted');
+      }
     };
-    if (Platform.OS === 'android' || Platform.OS === 'ios') {
-      requestPermissions();
-    }
+    requestPermissions();
   }, []);
 
   const handleBarCodeScanned = async ({ type, data }) => {
-    console.log(`Type: ${type}, Data: ${data}`)
+    console.log(`Type: ${type}, Data: ${data}`);
     setLoading(true);
     try {
       const bar_code = data; 
@@ -35,7 +35,8 @@ const ScannerScreen = ({ navigation }) => {
         const product = productData.product;
         setProduct(product);
         setProducts((prev) => [...prev, product]);
-        sendNotification(t('Product uploaded successfully!'));
+        // Remove or comment out the notification function
+        // sendNotification(t('Product uploaded successfully!'));
         navigation.navigate('ProductDetails', { product });
       } else {
         navigation.navigate('ProductNotFound');
@@ -45,13 +46,12 @@ const ScannerScreen = ({ navigation }) => {
       handleError(err);
     } finally {
       setLoading(false);
-      setStatusMessage('');
     }  
   };
 
   const handleError = (err) => {
-    console.error('Error details:', { err });
-  
+    console.error('Error details:', err);
+
     if (err.response) {
       switch (err.response.status) {
         case 400:
@@ -96,7 +96,6 @@ const ScannerScreen = ({ navigation }) => {
       setError(t('Unknown error. Please try again.'));
     }
   };
-  
 
   if (hasPermission === null) {
     return <View />;
@@ -107,10 +106,10 @@ const ScannerScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <BarcodeScanner
+      <BarCodeScanner
         style={styles.cameraView}
         onBarCodeScanned={handleBarCodeScanned}
-        facing="back"
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]} // Adjust as needed
       >
         {loading && <ActivityIndicator size="large" color="#fff" />}
         {error && (
@@ -126,7 +125,7 @@ const ScannerScreen = ({ navigation }) => {
             <Text style={styles.scanText}>{t('Place the barcode inside the frame')}</Text>
           </View>
         )}
-      </BarcodeScanner>
+      </BarCodeScanner>
     </View>
   );
 };
@@ -178,7 +177,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
   },
-
 });
 
 export default ScannerScreen;

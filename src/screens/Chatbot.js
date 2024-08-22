@@ -25,7 +25,7 @@ const ChatbotScreen = ({ navigation, route }) => {
     },
     messageArea: {
       paddingHorizontal: 16,
-      paddingBottom: 20, // Adjusted padding to ensure the last message is visible
+      paddingBottom: 20, 
     },
     messageContainer: {
       marginVertical: 8,
@@ -33,6 +33,8 @@ const ChatbotScreen = ({ navigation, route }) => {
       padding: 10,
       borderRadius: 8,
       backgroundColor: theme === 'dark' ? '#555' : '#fff',
+      overflow: 'hidden', 
+      textAlign: 'justify', 
     },
     userMessage: {
       alignSelf: 'flex-end',
