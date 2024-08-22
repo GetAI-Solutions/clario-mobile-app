@@ -50,8 +50,6 @@ const ScannerScreen = ({ navigation }) => {
   };
 
   const handleError = (err) => {
-    console.error('Error details:', err);
-
     if (err.response) {
       switch (err.response.status) {
         case 400:
