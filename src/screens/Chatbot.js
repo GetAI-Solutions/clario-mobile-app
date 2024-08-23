@@ -34,7 +34,6 @@ const ChatbotScreen = ({ navigation, route }) => {
       padding: 10,
       borderRadius: 8,
       backgroundColor: theme === 'dark' ? '#555' : '#fff',
-      wordWrap: 'break-word',
     },
     userMessage: {
       alignSelf: 'flex-end',
@@ -49,6 +48,7 @@ const ChatbotScreen = ({ navigation, route }) => {
     },
     messageText: {
       color: theme === 'dark' ? '#fff' : '#000',
+      flexShrink: 1,
     },
     botImage: {
       width: 30,
