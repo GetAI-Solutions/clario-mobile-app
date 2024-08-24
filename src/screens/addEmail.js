@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import countryList from 'react-select-country-list';
@@ -37,6 +37,7 @@ const AddEmail = () => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="#000" />
@@ -104,7 +105,7 @@ const AddEmail = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#fff',
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
@@ -184,6 +185,12 @@ const styles = StyleSheet.create({
   disabledButton: {
     backgroundColor: '#E5E7EB',
   },
+  texture: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+  }
 });
 
 export default AddEmail;

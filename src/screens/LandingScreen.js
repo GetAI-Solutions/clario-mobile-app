@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, Linking } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, ImageBackground} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const Landing = () => {
@@ -7,6 +7,7 @@ const Landing = () => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <View style={styles.content}>
         <Image source={require('../../assets/images/Frame.png')} style={styles.logo} />
         <Image source={require('../../assets/images/logo.png')} style={styles.mainLogo} />
@@ -32,16 +33,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#f7fafc',
+    backgroundColor: '#fff',
     paddingHorizontal: 16,
   },
   content: {
     alignItems: 'center',
   },
   logo: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     marginBottom: 24,
+    resizeMode: 'contain',
   },
   mainLogo: {
     width: 160,
@@ -49,20 +51,23 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
+    width: '50%',
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
+    textAlign: 'center',
   },
   description: {
-    color: '#4a5568',
+    color: '#000',
     textAlign: 'center',
     marginBottom: 32,
+    width: '80%',
   },
   signupButton: {
-    width: '100%',
-    paddingVertical: 12,
-    backgroundColor: '#319795',
-    borderRadius: 8,
+    width: '350px',
+    paddingVertical: 16,
+    backgroundColor: '#15718E',
+    borderRadius: 100,
     marginBottom: 16,
   },
   signupButtonText: {
@@ -71,15 +76,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   loginButton: {
-    width: '100%',
-    paddingVertical: 12,
-    borderColor: '#319795',
-    borderWidth: 1,
-    borderRadius: 8,
+    width: '350px',
+    paddingVertical: 16,
+    borderColor: '#15718E',
+    borderWidth: 2,
+    borderRadius: 100,
     marginBottom: 16,
   },
   loginButtonText: {
-    color: '#319795',
+    color: '#15718E',
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -90,6 +95,11 @@ const styles = StyleSheet.create({
   link: {
     textDecorationLine: 'underline',
   },
+  texture: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+  }
 });
 
 export default Landing;

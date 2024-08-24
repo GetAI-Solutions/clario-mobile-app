@@ -7,7 +7,7 @@ const OnboardingScreen = ({ navigation }) => {
     // Navigate to the LandingScreen after 3 seconds
     setTimeout(() => {
       navigation.replace('Landing');
-    }, 10000);
+    }, 3000);
   }, [navigation]);
 
   return (
