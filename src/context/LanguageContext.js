@@ -11,7 +11,7 @@ export const LanguageProvider = ({ children }) => {
     AsyncStorage.getItem('language').then((lang) => {
       if (lang) {
         setLanguage(lang);
-        i18n.changeLanguage(lang); // Update i18n language
+        i18n.changeLanguage(lang); 
       }
     });
   });

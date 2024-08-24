@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
@@ -10,9 +10,11 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { theme } = useTheme();
 
-  const truncatedDescription = product.product_summary.length > 150
-    ? product.product_summary.slice(0, 150) + '...'
-    : product.product_summary;
+  const cleanText = (text) => text.replace(/[#*]+/g, '');
+
+  const truncatedDescription = cleanText(product.product_summary).length > 150
+    ? cleanText(product.product_summary).slice(0, 150) + '...'
+    : cleanText(product.product_summary);
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -88,12 +90,12 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.productContainer}>
           <Image 
-            source={product.image_url && product.image_url !== "soon" ? { uri: product.imageurl } : require('../../assets/images/else.png')} 
+            source={product.image_url && product.image_url !== "soon" ? { uri: product.image_url } : require('../../assets/images/else.png')} 
             style={styles.productImage} 
           />
-          <Text style={styles.productName}>{product.product_name}</Text>
+          <Text style={styles.productName}>{cleanText(product.product_name)}</Text>
           <Text style={styles.productDescription}>
-            {showFullDescription ? product.product_summary : truncatedDescription}
+            {showFullDescription ? cleanText(product.product_summary) : truncatedDescription}
           </Text>
           {product.product_summary.length > 150 && (
             <TouchableOpacity onPress={toggleDescription}>

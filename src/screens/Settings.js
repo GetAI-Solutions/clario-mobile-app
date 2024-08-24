@@ -72,9 +72,25 @@ const SettingsScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => handleLanguageChange('sw')}>
               <Text style={styles.modalText}>Swahili</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('zu')}>
+              <Text style={styles.modalText}>Zulu</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('ha')}>
+              <Text style={styles.modalText}>Hausa</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('om')}>
+              <Text style={styles.modalText}>Oromo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('am')}>
+              <Text style={styles.modalText}>Amharic</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleLanguageChange('tw')}>
+              <Text style={styles.modalText}>Twi</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => setLanguageModalVisible(false)}>
               <Text style={styles.modalCancel}>Cancel</Text>
             </TouchableOpacity>
+            
           </View>
         </View>
       </Modal>

@@ -99,11 +99,13 @@ const ChatbotScreen = ({ navigation, route }) => {
     setMessages([initialMessage]);
   }, [product]);
 
+  const cleanText = (text) => text.replace(/[#*]+/g, '');
+
   const handleSend = async () => {
     if (inputText.trim()) {
       const newMessage = {
         type: 'user',
-        text: inputText,
+        text: cleanText(inputText),
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setInputText('');
@@ -125,7 +127,7 @@ const ChatbotScreen = ({ navigation, route }) => {
 
         const botMessage = {
           type: 'bot',
-          text: response.data.model_resp,
+          text: cleanText(response.data.model_resp),
         };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } else{
@@ -171,6 +173,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       <KeyboardAvoidingView 
         style={{ flex: 1 }} 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={50}
       >
         <FlatList
           ref={flatListRef}
