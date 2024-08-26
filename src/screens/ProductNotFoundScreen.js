@@ -78,7 +78,9 @@ const ProductNotFoundScreen = ({ navigation }) => {
       color: theme === 'dark' ? '#fff' : '#000',
     },
     searchButton: {
-      padding: 10,
+      padding: 3,
+      backgroundColor: theme === 'dark' ? '#2c7391' : '#2c7391',
+      borderRadius: 20,
     },
     searchButtonText: {
       fontSize: 20,
@@ -110,6 +112,7 @@ const ProductNotFoundScreen = ({ navigation }) => {
         </Text>
 
         <View style={styles.inputContainer}>
+          <Image source={require('../../assets/images/search.png')} />
           <TextInput
             style={styles.input}
             placeholder={t('Enter name of product')}
@@ -118,7 +121,7 @@ const ProductNotFoundScreen = ({ navigation }) => {
             onChangeText={setProductName}
           />
           <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
-            <Image source={require('../../assets/images/search.png')} />
+            <Image source={require('../../assets/images/send.png')} />
           </TouchableOpacity>
         </View>
 

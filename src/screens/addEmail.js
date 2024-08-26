@@ -33,6 +33,8 @@ const AddEmail = ({ navigation }) => {
         preferred_language: preferredLanguage,
       };
 
+      console.log('Signup data...', data)
+
       const signupResponse = await signup(data);
 
       if (signupResponse.status === 200) {

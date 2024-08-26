@@ -115,7 +115,7 @@ const ChatbotScreen = ({ navigation, route }) => {
         console.log('user_id: ', user.uid)
         console.log('product_barcode: ', product.product_barcode)
         console.log('user_message', inputText)
-        const response = await axios.post(`${BASEURL}/chat`, {
+        const response = await axios.post(`${BASEURL}/common/chat`, {
           userID: user.uid,
           bar_code: `${product.product_barcode}`,
           user_message: inputText,
@@ -127,7 +127,7 @@ const ChatbotScreen = ({ navigation, route }) => {
 
         const botMessage = {
           type: 'bot',
-          text: cleanText(response.data.model_resp),
+          text: cleanText(response.data.model_resp[1]),
         };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } else{

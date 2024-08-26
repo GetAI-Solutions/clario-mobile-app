@@ -72,24 +72,23 @@ const UploadScreen = ({ navigation }) => {
         const bar_code = barcodeData.product_barcode;
         console.log(bar_code);
   
-        if (!bar_code) {
-          navigation.navigate('ProductNotFound');
-          return;
-        }
-  
-        setStatusMessage(t('Barcode detected! Retrieving product details...'));
-  
-        const productData = await getProductSummary(bar_code, user.uid);
-  
-        if (productData && productData.product) {
-          const product = productData.product;
-          setProduct(product);
-          setProducts((prev) => [...prev, product]);
-          sendNotification(t('Product uploaded successfully!'));
-          navigation.navigate('ProductDetails', { product });
+        if (bar_code && bar_code !== '') {
+          setStatusMessage(t('Barcode detected! Retrieving product details...'));
+          const productData = await getProductSummary(bar_code, user.uid);
+          if (productData && productData.product) {
+            const product = productData.product;
+            setProduct(product);
+            setProducts((prev) => [...prev, product]);
+            sendNotification(t('Product uploaded successfully!'));
+            navigation.navigate('ProductDetails', { product });
+          } else {
+            navigation.navigate('ProductNotFound', { bar_code });
+          }
         } else {
-          navigation.navigate('ProductNotFound');
+          // Handle case where no barcode is extracted
+          setError(t('No barcode detected.'));
         }
+  
       } catch (err) {
         console.error('Upload error:', err);
         handleError(err);
@@ -101,7 +100,7 @@ const UploadScreen = ({ navigation }) => {
   };
 
 
-const handleError = (err) => {
+const handleError = ( err, bar_code ) => {
   console.error('Error details:', { err });
 
   if (err.response) {
@@ -116,7 +115,7 @@ const handleError = (err) => {
         setError(t('Forbidden access.'));
         break;
       case 404:
-        navigation.navigate('ProductNotFound');
+        navigation.navigate('ProductNotFound', { bar_code });
         break;
       case 408:
         setError(t('Request timeout.'));
