@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Switch, TouchableOpacity, Image, StyleSheet, Modal } from 'react-native';
+import { View, Text, Switch, TouchableOpacity, Image, StyleSheet, Modal, Alert } from 'react-native';
 import Header from '../components/Header'; 
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
@@ -20,20 +20,24 @@ const SettingsScreen = ({ navigation }) => {
     setUser((prevUser) => ({ ...prevUser, preferred_language: language }));
 
     try {
-      const response = await axios.patch(`${BASEURL}/update-preferred-language`, 
-        `userID=${user.uid}&preferred_language=${language}`, 
-        {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        }
-      );
+      const response = await axios.patch(`${BASEURL}/users/update-user-preference`, {
+        user_id: user.uid,
+        preferred_language: language,
+      });
       
-  
       if (response.status === 200) {
+        const updatedUser = { ...user, preferred_language: language };
+        setUser(updatedUser);
+        await AsyncStorage.setItem('userData', JSON.stringify(updatedUser));
+        Alert.alert(t('Language preference updated successfully'));
         console.log('Language preference updated successfully');
       } else {
+        Alert.alert(t('Failed to update language preference'));
         console.error('Failed to update language preference');
       }
     } catch (error) {
+      Alert.alert(t('Error updating language preference'));
+
       console.error('Error updating language preference:', error);
     }
     setLanguageModalVisible(false); 

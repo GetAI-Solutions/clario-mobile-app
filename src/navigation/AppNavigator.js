@@ -13,6 +13,7 @@ import Chatbot from '../screens/Chatbot';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import MainDrawerNavigator from './DrawerNavigator';
 import UserContext from '../context/UserContext';
+import FeedbackScreen from '../screens/FeedbackScreen';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ const AppNavigator = () => {
           <Stack.Screen name="UploadScreen" component={UploadScreen} options={{ headerShown: false }} />
           <Stack.Screen name="ScannerScreen" component={ScannerScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Chatbot" component={Chatbot} options={{ headerShown: false }} />
+          <Stack.Screen name='Feedback' component={FeedbackScreen} options={{ headerShown: false }} />
         </>
       )}
     </Stack.Navigator>

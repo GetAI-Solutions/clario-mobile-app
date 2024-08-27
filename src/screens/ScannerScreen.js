@@ -29,31 +29,31 @@ const ScannerScreen = ({ navigation }) => {
     console.log(`Type: ${type}, Data: ${data}`);
     setLoading(true);
     try {
-      const bar_code = data; 
+      const bar_code = data;
       const productData = await getProductSummary(bar_code, user.uid);
       if (productData && productData.product) {
         const product = productData.product;
         setProduct(product);
         setProducts((prev) => [...prev, product]);
-        // Remove or comment out the notification function
-        // sendNotification(t('Product uploaded successfully!'));
         navigation.navigate('ProductDetails', { product });
       } else {
-        navigation.navigate('ProductNotFound');
+        console.log('barcode...', bar_code);
+        navigation.navigate('ProductNotFound', { bar_code: bar_code });
       }
     } catch (err) {
       console.error('Upload error:', err);
-      handleError(err);
+      handleError(err, bar_code); // Pass bar_code to handleError
     } finally {
       setLoading(false);
-    }  
+    }
   };
-
-  const handleError = (err) => {
+  
+  const handleError = (err, bar_code) => {
     if (err.response) {
       switch (err.response.status) {
         case 400:
-          navigation.navigate('ProductNotFound');
+          console.log('barcode...', bar_code);
+          navigation.navigate('ProductNotFound', { bar_code: bar_code });
           break;
         case 401:
           setError(t('Unauthorized access.'));
@@ -62,7 +62,8 @@ const ScannerScreen = ({ navigation }) => {
           setError(t('Forbidden access.'));
           break;
         case 404:
-          navigation.navigate('ProductNotFound');
+          console.log('barcode...', bar_code);
+          navigation.navigate('ProductNotFound', { bar_code: bar_code });
           break;
         case 408:
           setError(t('Request timeout.'));
@@ -94,7 +95,7 @@ const ScannerScreen = ({ navigation }) => {
       setError(t('Unknown error. Please try again.'));
     }
   };
-
+  
   if (hasPermission === null) {
     return <View />;
   }
@@ -107,8 +108,14 @@ const ScannerScreen = ({ navigation }) => {
       <BarCodeScanner
         style={styles.cameraView}
         onBarCodeScanned={handleBarCodeScanned}
-        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]} // Adjust as needed
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]}
       >
+        <View style={styles.cornerContainer}>
+          <View style={[styles.corner, styles.topLeft]} />
+          <View style={[styles.corner, styles.topRight]} />
+          <View style={[styles.corner, styles.bottomLeft]} />
+          <View style={[styles.corner, styles.bottomRight]} />
+        </View>
         {loading && <ActivityIndicator size="large" color="#fff" />}
         {error && (
           <View style={styles.overlay}>
@@ -133,15 +140,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#000', // Dark background for better contrast
   },
   cameraView: {
-    overflow: 'hidden',
     height: '60%',
-    width: '80%',
+    width: '90%',
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#fff',
     marginTop: '20%',
+    overflow: 'hidden',
   },
   overlay: {
     position: 'absolute',
@@ -174,6 +182,41 @@ const styles = StyleSheet.create({
   scanText: {
     color: '#fff',
     fontSize: 18,
+  },
+  cornerContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'space-between',
+    padding: 20,
+  },
+  corner: {
+    width: 50,
+    height: 50,
+    borderColor: '#fff',
+    borderWidth: 3,
+  },
+  topLeft: {
+    borderTopLeftRadius: 20,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+  },
+  topRight: {
+    borderTopRightRadius: 20,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+  },
+  bottomLeft: {
+    borderBottomLeftRadius: 20,
+    borderTopWidth: 0,
+    borderRightWidth: 0,
+  },
+  bottomRight: {
+    borderBottomRightRadius: 20,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
   },
 });
 

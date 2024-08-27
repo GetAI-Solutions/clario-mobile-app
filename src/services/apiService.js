@@ -29,12 +29,17 @@ export const updateUser = async (preferences) => {
   return response
 }
 
-export const chatPerplexityAi = async (bar_code, product_name) => {
-  const response = await axios.post(`${BASEURL}/common/get-details-from-perplexity`,
-    new URLSearchParams({ bar_code, product_name }),
+
+export const getDetailsFromPerplexity = async (product_name, bar_code) => {
+  const response = await axios.post(
+    `${BASEURL}/common/get-details-from-perplexity`,
+    new URLSearchParams({ product_name, bar_code }),
     {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     }
-  )
-  return response
-}
+  );
+  return response;
+};
+

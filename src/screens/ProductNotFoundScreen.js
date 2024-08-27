@@ -4,15 +4,60 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
+import { BASEURL } from '../services/api';
+import { chatPerplexityAi, getDetailsFromPerplexity } from '../services/apiService';
+import ProductContext from '../context/ProductContext';
 
-const ProductNotFoundScreen = ({ navigation }) => {
+
+const ProductNotFoundScreen = ({ navigation, route }) => {
+  const { bar_code } = route.params;
   const [productName, setProductName] = useState('');
+  const [product, setProduct] = useState(null);
+  const { setProducts } = useContext(ProductContext)
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { theme } = useTheme();
 
-  const handleSearch = () => {
-    console.log('Searching for:', productName);
+  const handleSearch = async () => {
+    if (!bar_code) {
+      console.error('bar_code is not defined');
+      return;
+    }
+    console.log('barcode...', bar_code)
+    setLoading(true);
+    try {
+      
+      const response = await getDetailsFromPerplexity(productName, bar_code);
+      console.log('response object...', response)
+      console.log("Navigating with product:", response.data);
+      console.log("product details..", response.data.product.product_details)
+      
+      if (response.data) {
+        // Map the product details to the expected keys
+        const mappedProduct = {
+          product_summary: response.data.product.product_details, // Example of renaming
+          product_name: response.data.product.product_name,
+          product_barcode: response.data.product.product_code,
+          perplexity: true,
+        }
+
+
+
+
+        navigation.navigate('ProductDetails', { product: mappedProduct });
+      }else if (response.status === 400) {
+        setError(t('Please provide a more specific product name'));
+      } else {
+        setError(t('An error occurred while searching for the product'));
+      }
+    } catch (error) {
+      setError(t('An error occurred while searching for the product'));
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   const handleUpload = () => {
     navigation.navigate('UploadScreen');
@@ -124,6 +169,8 @@ const ProductNotFoundScreen = ({ navigation }) => {
             <Image source={require('../../assets/images/send.png')} />
           </TouchableOpacity>
         </View>
+        {loading && <Text>Loading...</Text>}
+        {error && <Text>{error}</Text>}
 
         <Footer onUpload={handleUpload} onScan={handleScan} />
       </View>

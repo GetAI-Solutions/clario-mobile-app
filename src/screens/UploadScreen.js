@@ -37,6 +37,7 @@ const UploadScreen = ({ navigation }) => {
   
     console.log('ImagePicker result:', result);
   
+    let bar_code = ''; // Declare bar_code here
     if (!result.canceled) {
       try {
         setLoading(true);
@@ -46,11 +47,9 @@ const UploadScreen = ({ navigation }) => {
         let formData = new FormData();
   
         if (Platform.OS === 'web') {
-          // Web-specific logic
           const imageBlob = await fetchImageFromUri(result.assets[0].uri);
           formData.append('file', imageBlob);
         } else {
-          // Android-specific logic
           setStatusMessage(t('Resizing image...'));
           const manipResult = await ImageManipulator.manipulateAsync(
             result.assets[0].uri,
@@ -69,36 +68,38 @@ const UploadScreen = ({ navigation }) => {
         console.log('formData:', formData);
   
         const barcodeData = await uploadBarcode(formData);
-        const bar_code = barcodeData.product_barcode;
-        console.log(bar_code);
+        bar_code = barcodeData.product_barcode; // Assign value to the existing variable
+        console.log("barcode...", bar_code);
   
         if (bar_code && bar_code !== '') {
           setStatusMessage(t('Barcode detected! Retrieving product details...'));
           const productData = await getProductSummary(bar_code, user.uid);
+          console.log('barcode...', bar_code)
+          console.log('response object...', productData)
           if (productData && productData.product) {
             const product = productData.product;
-            setProduct(product);
+            setProduct(product);  
             setProducts((prev) => [...prev, product]);
             sendNotification(t('Product uploaded successfully!'));
             navigation.navigate('ProductDetails', { product });
           } else {
-            navigation.navigate('ProductNotFound', { bar_code });
+            console.log('barcode...', bar_code)
+            navigation.navigate('ProductNotFound', { bar_code: bar_code });
           }
         } else {
-          // Handle case where no barcode is extracted
           setError(t('No barcode detected.'));
         }
   
       } catch (err) {
         console.error('Upload error:', err);
-        handleError(err);
+        handleError(err, bar_code); // Pass the barcode variable here
       } finally {
         setLoading(false);
         setStatusMessage('');
       }
     }
   };
-
+  
 
 const handleError = ( err, bar_code ) => {
   console.error('Error details:', { err });
@@ -106,7 +107,8 @@ const handleError = ( err, bar_code ) => {
   if (err.response) {
     switch (err.response.status) {
       case 400:
-        navigation.navigate('ProductNotFound');
+        console.log('barcode...', bar_code)
+        navigation.navigate('ProductNotFound', { bar_code: bar_code });
         break;
       case 401:
         setError(t('Unauthorized access.'));
@@ -115,7 +117,8 @@ const handleError = ( err, bar_code ) => {
         setError(t('Forbidden access.'));
         break;
       case 404:
-        navigation.navigate('ProductNotFound', { bar_code });
+        console.log('barcode...', bar_code)
+        navigation.navigate('ProductNotFound', { bar_code: bar_code });
         break;
       case 408:
         setError(t('Request timeout.'));

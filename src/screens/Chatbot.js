@@ -115,12 +115,16 @@ const ChatbotScreen = ({ navigation, route }) => {
         console.log('user_id: ', user.uid)
         console.log('product_barcode: ', product.product_barcode)
         console.log('user_message', inputText)
+        console.log('perplexity...', product.perplexity)
         const response = await axios.post(`${BASEURL}/common/chat`, {
           userID: user.uid,
           bar_code: `${product.product_barcode}`,
           user_message: inputText,
+          perplexity: product.perplexity || false,
         }
       );
+
+      console.log('data...', response)
 
       if(response.status === 200){
         console.log(response.data)
