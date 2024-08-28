@@ -131,7 +131,7 @@ const ChatbotScreen = ({ navigation, route }) => {
 
         const botMessage = {
           type: 'bot',
-          text: cleanText(response.data.model_resp[1]),
+          text: cleanText(response.data.model_resp),
         };
         setMessages((prevMessages) => [...prevMessages, botMessage]);
       } else{
