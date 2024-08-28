@@ -108,14 +108,8 @@ const ScannerScreen = ({ navigation }) => {
       <BarCodeScanner
         style={styles.cameraView}
         onBarCodeScanned={handleBarCodeScanned}
-        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]}
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]} // Adjust as needed
       >
-        <View style={styles.cornerContainer}>
-          <View style={[styles.corner, styles.topLeft]} />
-          <View style={[styles.corner, styles.topRight]} />
-          <View style={[styles.corner, styles.bottomLeft]} />
-          <View style={[styles.corner, styles.bottomRight]} />
-        </View>
         {loading && <ActivityIndicator size="large" color="#fff" />}
         {error && (
           <View style={styles.overlay}>
@@ -140,16 +134,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#000', // Dark background for better contrast
   },
   cameraView: {
+    overflow: 'hidden',
     height: '60%',
-    width: '90%',
+    width: '80%',
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#fff',
     marginTop: '20%',
-    overflow: 'hidden',
   },
   overlay: {
     position: 'absolute',
@@ -182,41 +175,6 @@ const styles = StyleSheet.create({
   scanText: {
     color: '#fff',
     fontSize: 18,
-  },
-  cornerContainer: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  corner: {
-    width: 50,
-    height: 50,
-    borderColor: '#fff',
-    borderWidth: 3,
-  },
-  topLeft: {
-    borderTopLeftRadius: 20,
-    borderBottomWidth: 0,
-    borderRightWidth: 0,
-  },
-  topRight: {
-    borderTopRightRadius: 20,
-    borderBottomWidth: 0,
-    borderLeftWidth: 0,
-  },
-  bottomLeft: {
-    borderBottomLeftRadius: 20,
-    borderTopWidth: 0,
-    borderRightWidth: 0,
-  },
-  bottomRight: {
-    borderBottomRightRadius: 20,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
   },
 });
 
