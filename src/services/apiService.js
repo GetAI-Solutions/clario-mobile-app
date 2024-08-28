@@ -43,3 +43,13 @@ export const getDetailsFromPerplexity = async (product_name, bar_code) => {
   return response;
 };
 
+export const submitFeedback = async (userID, feedback) => {
+  const response = await axios.post(
+    `${BASEURL}/users/give-user-feedback`,
+    new URLSearchParams({ userID, feedback }),
+    {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    }
+  );
+  return response.data;
+};

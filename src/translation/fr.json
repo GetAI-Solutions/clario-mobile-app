@@ -63,5 +63,20 @@
     "discoveredProductPrefix": "Vous avez découvert",
     "discoveredProductSuffix": "! Voulez-vous en savoir plus sur son utilisation, ses avantages ou ses avis?",
     "Sorry, something went wrong. Please try again later.": "Désolé, quelque chose s'est mal passé. Veuillez réessayer plus tard.",
-    "What do you want to know?": "Que voulez-vous savoir ?"
+    "What do you want to know?": "Que voulez-vous savoir ?",
+    "Feedback": "Retour d'information",
+    "Rate Your Experience": "Évaluez votre expérience",
+    "Leave a comment": "Laissez un commentaire",
+    "Your message here": "Votre message ici",
+    "Send Feedback": "Envoyer le retour d'information",
+    "Duly Noted!": "Bien noté !",
+    "Thank you for your feedback! Your input helps us enhance our app to better meet your needs.": "Merci pour votre retour d'information ! Votre avis nous aide à améliorer notre application pour mieux répondre à vos besoins.",
+    "Go Home": "Retour à l'accueil",
+    "Feedback Submitted!": "Retour d'information envoyé !",
+    "Thank you for your feedback!": "Merci pour votre retour d'information !",
+    "Error submitting feedback": "Erreur lors de l'envoi du retour d'information",
+    "Failed to submit feedback. Please try again later.": "Échec de l'envoi du retour d'information. Veuillez réessayer plus tard.",
+    "Star": "Étoile",
+    "Star-outline": "Étoile-outline",
+    "Close": "Fermer"
   }

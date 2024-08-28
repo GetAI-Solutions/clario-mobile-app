@@ -17,7 +17,7 @@ const CustomDrawerContent = (props) => {
     try {
       await AsyncStorage.removeItem('userData');
       setUser(null);
-      navigation.navigate('Login');
+      navigation.navigate('Landing');
     } catch (error) {
       console.error('Error logging out: ', error);
     }
@@ -119,6 +119,18 @@ const CustomDrawerContent = (props) => {
             />
           )}
           onPress={() => navigation.navigate('Settings')}
+        />
+        <DrawerItem
+          label={t('Feedback')}
+          labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
+          icon={({ focused, size }) => (
+            <Icon
+              name={focused ? 'chatbox' : 'chatbox-outline'}
+              size={size}
+              color={theme === 'dark' ? '#fff' : '#000'}
+            />
+          )}
+          onPress={() => navigation.navigate('Feedback')}
         />
       </View>
       <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>

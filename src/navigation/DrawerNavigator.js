@@ -11,7 +11,7 @@ import ProductDetailsScreen from '../screens/ProductDetailsScreen';
 import ProductNotFoundScreen from '../screens/ProductNotFoundScreen';
 import SettingsScreen from '../screens/Settings';
 import AccountScreen from '../screens/Accounts';
-
+import LandingScreen from '../screens/LandingScreen';
 const Drawer = createDrawerNavigator();
 
 export default function MainDrawerNavigator() {
@@ -37,6 +37,7 @@ export default function MainDrawerNavigator() {
       <Drawer.Screen name="ProductDetails" component={ProductDetailsScreen} />
       <Drawer.Screen name='ProductNotFound' component={ProductNotFoundScreen} />
       <Drawer.Screen name='Profile' component={AccountScreen} />
+      <Drawer.Screen name="Landing" component={LandingScreen} />
       {/* Add more drawer items here */}
     </Drawer.Navigator>
   );

@@ -155,6 +155,7 @@ const handleError = ( err, bar_code ) => {
     container: {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      paddingHorizontal: 20,
     },
     content: {
       flex: 1,

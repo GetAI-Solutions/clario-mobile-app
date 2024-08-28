@@ -83,7 +83,7 @@ const SignupPhone = ({ navigation }) => {
             onChangeText={handlePasswordChange}
           />
           <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
-            <Icon name={showPassword ? "eye-off" : "eye"} size={24} color="#000" />
+            <Icon name={showPassword ? "eye" : "eye-off"} size={24} color="#000" />
           </TouchableOpacity>
         </View>
       </View>
@@ -94,7 +94,7 @@ const SignupPhone = ({ navigation }) => {
         disabled={!phoneNumber || !password}
         style={[styles.button, (!phoneNumber || !password) ? styles.disabledButton : styles.activeButton]}
       >
-        <Text>Continue</Text>
+        <Text style={{color:'#fff'}}>Continue</Text>
         
       </TouchableOpacity>
 
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f4f6',
-    paddingHorizontal: 16,
     paddingVertical: 16,
+    paddingHorizontal: 20,
   },
   content: {
     marginTop: 8,
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
   },
   activeButton: {
     backgroundColor: '#2c7391',
+    textColor: '#fff'
   },
   modalOverlay: {
     flex: 1,

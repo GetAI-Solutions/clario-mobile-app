@@ -6,7 +6,7 @@ import { useTheme } from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 import { BASEURL } from '../services/api';
 import axios from 'axios';
-
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 
 const SettingsScreen = ({ navigation }) => {
@@ -27,10 +27,10 @@ const SettingsScreen = ({ navigation }) => {
       
       if (response.status === 200) {
         const updatedUser = { ...user, preferred_language: language };
-        setUser(updatedUser);
-        await AsyncStorage.setItem('userData', JSON.stringify(updatedUser));
-        Alert.alert(t('Language preference updated successfully'));
         console.log('Language preference updated successfully');
+        setUser(updatedUser);
+        Alert.alert(t('Language preference updated successfully'));
+        
       } else {
         Alert.alert(t('Failed to update language preference'));
         console.error('Failed to update language preference');

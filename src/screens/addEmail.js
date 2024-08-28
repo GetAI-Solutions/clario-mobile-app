@@ -15,7 +15,6 @@ const AddEmail = ({ navigation }) => {
   const [fullName, setFullName] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('ET');
   const [preferredLanguage, setPreferredLanguage] = useState('en');
-  const [languageModalVisible, setLanguageModalVisible] = useState(false);
 
   const route = useRoute();
   const { phoneNumber, dialCode, password } = route.params || {};
@@ -107,12 +106,6 @@ const AddEmail = ({ navigation }) => {
           countries={countries}
         />
 
-        <TouchableOpacity
-          style={styles.languageButton}
-          onPress={() => setLanguageModalVisible(true)}
-        >
-          <Text style={styles.languageButtonText}>Select Language</Text>
-        </TouchableOpacity>
 
         <TouchableOpacity
           onPress={handleSignup}
@@ -122,34 +115,6 @@ const AddEmail = ({ navigation }) => {
           {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Signup</Text>}
         </TouchableOpacity>
       </ScrollView>
-
-      <Modal
-        visible={languageModalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setLanguageModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.languageLabel}>Preferred Language</Text>
-            <Picker
-              selectedValue={preferredLanguage}
-              onValueChange={(itemValue) => setPreferredLanguage(itemValue)}
-              style={styles.languagePicker}
-            >
-              <Picker.Item label="English" value="en" />
-              <Picker.Item label="French" value="fr" />
-              <Picker.Item label="Swahili" value="sw" />
-            </Picker>
-            <TouchableOpacity
-              style={styles.closeButton}
-              onPress={() => setLanguageModalVisible(false)}
-            >
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };

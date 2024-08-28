@@ -73,7 +73,10 @@ const Login = ({ navigation }) => {
         errorMessage = 'Invalid email or password.';
       } else if (error.response.status === 500) {
         errorMessage = 'Server error. Please try again later.';
-      } else {
+      } else if (error.response.status === 404) {
+        errorMessage = "invalid credentials"
+      }
+      else {
         errorMessage = error.response.data.message || errorMessage;
       }
     } else {

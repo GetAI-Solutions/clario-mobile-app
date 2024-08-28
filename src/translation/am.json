@@ -64,5 +64,20 @@
     "discoveredProductPrefix": "እርሶ አግኝታችሁ",
     "discoveredProductSuffix": "! ምንኛ ተጠቃሚ ማወቅ ይፈልጋሉ, ጥቅሞች, ወይም አስተያየቶች?",
     "Sorry, something went wrong. Please try again later.": "ይቅርታ ተከስቷል እባክዎ ከጊዜ በኋላ ደግመው ይሞክሩ።",
-    "What do you want to know?": "ምን ማወቅ ይፈልጋሉ?"
+    "What do you want to know?": "ምን ማወቅ ይፈልጋሉ?",
+    "Feedback": "አስተያየት",
+    "Rate Your Experience": "ተሞክሮዎን ይምረጡ",
+    "Leave a comment": "አስተያየት ይተዉ",
+    "Your message here": "መልእክትዎ እዚህ",
+    "Send Feedback": "አስተያየት ይላኩ",
+    "Duly Noted!": "በትክክል ተመዝግቧል!",
+    "Thank you for your feedback! Your input helps us enhance our app to better meet your needs.": "ስለ አስተያየትዎ እናመሰግናለን! ያንተ እቅድ ፕሮግራማችንን እንደ እንድንማነት ያንሻልን ለማሻሻል።",
+    "Go Home": "ወደ መነሻ ገጽ ተመለስ",
+    "Feedback Submitted!": "አስተያየት ተላክቷል!",
+    "Thank you for your feedback!": "ስለ አስተያየትዎ እናመሰግናለን!",
+    "Error submitting feedback": "አስተያየት በመላክ ላይ ስህተት አጋጥሟል",
+    "Failed to submit feedback. Please try again later.": "አስተያየት መላክ አልተቻለም። እባኮትን ከገና ይሞክሩ።",
+    "Star": "ኮከብ",
+    "Star-outline": "ኮከብ-ውጭ",
+    "Close": "ዝጋ"
 }

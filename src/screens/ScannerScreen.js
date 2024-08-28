@@ -31,18 +31,19 @@ const ScannerScreen = ({ navigation }) => {
     try {
       const bar_code = data;
       const productData = await getProductSummary(bar_code, user.uid);
+      
       if (productData && productData.product) {
         const product = productData.product;
         setProduct(product);
         setProducts((prev) => [...prev, product]);
         navigation.navigate('ProductDetails', { product });
       } else {
-        console.log('barcode...', bar_code);
+        console.log('Product not found, barcode:', bar_code);
         navigation.navigate('ProductNotFound', { bar_code: bar_code });
       }
     } catch (err) {
       console.error('Upload error:', err);
-      handleError(err, bar_code); // Pass bar_code to handleError
+      handleError(err, data);  
     } finally {
       setLoading(false);
     }
@@ -51,19 +52,17 @@ const ScannerScreen = ({ navigation }) => {
   const handleError = (err, bar_code) => {
     if (err.response) {
       switch (err.response.status) {
-        case 400:
-          console.log('barcode...', bar_code);
+        case 404:
+          console.log('Product not found, barcode:', bar_code);
           navigation.navigate('ProductNotFound', { bar_code: bar_code });
+        case 400:
+          setError(t('Bad Request. Please check your input.'));
           break;
         case 401:
           setError(t('Unauthorized access.'));
           break;
         case 403:
           setError(t('Forbidden access.'));
-          break;
-        case 404:
-          console.log('barcode...', bar_code);
-          navigation.navigate('ProductNotFound', { bar_code: bar_code });
           break;
         case 408:
           setError(t('Request timeout.'));
@@ -94,7 +93,10 @@ const ScannerScreen = ({ navigation }) => {
     } else {
       setError(t('Unknown error. Please try again.'));
     }
+  
+    navigation.navigate('MainScreen');
   };
+  
   
   if (hasPermission === null) {
     return <View />;

@@ -64,5 +64,20 @@
     "discoveredProductPrefix": "You've discovered",
     "discoveredProductSuffix": "! Would you like to know more about its usage, benefits, or reviews?",
     "Sorry, something went wrong. Please try again later.": "Sorry, something went wrong. Please try again later.",
-    "What do you want to know?": "What do you want to know?"
+    "What do you want to know?": "What do you want to know?",
+    "Feedback": "Feedback",
+    "Rate Your Experience": "Rate Your Experience",
+    "Leave a comment": "Leave a comment",
+    "Your message here": "Your message here",
+    "Send Feedback": "Send Feedback",
+    "Duly Noted!": "Duly Noted!",
+    "Thank you for your feedback! Your input helps us enhance our app to better meet your needs.": "Thank you for your feedback! Your input helps us enhance our app to better meet your needs.",
+    "Go Home": "Go Home",
+    "Feedback Submitted!": "Feedback Submitted!",
+    "Thank you for your feedback!": "Thank you for your feedback!",
+    "Error submitting feedback": "Error submitting feedback",
+    "Failed to submit feedback. Please try again later.": "Failed to submit feedback. Please try again later.",
+    "Star": "Star",
+    "Star-outline": "Star-outline",
+    "Close": "Close"
   }

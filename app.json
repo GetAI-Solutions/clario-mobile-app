@@ -4,7 +4,7 @@
     "slug": "get-ai",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/logo2.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -32,7 +32,7 @@
       "usesCleartextTraffic": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/logo2.png"
     },
     "plugins": [
       "expo-font"
@@ -41,6 +41,10 @@
       "eas": {
         "projectId": "2e680c45-74cb-4eb5-b60d-4435fe7291c7"
       }
-    }
+    },
+    "author": "GetAi Team",
+    "keywords": ["product scanning", "AI-powered", "barcode scanning", "chatbot", "multilingual"],
+    "description": "GetAi is a product scanning app that uses AI to provide product summaries and connects users with a chatbot for more information. With multilingual support, users can scan or upload barcodes and access product information in their preferred language.",
+    "category": "Shopping"
   }
 }
