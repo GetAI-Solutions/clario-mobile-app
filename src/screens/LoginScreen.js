@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ImageBackground } from 'react-native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { loginUser } from '../services/authService';
@@ -88,8 +88,133 @@ const Login = ({ navigation }) => {
     Alert.alert('Error', errorMessage);
   };
 
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme === 'light' ? '#fff' : '#2a2a2a',
+      paddingHorizontal: 16,
+      paddingVertical: 16,
+    },
+    head: {
+      textAlign: 'left'
+    },
+    backButton: {
+      alignSelf: 'flex-start',
+      padding: 8,
+    },
+    title: {
+      color: theme === 'light' ? '#000' : '#daa163',
+      fontSize: 22,
+      fontWeight: '600',
+      textAlign: 'left',
+      marginVertical: 8,
+    },
+    subtitle: {
+      fontSize: 14,
+      color: theme === 'light' ? '#000' : '#fff',
+      textAlign: 'left',
+      marginBottom: 24,
+    },
+    inputContainer: {
+      marginBottom: 16,
+    },
+    label: {
+      fontSize: 14,
+      color: theme === 'light' ? '#000' : '#fff',
+      marginBottom: 8,
+    },
+    phoneInputContainer: {
+      flexDirection: 'row',
+      borderWidth: 1,
+      borderColor: theme === 'light' ? '#000' : '#fff',
+      borderRadius: 8,
+      alignItems: 'center',
+      paddingHorizontal: 12,
+    },
+    countryPickerButton: {
+      paddingRight: 10,
+    },
+    callingCode: {
+      paddingRight: 10,
+      fontSize: 14,
+    },
+    phoneInput: {
+      flex: 1,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      fontSize: 14,
+      color: theme === 'light' ? '#000' : '#fff',
+    },
+    input: {
+      borderWidth: 1,
+      color: theme === 'light' ? '#000' : '#fff',
+      borderColor: theme === 'light' ? '#000' : '#fff',
+      borderRadius: 8,
+      paddingHorizontal: 12,
+      paddingVertical: 10,
+      fontSize: 14,
+    },
+    passwordInputContainer: {
+      flexDirection: 'row',
+      borderWidth: 1,
+      borderColor: theme === 'light' ? '#000' : '#fff',
+      borderRadius: 8,
+      alignItems: 'center',
+      paddingHorizontal: 12,
+    },
+    passwordInput: {
+      flex: 1,
+      paddingVertical: 10,
+      fontSize: 14,
+    },
+    toggleButton: {
+      padding: 8,
+    },
+    footer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: 16,
+    },
+    forgotPassword: {
+      padding: 8,
+    },
+    switchLoginMethod: {
+      padding: 8,
+    },
+    linkText: {
+      color: theme === 'light' ? '#15718e' : '#daa163',
+    },
+    loginButton: {
+      backgroundColor: '#2c7391',
+      borderRadius: 100,
+      alignItems: 'center',
+      paddingVertical: 16,
+      position: 'absolute',
+      bottom: 20,
+      left: 0,
+      right: 0,
+      marginHorizontal: 20,
+    },
+    buttonText: {
+      color: '#FFFFFF',
+      fontWeight: '700',
+      fontSize: '1.2em'
+    },
+    disabledButton: {
+      backgroundColor: '#A1A1AA',
+    },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+    },
+  });
+
+
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
       <View style={styles.head}>
         <Text style={styles.title}>Log in to your account</Text>
@@ -104,7 +229,7 @@ const Login = ({ navigation }) => {
               onPress={() => setShowCountryPicker(true)}
               style={styles.countryPickerButton}
             >
-              <Text>{selectedCountry.dial_code}</Text>
+      <Text style={{color: theme === 'light' ? '#000' : '#daa163',}}>{selectedCountry.dial_code}</Text>
             </TouchableOpacity>
             <TextInput
               id="phoneNumber"
@@ -113,7 +238,7 @@ const Login = ({ navigation }) => {
               value={phoneNumber}
               onChangeText={handlePhoneNumberChange}
               keyboardType="phone-pad"
-              placeholderTextColor="#9CA3AF"
+              placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
             />
           </View>
         </View>
@@ -127,7 +252,7 @@ const Login = ({ navigation }) => {
             value={email}
             onChangeText={handleEmailChange}
             keyboardType="email-address"
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
           />
         </View>
       )}
@@ -142,10 +267,10 @@ const Login = ({ navigation }) => {
             value={password}
             onChangeText={handlePasswordChange}
             secureTextEntry={!showPassword}
-            placeholderTextColor="#9CA3AF"
+            placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
           />
           <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
-            <Icon name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={24} color="#9CA3AF" />
+            <Icon name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={24} color={theme === 'light' ? '#000' : '#daa163'} />
           </TouchableOpacity>
         </View>
       </View>
@@ -187,117 +312,6 @@ const Login = ({ navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f3f4f6',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-  },
-  head: {
-    textAlign: 'left'
-  },
-  backButton: {
-    alignSelf: 'flex-start',
-    padding: 8,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: '600',
-    textAlign: 'left',
-    marginVertical: 8,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#6B7280',
-    textAlign: 'left',
-    marginBottom: 24,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  label: {
-    fontSize: 14,
-    color: '#6B7280',
-    marginBottom: 8,
-  },
-  phoneInputContainer: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 8,
-    alignItems: 'center',
-    paddingHorizontal: 12,
-  },
-  countryPickerButton: {
-    paddingRight: 10,
-  },
-  callingCode: {
-    paddingRight: 10,
-    fontSize: 14,
-  },
-  phoneInput: {
-    flex: 1,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    fontSize: 14,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 14,
-  },
-  passwordInputContainer: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 8,
-    alignItems: 'center',
-    paddingHorizontal: 12,
-  },
-  passwordInput: {
-    flex: 1,
-    paddingVertical: 10,
-    fontSize: 14,
-  },
-  toggleButton: {
-    padding: 8,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  forgotPassword: {
-    padding: 8,
-  },
-  switchLoginMethod: {
-    padding: 8,
-  },
-  linkText: {
-    color: '#14B8A6',
-  },
-  loginButton: {
-    backgroundColor: '#2c7391',
-    borderRadius: 24,
-    alignItems: 'center',
-    paddingVertical: 12,
-    position: 'absolute',
-    bottom: 20,
-    left: 0,
-    right: 0,
-    marginHorizontal: 20,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontWeight: '600',
-  },
-  disabledButton: {
-    backgroundColor: '#A1A1AA',
-  },
-});
+
 
 export default Login;
