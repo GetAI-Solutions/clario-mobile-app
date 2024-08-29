@@ -14,6 +14,7 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 import MainDrawerNavigator from './DrawerNavigator';
 import UserContext from '../context/UserContext';
 import FeedbackScreen from '../screens/FeedbackScreen';
+import TabNavigator from './TabNavigator';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +38,7 @@ const AppNavigator = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name="MainScreen" component={MainDrawerNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="MainScreen" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="NoProductHistory" component={NoProductHistoryScreen} options={{ headerShown: false }} />
           <Stack.Screen name="UploadScreen" component={UploadScreen} options={{ headerShown: false }} />
           <Stack.Screen name="ScannerScreen" component={ScannerScreen} options={{ headerShown: false }} />
