@@ -71,6 +71,7 @@ const Login = ({ navigation }) => {
     let errorMessage = 'An unexpected error occurred. Please try again.';
   
     if (error.response) {
+      console.log('error status...', error.response.status)
       if (error.response.status === 401) {
         errorMessage = 'Invalid email or password.';
       } else if (error.response.status === 500) {

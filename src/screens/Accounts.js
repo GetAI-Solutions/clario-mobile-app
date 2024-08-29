@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect  } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import Header from '../components/Header'; 
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { updateUser } from '../services/apiService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AccountSecurityScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -118,6 +117,7 @@ const AccountSecurityScreen = ({ navigation }) => {
       paddingVertical: 15,
       borderRadius: 25,
       alignItems: 'center',
+      marginBottom: 20,
     },
     saveButtonText: {
       color: '#FFF',
@@ -127,7 +127,8 @@ const AccountSecurityScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.container}>
       <Header navigation={navigation} />
       <Text style={styles.title}>{t('Account & Security')}</Text>
 
@@ -197,6 +198,8 @@ const AccountSecurityScreen = ({ navigation }) => {
       </TouchableOpacity>
 
     </View>
+    </ScrollView>
+    
   );
 };
 

@@ -30,10 +30,10 @@ export const updateUser = async (preferences) => {
 }
 
 
-export const getDetailsFromPerplexity = async (product_name, bar_code) => {
+export const getDetailsFromPerplexity = async (product_name, bar_code, userID) => {
   const response = await axios.post(
     `${BASEURL}/common/get-details-from-perplexity`,
-    new URLSearchParams({ product_name, bar_code }),
+    new URLSearchParams({ product_name, bar_code, userID }),
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

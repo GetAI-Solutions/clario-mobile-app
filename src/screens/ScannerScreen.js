@@ -5,6 +5,7 @@ import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { getProductSummary } from '../services/apiService';
+import { Ionicons } from '@expo/vector-icons';
 
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
@@ -127,6 +128,13 @@ const ScannerScreen = ({ navigation }) => {
           </View>
         )}
       </BarCodeScanner>
+      <TouchableOpacity
+        style={styles.homeButton}
+        onPress={() => navigation.navigate('MainScreen')}
+      >
+        <Ionicons name="home" size={24} color="white" />
+        <Text style={styles.homeButtonText}>{t('Home')}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -177,6 +185,20 @@ const styles = StyleSheet.create({
   scanText: {
     color: '#fff',
     fontSize: 18,
+  },
+  homeButton: {
+    position: 'absolute',
+    bottom: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'tomato',
+    borderRadius: 5,
+  },
+  homeButtonText: {
+    color: 'white',
+    marginLeft: 5,
+    fontSize: 16,
   },
 });
 

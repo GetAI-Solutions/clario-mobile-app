@@ -7,6 +7,7 @@ import { useTheme } from '../context/ThemeContext';
 import { BASEURL } from '../services/api';
 import { chatPerplexityAi, getDetailsFromPerplexity } from '../services/apiService';
 import ProductContext from '../context/ProductContext';
+import UserContext from '../context/UserContext';
 
 
 const ProductNotFoundScreen = ({ navigation, route }) => {
@@ -18,6 +19,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const { user } = useContext(UserContext)
 
   const handleSearch = async () => {
     if (!bar_code) {
@@ -27,8 +29,8 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
     console.log('barcode...', bar_code)
     setLoading(true);
     try {
-      
-      const response = await getDetailsFromPerplexity(productName, bar_code);
+      const userID = user.uid
+      const response = await getDetailsFromPerplexity(productName, bar_code, userID);
       console.log('response object...', response)
       console.log("Navigating with product:", response.data);
       console.log("product details..", response.data.product.product_details)
