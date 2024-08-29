@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, ImageBackground } from 'react-native';
 import { CountryPicker } from 'react-native-country-codes-picker';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -54,6 +54,7 @@ const SignupPhone = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <View style={styles.content}>
         <Text style={styles.title}>Create an Account</Text>
         <Text style={styles.subtitle}>Enter your mobile number to verify your account</Text>
@@ -94,8 +95,7 @@ const SignupPhone = ({ navigation }) => {
         disabled={!phoneNumber || !password}
         style={[styles.button, (!phoneNumber || !password) ? styles.disabledButton : styles.activeButton]}
       >
-        <Text style={{color:'#fff'}}>Continue</Text>
-        
+        <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
 
       <Modal visible={showModal} transparent animationType="slide">
@@ -107,10 +107,10 @@ const SignupPhone = ({ navigation }) => {
             <Image source={require('../../assets/images/pop.png')} style={styles.modalImage} />
             <Text style={styles.modalTitle}>Confirm Your Phone Number</Text>
             <Text style={styles.modalText}>Is this correct? {selectedCountry.dial_code} {phoneNumber}</Text>
-            <Button
-              mode="contained"
-              onPress={handleContinue}
-              buttonColor="#2c7391"
+            <Button 
+              mode="contained" 
+              onPress={handleContinue} 
+              buttonColor="#15718E" 
               style={styles.modalButton}
             >
               <Text>Continue</Text>
@@ -137,9 +137,10 @@ const SignupPhone = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
     paddingVertical: 16,
-    paddingHorizontal: 20,
+    boxSize: 'border-box',
   },
   content: {
     marginTop: 8,
@@ -151,15 +152,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   subtitle: {
-    color: '#6b7280',
+    color: '#000',
     marginBottom: 24,
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#d1d5db',
-    borderRadius: 8,
+    borderColor: '#000',
+    borderRadius: 10,
     paddingHorizontal: 8,
     marginBottom: 16,
     backgroundColor: 'white',
@@ -181,18 +182,20 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     alignItems: 'center',
     paddingVertical: 12,
-    position: 'absolute',
-    bottom: 40, // adjust this value to your liking
-    left: 0,
-    right: 0,
-    marginHorizontal: 20,
+    borderRadius: 100,
+    marginTop: 24,
   },
   disabledButton: {
-    backgroundColor: '#9ca3af',
+    backgroundColor: '#acacac',
   },
   activeButton: {
-    backgroundColor: '#2c7391',
-    textColor: '#fff'
+    backgroundColor: '#15718E',
+  },
+  buttonText: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'white',
   },
   modalOverlay: {
     flex: 1,
@@ -202,8 +205,9 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'white',
-    borderRadius: 8,
+    borderRadius: 25,
     padding: 16,
+    paddingBottom: 32,
     width: '80%',
     alignItems: 'center',
   },
@@ -213,7 +217,7 @@ const styles = StyleSheet.create({
     right: 16,
   },
   modalCloseText: {
-    fontSize: 24,
+    fontSize: 28,
   },
   modalImage: {
     marginBottom: 16,
@@ -224,16 +228,22 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   modalText: {
-    color: '#6b7280',
+    color: '#000',
     marginBottom: 16,
   },
   modalButton: {
-    width: '100%',
-    paddingVertical: 12,
-    borderRadius: 48,
+    width: '80%',
+    paddingVertical: 8,
+    borderRadius: 100,
     marginBottom: 8,
-    color: '#2c7391',
+    fontWeight: 'bold',
   },
+  texture: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+  }
 });
 
 export default SignupPhone;

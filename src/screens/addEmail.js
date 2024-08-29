@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ScrollView, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ScrollView, Modal, ImageBackground } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 import EmailInput from '../components/EmailInput';
@@ -93,6 +93,7 @@ const AddEmail = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Add your email</Text>
@@ -122,9 +123,7 @@ const AddEmail = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
-  },
-  content: {
+    backgroundColor: '#fff',
     paddingHorizontal: 16,
     paddingVertical: 16,
   },
@@ -195,6 +194,12 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: '#fff',
   },
+  texture: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+  }
 });
 
 export default AddEmail;
