@@ -7,8 +7,10 @@ import { storeUserData } from '../utils/storageUtils';
 import Header from '../components/Header';
 import UserContext from '../context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTheme } from '../context/ThemeContext';
 
 const Login = ({ navigation }) => {
+  const { theme } = useTheme();
   const [isPhoneLogin, setIsPhoneLogin] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');

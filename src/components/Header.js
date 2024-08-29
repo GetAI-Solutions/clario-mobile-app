@@ -15,7 +15,7 @@ const Header = ({ navigation }) => {
       paddingBottom: 8,
       marginBottom: 16,
       marginTop: 25,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      backgroundColor: 'transparent',
     },
   });
 
