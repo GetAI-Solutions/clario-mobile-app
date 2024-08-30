@@ -15,6 +15,7 @@ import MainDrawerNavigator from './DrawerNavigator';
 import UserContext from '../context/UserContext';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import TabNavigator from './TabNavigator';
+import HomeScreen from '../screens/HomeScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,12 +39,13 @@ const AppNavigator = () => {
         </>
       ) : (
         <>
-          <Stack.Screen name="MainScreen" component={TabNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="MainTabScreen" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="NoProductHistory" component={NoProductHistoryScreen} options={{ headerShown: false }} />
           <Stack.Screen name="UploadScreen" component={UploadScreen} options={{ headerShown: false }} />
           <Stack.Screen name="ScannerScreen" component={ScannerScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Chatbot" component={Chatbot} options={{ headerShown: false }} />
-          <Stack.Screen name='Feedback' component={FeedbackScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ headerShown: false }} />
+          
         </>
       )}
     </Stack.Navigator>

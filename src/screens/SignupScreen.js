@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image } fro
 import { CountryPicker } from 'react-native-country-codes-picker';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Header from '../components/Header';
+import Header from '../components/AuthHeader';
 
 const SignupPhone = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState('');

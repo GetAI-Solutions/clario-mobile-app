@@ -1,16 +1,16 @@
 import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
 
-const MediumCard = ({id, brand, name, img, onpress}) => {
+const MediumCard = ({ name, brand, image, onPress }) => {
     return (
-        <TouchableOpacity key={id} style={styles.card} onpress={onpress}>
+        <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.blueOverlay}>
-              <Text style={styles.productBrand}>{brand}</Text>
-              <Text style={styles.productName}>{name}</Text>
+                <Text style={styles.productBrand}>{brand}</Text>
+                <Text style={styles.productName}>{name}</Text>
             </View>
-            <Image source={img} style={styles.productImage} />
+            <Image source={image} style={styles.productImage} />
         </TouchableOpacity>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     card: {
@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     productBrand: {
         marginLeft: 12,
         fontWeight: '600',
-        color: '#fff',
+        color: '#000',
     },
     productName: {
-        color: '#fff',
+        color: '#000',
         marginLeft: 12,
     },  
     blueOverlay: {

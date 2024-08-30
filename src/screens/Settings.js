@@ -20,6 +20,7 @@ const SettingsScreen = ({ navigation }) => {
     setUser((prevUser) => ({ ...prevUser, preferred_language: language }));
 
     try {
+      console.log('id', user.uid)
       const response = await axios.patch(`${BASEURL}/users/update-user-preference`, {
         user_id: user.uid,
         preferred_language: language,

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ScrollView, Modal } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import Header from '../components/Header';
 import EmailInput from '../components/EmailInput';
 import FullNameInput from '../components/FullNameInput';
 import CountryPickerComponent from '../components/CountryPickerComponent';
 import countryList from 'react-select-country-list';
 import { signup, sendOtp } from '../services/authService';
-import { Picker } from '@react-native-picker/picker';
+import Header from '../components/AuthHeader';
 
 const AddEmail = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -47,7 +46,10 @@ const AddEmail = ({ navigation }) => {
         } else {
           Alert.alert("An error occurred", "Could not send OTP. Please try again.");
         }
-      } else {
+      } else if(signupResponse.status === 400) {
+        Alert.alert('Email already registered!')
+      }
+      else {
         Alert.alert('Error', 'An unexpected error occurred during signup. Please try again.');
       }
     } catch (error) {
@@ -60,37 +62,38 @@ const AddEmail = ({ navigation }) => {
   const handleError = (error) => {
     if (error.response) {
       const status = error.response.status;
-      const message = error.response.data.message || 'An unexpected error occurred. Please try again.';
-
+      let message = error.response.data.message;
+  
       switch (status) {
         case 400:
-          Alert.alert('Error', message || 'Bad Request. Please check your input.');
+          message = message || 'Email already used, try with another one!';
           break;
         case 401:
-          Alert.alert('Unauthorized', 'You are not authorized to perform this action.');
+          message = 'You are not authorized to perform this action.';
           break;
         case 403:
-          Alert.alert('Forbidden', 'You do not have permission to perform this action.');
+          message = 'You do not have permission to perform this action.';
           break;
         case 404:
-          Alert.alert('Not Found', 'The requested resource was not found.');
+          message = 'The requested resource was not found.';
           break;
         case 422:
-          Alert.alert('Unprocessable Entity', 'The provided data was invalid.');
+          message = 'The provided data was invalid.';
           break;
         case 500:
-          Alert.alert('Server Error', 'An error occurred on the server. Please try again later.');
+          message = 'An error occurred on the server. Please try again later.';
           break;
         default:
-          Alert.alert('Error', message);
+          message = message || 'An unexpected error occurred. Please try again.';
       }
+  
+      Alert.alert('Error', message);
     } else if (error.request) {
       Alert.alert('Network Error', 'No response received from the server. Please check your internet connection.');
     } else {
       Alert.alert('Error', error.message || 'An error occurred. Please try again.');
     }
   };
-
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
