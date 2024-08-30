@@ -40,7 +40,7 @@ const HomeScreen = ({ navigation }) => {
 const products = [
   
   {
-    section: t('Popular Today'),
+    section: 'Popular Today',
     items: [
       {
         product_barcode: 9554100150802,
@@ -76,7 +76,7 @@ const products = [
     ],
   },
   {
-    section: t('African Made'),
+    section: 'African Made',
     items: [
       {
         product_barcode: 8719327078297,
@@ -121,7 +121,7 @@ const products = [
     ],
   },
   {
-    section: t('Sponsored'),
+    section: 'Sponsored',
     items: [
       {
         product_barcode: 6154000082079,
@@ -150,7 +150,7 @@ const products = [
     ],
   },
   {
-    section: t('Latest Additions'),
+    section: 'Latest Additions',
     items: [
       {
         product_barcode: 955410015080,
@@ -159,10 +159,10 @@ const products = [
         image_url:  require('../../assets/images/coco.jpg')
       },
       {
-        product_barcode: 955410015802,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        "product_barcode": "6291007700213",
+        "product_name": "Nutro Marie Tea Time Biscuits",
+        "product_summary": "Nutro Marie Tea Time Biscuits are light and crispy, made from wheat flour with a subtly sweet flavor. Available in 200g and 45g packs, they're perfect for pairing with tea or coffee. Each 200g pack offers approximately 110 calories per 5 biscuits. Rated 4.1/5 for taste and texture.",
+        "image_url": require('../../assets/images/marie.jpg')
       },
       {
         product_barcode: 8084100150802,
@@ -171,10 +171,10 @@ const products = [
         image_url:  require('../../assets/images/coco.jpg')
       },
       {
-        product_barcode: 78700150802,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        "product_barcode": "6290400030095",
+        "product_name": "Quaker White Oats",
+        "product_summary": "Quaker White Oats are 100% whole grain rolled oats, providing a nutritious start to your day. Each 500g pack from PepsiCo offers 374 kcal per 100g, with high fiber and protein content. Ideal for oatmeal, baking, and smoothies. No artificial additives.",
+        "image_url": require('../../assets/images/quaker.jpg')
       },
     ],
   },
@@ -244,13 +244,13 @@ const products = [
     </View>
     {products.map((category, categoryIndex) => (
       <View key={categoryIndex} style={styles.section}>
-        <Text style={[styles.sectionTitle, category.section === t('Sponsored') && styles.sponsoredTitle]}>
-          {category.section}
+        <Text style={[styles.sectionTitle, category.section === 'Sponsored' && styles.sponsoredTitle]}>
+          {t(category.section)}
         </Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.productsRow}>
           {category.items.map((product, index) => {
             switch (category.section) {
-              case t('Popular Today'):
+              case 'Popular Today':
                 return (
                   <WideCard
                       key={index}
@@ -260,7 +260,7 @@ const products = [
                       onPress={() => handlePress(product)}
                     />
                 );
-              case t('African Made'):
+              case 'African Made':
                 return (
                   <NarrowCard
                       key={index}
