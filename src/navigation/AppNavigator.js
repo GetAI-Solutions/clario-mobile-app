@@ -28,7 +28,7 @@ const AppNavigator = () => {
 
   return (
     <Stack.Navigator initialRouteName="OnboardingScreen">
-      {/* {!user ? (
+      {!user ? (
         <>
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
@@ -37,7 +37,7 @@ const AppNavigator = () => {
           <Stack.Screen name="EmailSignup" component={AddEmail} options={{ headerShown: false }} />
           <Stack.Screen name="VerifyEmail" component={VerifyPhone} options={{ headerShown: false }} />
         </>
-      ) : ( */}
+      ) : (
         <>
           <Stack.Screen name="MainTabScreen" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="NoProductHistory" component={NoProductHistoryScreen} options={{ headerShown: false }} />
@@ -47,7 +47,7 @@ const AppNavigator = () => {
           <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ headerShown: false }} />
           
         </>
-      {/* )} */}
+      )}
     </Stack.Navigator>
   );
 };
