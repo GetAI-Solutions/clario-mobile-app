@@ -4,9 +4,9 @@ import { CountryPicker } from 'react-native-country-codes-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { loginUser } from '../services/authService';
 import { storeUserData } from '../utils/storageUtils';
-import Header from '../components/Header';
 import UserContext from '../context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from '../components/AuthHeader';
 import { useTheme } from '../context/ThemeContext';
 
 const Login = ({ navigation }) => {
@@ -20,6 +20,7 @@ const Login = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+233', name: 'Ghana' });
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState('');
 
 
 
@@ -42,6 +43,7 @@ const Login = ({ navigation }) => {
 
   const handleLogin = async () => {
     setIsLoading(true);
+    setErrorMessage(''); 
     try {
       const loginData = {
         email: isPhoneLogin ? undefined : email,
@@ -71,22 +73,25 @@ const Login = ({ navigation }) => {
     let errorMessage = 'An unexpected error occurred. Please try again.';
   
     if (error.response) {
-      console.log('error status...', error.response.status)
-      if (error.response.status === 401) {
-        errorMessage = 'Invalid email or password.';
-      } else if (error.response.status === 500) {
-        errorMessage = 'Server error. Please try again later.';
-      } else if (error.response.status === 404) {
-        errorMessage = "invalid credentials"
+      console.log('Error response status:', error.response.status);
+      
+      switch (error.response.status) {
+        case 400:
+          return setErrorMessage('Invalid email or password.');
+        case 401:
+          return setErrorMessage('Invalid email or password.');
+        case 500:
+          return setErrorMessage('Server error. Please try again later.');
+        case 404:
+          return setErrorMessage('User not found.');
+        default:
+          return setErrorMessage(error.response.data.message || errorMessage);
       }
-      else {
-        errorMessage = error.response.data.message || errorMessage;
-      }
+    } else if (error.request) {
+      return setErrorMessage('Network error. Please check your connection.');
     } else {
-      errorMessage = 'Network error. Please check your connection.';
+      return setErrorMessage(error.message || errorMessage);
     }
-  
-    Alert.alert('Error', errorMessage);
   };
 
 
@@ -275,6 +280,10 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
+
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}
 
       <View style={styles.footer}>
         <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={styles.forgotPassword}>

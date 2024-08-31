@@ -80,6 +80,7 @@ const UploadScreen = ({ navigation }) => {
             const product = productData.product;
             setProduct(product);  
             setProducts((prev) => [...prev, product]);
+            console.log('navigating with product...', product)
             sendNotification(t('Product uploaded successfully!'));
             navigation.navigate('ProductDetails', { product });
           } else {

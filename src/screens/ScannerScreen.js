@@ -130,7 +130,7 @@ const ScannerScreen = ({ navigation }) => {
       </BarCodeScanner>
       <TouchableOpacity
         style={styles.homeButton}
-        onPress={() => navigation.navigate('MainScreen')}
+        onPress={() => navigation.navigate('MainTabScreen')}
       >
         <Ionicons name="home" size={24} color="white" />
         <Text style={styles.homeButtonText}>{t('Home')}</Text>

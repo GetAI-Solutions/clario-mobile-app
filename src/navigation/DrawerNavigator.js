@@ -16,10 +16,10 @@ import HomeScreen from '../screens/HomeScreen';
 const Drawer = createDrawerNavigator();
 
 export default function MainDrawerNavigator() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   return (
     <Drawer.Navigator
-      initialRouteName="MainScreen"
+      initialRouteName="MainDrawerScreen"
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerStyle: {
@@ -29,19 +29,19 @@ export default function MainDrawerNavigator() {
         headerShown: false,
       }}
     >
-      <Drawer.Screen name="MainScreen" component={MainScreen} />
+      <Drawer.Screen name="MainDrawerScreen" component={MainScreen} />
       <Drawer.Screen name="RateGetAi" component={RateGetAi} />
       <Drawer.Screen name="Feedback" component={FeedbackScreen} />
       <Drawer.Screen name="ContactUs" component={ContactUsScreen} />
       <Drawer.Screen name="Share" component={ShareScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="ProductDetails" component={ProductDetailsScreen} />
-      <Drawer.Screen name='ProductNotFound' component={ProductNotFoundScreen} />
-      <Drawer.Screen name='Profile' component={AccountScreen} />
+      <Drawer.Screen name="ProductNotFound" component={ProductNotFoundScreen} />
+      <Drawer.Screen name="Profile" component={AccountScreen} />
       <Drawer.Screen name="Landing" component={LandingScreen} />
-      <Drawer.Screen name='Home' component={HomeScreen} />
-      {/* Add more drawer items here */}
+      <Drawer.Screen name="Home" component={HomeScreen} />
     </Drawer.Navigator>
   );
 }
+
 

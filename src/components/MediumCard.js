@@ -1,48 +1,60 @@
-import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, Text, Dimensions, Platform } from 'react-native';
 
-const MediumCard = ({id, brand, name, img, onpress}) => {
+const { width, height } = Dimensions.get('window');
+
+const MediumCard = ({ name, brand, image, onPress }) => {
     return (
-        <TouchableOpacity key={id} style={styles.card} onpress={onpress}>
+        <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.blueOverlay}>
-              <Text style={styles.productBrand}>{brand}</Text>
-              <Text style={styles.productName}>{name}</Text>
+                <Text style={styles.productBrand}>{brand}</Text>
+                <Text style={styles.productName}>{name}</Text>
             </View>
-            <Image source={img} style={styles.productImage} />
+            <Image source={image} style={styles.productImage} resizeMode="cover" />
         </TouchableOpacity>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     card: {
-        boxShadow: '0px 0px 31.608px -10.196px rgba(0, 0, 0, 0.25)',
-        width: '43vw',
-        height: '43vw',
+        width: width * 0.43,  
+        height: width * 0.43, 
         backgroundColor: 'grey',
         marginRight: 16,
         borderRadius: 15,
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.8,
+                shadowRadius: 2,
+            },
+            android: {
+                elevation: 5,
+            },
+        }),
     },
     productImage: { 
         position: 'absolute',
         width: '100%',
         height: '100%',
         borderRadius: 15,
-        marginBottom: 10,
     },
     productBrand: {
         marginLeft: 12,
         fontWeight: '600',
-        color: '#fff',
+        color: '#000',
     },
     productName: {
-        color: '#fff',
+        color: '#000',
         marginLeft: 12,
     },  
     blueOverlay: {
         position: 'absolute',
-        height: '100%',
+        height: '30%',
         width: '100%',
-        top: '70%',
-        zIndex: 3,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,255,0.2)',
+        justifyContent: 'center',
     }
 });
 

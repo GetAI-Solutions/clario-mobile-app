@@ -11,12 +11,12 @@ import { useTranslation } from 'react-i18next';
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
-  const { theme } = useTheme(); 
-  const { t } = useTranslation(); 
+  const { theme } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Tab.Navigator
-      initialRouteName="MainScreen" 
+      initialRouteName="MainTabScreen"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -27,40 +27,41 @@ export default function TabNavigator() {
             iconName = focused ? 'settings' : 'settings-outline';
           } else if (route.name === 'Accounts') {
             iconName = focused ? 'person' : 'person-outline';
-          } else if (route.name === 'MainScreen') {
+          } else if (route.name === 'MainTabScreen') {
             iconName = focused ? 'menu' : 'menu-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: theme === 'dark' ? '#FF6347' : '#FF4500', 
-        tabBarInactiveTintColor: theme === 'dark' ? '#B0B0B0' : '#808080', 
+        tabBarActiveTintColor: theme === 'dark' ? '#FF6347' : '#FF4500',
+        tabBarInactiveTintColor: theme === 'dark' ? '#B0B0B0' : '#808080',
         tabBarStyle: {
-          backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff', 
+          backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
         },
         headerShown: false,
       })}
     >
-      <Tab.Screen 
-        name="MainScreen" 
-        component={MainDrawerNavigator} 
-        options={{ tabBarLabel: t('Main Menu') }} 
+      <Tab.Screen
+        name="MainTabScreen"
+        component={MainDrawerNavigator}
+        options={{ tabBarLabel: t('Main Menu') }}
       />
-      <Tab.Screen 
-        name="Home" 
-        component={HomeScreen} 
-        options={{ tabBarLabel: t('Home') }} 
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarLabel: t('Home') }}
       />
-      <Tab.Screen 
-        name="Settings" 
-        component={SettingsScreen} 
-        options={{ tabBarLabel: t('Settings') }} 
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{ tabBarLabel: t('Settings') }}
       />
-      <Tab.Screen 
-        name="Accounts" 
-        component={AccountScreen} 
-        options={{ tabBarLabel: t('Accounts') }} 
+      <Tab.Screen
+        name="Accounts"
+        component={AccountScreen}
+        options={{ tabBarLabel: t('Accounts') }}
       />
     </Tab.Navigator>
   );
 }
+

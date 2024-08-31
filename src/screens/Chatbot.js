@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, FlatList, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, FlatList,  KeyboardAvoidingView, Platform } from 'react-native';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
 import { BASEURL } from '../services/api';

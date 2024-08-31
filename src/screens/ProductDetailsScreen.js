@@ -89,10 +89,15 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.productContainer}>
-          <Image 
-            source={product.image_url && product.image_url !== "soon" ? { uri: product.image_url } : require('../../assets/images/else.png')} 
-            style={styles.productImage} 
-          />
+        <Image 
+          source={
+            // Check if image_url is a remote URI or a local image
+            typeof product.image_url === 'string' && product.image_url !== "" 
+              ? { uri: product.image_url } 
+              : product.image_url || require('../../assets/images/else.png')
+          } 
+          style={styles.productImage} 
+         />
           <Text style={styles.productName}>{cleanText(product.product_name)}</Text>
           <Text style={styles.productDescription}>
             {showFullDescription ? cleanText(product.product_summary) : truncatedDescription}
