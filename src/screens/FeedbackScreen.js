@@ -41,14 +41,14 @@ const FeedbackScreen = ({ navigation }) => {
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F5F5F5',
     },
     title: {
-      fontSize: 18,
+      fontSize: '1.4em',
       fontWeight: '600',
       marginVertical: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     header: {
-      fontSize: 14,
-      fontWeight: '400',
+      fontSize: '1em',
+      fontWeight: '500',
       marginBottom: 10,
       alignSelf: 'center',
       marginTop: 20,
@@ -60,69 +60,69 @@ const FeedbackScreen = ({ navigation }) => {
       marginBottom: 20,
     },
     subHeader: {
-      fontSize: 16,
+      fontSize: '1em',
       marginBottom: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     input: {
-      backgroundColor: theme === 'dark' ? '#333333' : '#FFF',
+      backgroundColor: 'transparent',
       padding: 10,
       borderRadius: 15,
       marginBottom: 20,
       height: 200,
       textAlignVertical: 'top',
-      borderColor: theme === 'dark' ? '#BBBBBB' : '#3299a8',
+      borderColor: theme === 'dark' ? '#daa163' : '#15718e',
       borderWidth: 1,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     button: {
       marginTop: 30,
-      backgroundColor:'#3299a8',
+      backgroundColor:'#15718e',
       paddingVertical: 15,
       borderRadius: 25,
       alignItems: 'center',
     },
     buttonText: {
       color: '#FFF',
-      fontSize: 16,
+      fontSize: '1.2em',
+      fontWeight: 700,
     },
     modalContainer: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'rgba(0,0,0,0.5)',
+      padding: 20,
     },
     modalContent: {
       backgroundColor: theme === 'dark' ? '#333333' : '#FFF',
       padding: 10,
-      borderRadius: 10,
-      alignItems: 'center',
+      borderRadius: 25,
+      alignItems: 'center', 
+      height: 550,
     },
     modalImage: {
-      height: 180,
-      width: 120,
-      marginBottom: 20,
+      width: '80%',
     },
     modalHeader: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 30,
+      fontSize: '1.5em',
+      fontWeight: 700,
+      marginBottom: 20,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     modalText: {
-      fontSize: 16,
+      fontSize: '1em',
       marginBottom: 20,
       textAlign: 'center',
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     modalGoHomeButton: {
       padding: 15,
-      backgroundColor: '#3299a8',
-      borderRadius: 17,
+      backgroundColor: '#15718e',
+      borderRadius: 50,
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth: 140,
-      minHeight: 40,
+      width: '80%',
     },
   });
 
@@ -137,7 +137,7 @@ const FeedbackScreen = ({ navigation }) => {
             <Icon
               name={i < rating ? 'star' : 'star-outline'}
               size={40}
-              color="#FFB400"
+              color="#daa163"
             />
           </TouchableOpacity>
         ))}
@@ -173,13 +173,20 @@ const FeedbackScreen = ({ navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <TouchableOpacity onPress={() => setModalVisible(false)}>
+            <TouchableOpacity 
+              style={{
+                position: 'absolute',
+                top: '5%',
+                left: '85%',
+              }}
+              onPress={() => setModalVisible(false)}>
               <Icon name="close" size={30} color={theme === 'dark' ? '#FFFFFF' : '#000000'} />
             </TouchableOpacity>
             <Image
               source={require('../../assets/images/noted.png')}
               style={styles.modalImage}
             />
+            <View style={{marginTop: -100, width: '70%', alignItems: 'center'}}>
             <Text style={styles.modalHeader}>{t("Duly Noted!")}</Text>
             <Text style={styles.modalText}>
               {t("Thank you for your feedback! Your input helps us enhance our app to better meet your needs.")}
@@ -187,6 +194,7 @@ const FeedbackScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => {navigation.navigate('MainScreen'); setModalVisible(false); }} style={styles.modalGoHomeButton}>
               <Text style={styles.buttonText}>{t("Go Home")}</Text>
             </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>

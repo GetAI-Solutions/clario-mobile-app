@@ -1,15 +1,11 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Touchable } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, Touchable, ImageBackground } from 'react-native';
 import WideCard from '../components/WideCard';
 import NarrowCard from '../components/NarrowCard';
 import MediumCard from '../components/MediumCard';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-
-
-
-
-
+// import { LinearGradient } from 'react-native-linear-gradient';
 
 /** an array of objects that represent each
  * section, in each object the following data/properties are required:
@@ -46,7 +42,7 @@ const products = [
         product_barcode: 9554100150802,
         product_name: 'Enrich Coco Crunch',
         product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        image_url:  require('../../assets/images/cococrunch.png')
       },
       {
         product_barcode: 6224009091270,
@@ -71,7 +67,7 @@ const products = [
       The product is positioned as a healthy beverage choice, targeting those looking for natural fruit juices. Its sweet and fruity flavor profile is designed to attract mango lovers and those seeking a tropical taste experience.
 
       Overall, Hub Mango Juice offers a blend of quality, taste, and health benefits, making it a popular choice among consumers looking for natural fruit beverages.`,
-        image_url: require('../../assets/images/hub.jpg')
+        image_url: require('../../assets/images/hub.png')
       },
     ],
   },
@@ -104,19 +100,19 @@ const products = [
         These chips are marketed as a flavorful snack that highlights Ethiopian culinary traditions, appealing to both local consumers and tourists looking for authentic Ethiopian snacks.
 
         In summary, Habesha Spice Sun Chips offer a tasty and culturally resonant snacking option, combining quality ingredients with local flavor.`,
-          image_url: require('../../assets/images/chips.jpg')
+          image_url: require('../../assets/images/sunchips.jpeg')
       },
       {
         product_barcode: 4005808226740,
         product_name: 'Nivea Men Body Lotion',
         product_summary: `NIVEA Men Body Lotion provides intense hydration for men’s skin, offering a non-greasy feel and long-lasting moisture. It features key ingredients like glycerin and dimethicone to nourish and smooth the skin. Ideal for daily use on the body, face, hands, and feet, this lotion is available in various sizes and formulas, including options for different skin types and preferences.`,
-        image_url: require('../../assets/images/nivea.jpg')
+        image_url: require('../../assets/images/niveamen.png')
       },
       {
         product_barcode: 6186000077021,
         product_name: 'Queen Elisabeth Cocoa Butter',
         product_summary: 'Queen Elisabeth Cocoa Butter is a rich, creamy lotion designed to deeply moisturize and soothe dry skin. It provides intense hydration, improves skin texture, and creates a protective barrier against environmental factors. Ideal for use on hands, feet, elbows, and knees, it also helps reduce the appearance of stretch marks and cracked heels.',
-        image_url: require('../../assets/images/butter.jpg')
+        image_url: require('../../assets/images/butter.jpeg')
       },
     ],
   },
@@ -127,25 +123,25 @@ const products = [
         product_barcode: 6154000082079,
         product_name: 'Bigi Cola',
         product_summary: 'Bigi Cola is a carbonated soft drink by Rite Foods Limited, introduced in 2016. It offers a refreshing taste with ingredients including sugar, caffeine, and flavorings. Available in cans and PET bottles, it’s widely sold across Nigeria and online. Bigi Cola provides an affordable alternative to other cola brands.',
-        image_url: require('../../assets/images/bigi.jpg')
+        image_url: require('../../assets/images/bigidrinks.jpg')
       },
       {
         product_barcode: 6161106960842,
         product_name: 'Nestlé Cerelac',
         product_summary: 'Nestlé Cerelac is an instant cereal designed for infants 6-24 months old, used as a supplement to breast milk. Available in various flavors and fortified with essential vitamins and minerals, it helps introduce new tastes and textures. Cerelac is available globally in tins and cans, but should be used alongside breastfeeding or formula, not as a replacement.',
-        image_url: require('../../assets/images/cerelac.jpg')
+        image_url: require('../../assets/images/cerelac.png')
       },
       {
         product_barcode: 955001502,
         product_name: 'Enrich Coco Crunch',
         product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        image_url:  require('../../assets/images/cococrunch.png')
       },
       {
         product_barcode: 554100150802,
         product_name: 'Enrich Coco Crunch',
         product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        image_url:  require('../../assets/images/cococrunch.png')
       },
     ],
   },
@@ -156,25 +152,25 @@ const products = [
         product_barcode: 955410015080,
         product_name: 'Enrich Coco Crunch',
         product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        image_url:  require('../../assets/images/cococrunch.png')
       },
       {
         "product_barcode": "6291007700213",
         "product_name": "Nutro Marie Tea Time Biscuits",
         "product_summary": "Nutro Marie Tea Time Biscuits are light and crispy, made from wheat flour with a subtly sweet flavor. Available in 200g and 45g packs, they're perfect for pairing with tea or coffee. Each 200g pack offers approximately 110 calories per 5 biscuits. Rated 4.1/5 for taste and texture.",
-        "image_url": require('../../assets/images/marie.jpg')
+        "image_url": require('../../assets/images/marie.png')
       },
       {
         product_barcode: 8084100150802,
         product_name: 'Enrich Coco Crunch',
         product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/coco.jpg')
+        image_url:  require('../../assets/images/cococrunch.png')
       },
       {
         "product_barcode": "6290400030095",
         "product_name": "Quaker White Oats",
         "product_summary": "Quaker White Oats are 100% whole grain rolled oats, providing a nutritious start to your day. Each 500g pack from PepsiCo offers 374 kcal per 100g, with high fiber and protein content. Ideal for oatmeal, baking, and smoothies. No artificial additives.",
-        "image_url": require('../../assets/images/quaker.jpg')
+        "image_url": require('../../assets/images/quaker.png')
       },
     ],
   },
@@ -186,7 +182,7 @@ const products = [
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'light' ? '#fff' : '#333',
+      backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e',
       padding: 20,
       paddingTop: 0,
     },
@@ -194,17 +190,26 @@ const products = [
       position: 'sticky',
       top: 0,
       left: 0,
-      backgroundColor: theme === 'light' ? 'white' : '#444',
+      backgroundColor: theme === 'light' ? 'white' : '#1e1e1e',
       zIndex: 1,
       height: 80,
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
     },
     headerText: {
-      fontSize: 20, // Adjust fontSize for better responsiveness
+      fontSize: '1.5em', // Adjust fontSize for better responsiveness
       fontWeight: '700',
-      color: theme === 'light' ? '#daa163' : '#ffcc66',
+      color: theme === 'light' ? '#15718e' : '#fff',
       marginLeft: 20,
+      marginTop: 20,
+    },
+    logo: {
+      position: 'absolute',
+      top: 15,
+      left: '80%',
+      width: 50,
+      height: 50,
+      resizeMode: 'contain',
     },
     section: {
       marginTop: 20,
@@ -213,11 +218,11 @@ const products = [
     sectionTitle: {
       fontSize: 28,
       fontWeight: '700',
-      color: theme === 'light' ? '#15718e' : '#a0d1e3',
+      color: theme === 'dark' ? '#FFF' : '#15718e',
       marginBottom: 10,
     },
     sponsoredTitle: {
-      color: theme === 'light' ? '#daa163' : '#ffcc66',
+      color:  '#faad5e',
     },
     productsRow: {
       flexDirection: 'row',
@@ -227,24 +232,25 @@ const products = [
       width: '48%',
       marginBottom: 20,
     },
-    svgStyle: {
-      position: 'sticky',
-      bottom: 0,
-      left: 0,
-      width: '101%',
-      height: 80,
-      zIndex: 1,
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+      zIndex: -1,
     }
   });
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView >
     <View style={styles.header}>
+      <Image source={require('../../assets/images/getAI-logo.png')} style={styles.logo}></Image>
       <Text style={styles.headerText}>GetAI</Text>
     </View>
+    <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
     {products.map((category, categoryIndex) => (
       <View key={categoryIndex} style={styles.section}>
-        <Text style={[styles.sectionTitle, category.section === 'Sponsored' && styles.sponsoredTitle]}>
+        <Text style={[styles.sectionTitle, (category.section === 'Sponsored' || category.section === 'Latest Additions') && styles.sponsoredTitle]}>
           {t(category.section)}
         </Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.productsRow}>
@@ -285,6 +291,7 @@ const products = [
         </ScrollView>
       </View>
     ))}
+    </View>
   </ScrollView>
   );
 };

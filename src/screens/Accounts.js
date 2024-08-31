@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect  } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import Header from '../components/Header'; 
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
@@ -75,12 +75,12 @@ const AccountSecurityScreen = ({ navigation }) => {
       marginTop: 10,
       paddingHorizontal: 10,
       paddingVertical: 5,
-      borderColor: '#3299a8',
+      borderColor: '#15718e',
       borderWidth: 1,
       borderRadius: 20,
     },
     changePictureText: {
-      color: '#3299a8',
+      color: '#15718e',
       fontSize: 14,
     },
     inputContainer: {
@@ -109,11 +109,11 @@ const AccountSecurityScreen = ({ navigation }) => {
     icon: {
       width: 20,
       height: 20,
-      tintColor: '#3299a8',
+      tintColor: '#15718e',
     },
     saveButton: {
       marginTop: 30,
-      backgroundColor: '#3299a8',
+      backgroundColor: '#15718e',
       paddingVertical: 15,
       borderRadius: 25,
       alignItems: 'center',
@@ -124,11 +124,16 @@ const AccountSecurityScreen = ({ navigation }) => {
       fontSize: 16,
       fontWeight: '600',
     },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+    },
   });
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
+    <View style={styles.container}>
+        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
       <Text style={styles.title}>{t('Account & Security')}</Text>
 
@@ -198,7 +203,7 @@ const AccountSecurityScreen = ({ navigation }) => {
       </TouchableOpacity>
 
     </View>
-    </ScrollView>
+ 
     
   );
 };

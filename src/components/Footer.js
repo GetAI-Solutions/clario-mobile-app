@@ -9,18 +9,21 @@ const Footer = ({ onUpload, onScan }) => {
 
   const styles = StyleSheet.create({
     footer: {
+      position: 'absolute',
       flexDirection: 'row',
       justifyContent: 'center',
       padding: 16,
       paddingBottom: 64,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      backgroundColor: 'transparent',
+      top: '80%',
+      alignSelf: 'center',
     },
     button: {
       alignItems: 'center',
       marginHorizontal: 20,
     },
     iconWrapper: {
-      backgroundColor: theme === 'dark' ? '#333' : '#2c7391',
+      backgroundColor: theme === 'dark' ? '#333' : '#15718e',
       borderRadius: 50,
       padding: 10,
       marginBottom: 16,

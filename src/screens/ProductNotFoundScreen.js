@@ -72,7 +72,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
       paddingHorizontal: 20,
     },
     content: {

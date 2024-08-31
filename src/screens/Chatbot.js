@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, FlatList,  KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, FlatList,  KeyboardAvoidingView, Platform } from 'react-native';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
 import { BASEURL } from '../services/api';
@@ -21,7 +21,7 @@ const ChatbotScreen = ({ navigation, route }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#f5f5f5',
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
       paddingHorizontal: 20,
     },
     messageArea: {
@@ -45,29 +45,42 @@ const ChatbotScreen = ({ navigation, route }) => {
       backgroundColor: theme === 'dark' ? '#555' : '#fff',
       flexDirection: 'row',
       borderTopLeftRadius: 0,
+      shadowColor: '#000',
+      shadowOpacity: 0.1,
+      shadowRadius: 10,
+      shadowOffset: { width: 0, height: 5 },
+      elevation: 3,
     },
     messageText: {
       color: theme === 'dark' ? '#fff' : '#000',
       flexShrink: 1,
     },
     botImage: {
-      width: 30,
-      height: 30,
+      width: 40,
+      height: 40,
       marginRight: 10,
+      resizeMode: 'contain',
     },
     inputArea: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: 16,
       paddingVertical: 8,
-      borderTopWidth: 1,
-      borderTopColor: theme === 'dark' ? '#555' : '#ccc',
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
+      backgroundColor: 'transparent',
+      marginBottom: 12,
+    },
+    inputContainer: {
+      borderRadius: 20,
+      borderWidth: 2,
+      borderColor: theme === 'light' ? '#15718e' : '#daa163',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     textInput: {
       flex: 1,
-      borderWidth: 1,
-      borderColor: theme === 'dark' ? '#555' : '#ccc',
       borderRadius: 20,
       paddingHorizontal: 12,
       paddingVertical: 8,
@@ -76,12 +89,17 @@ const ChatbotScreen = ({ navigation, route }) => {
       color: theme === 'dark' ? '#fff' : '#000',
     },
     sendButton: {
-      padding: 1,
-      backgroundColor: theme === 'dark' ? '#2c7391' : '#2c7391',
+      padding: 2,
+      backgroundColor: theme === 'dark' ? '#daa163' : '#15718e',
+      width: 35,
+      height: 35,
+      borderRadius: '100%',
     },
     sendIcon: {
-      width: 24,
-      height: 24,
+      width: 20,
+      height: 20,
+      alignSelf: 'center',
+      marginTop: 4,
     },
     loadingIndicator: {
       position: 'absolute',
@@ -89,6 +107,11 @@ const ChatbotScreen = ({ navigation, route }) => {
       left: '50%',
       transform: [{ translateX: -12 }, { translateY: -12 }],
     },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+    }
   });
 
   useEffect(() => {
@@ -153,24 +176,35 @@ const ChatbotScreen = ({ navigation, route }) => {
     }
   };
   const renderMessage = ({ item }) => (
+    item.type == 'bot' ? (
+    <View style={{flexDirection: 'row'}}>
+      <Image
+        source={require('../../assets/images/chatbot1.png')}
+        style={styles.botImage}
+      />
+      <View
+        style={[
+          styles.messageContainer,
+          styles.botMessage,
+        ]}
+      >
+        <Text style={styles.messageText}>{item.text}</Text>
+      </View>
+    </View>) : (
     <View
       style={[
         styles.messageContainer,
-        item.type === 'bot' ? styles.botMessage : styles.userMessage,
+        styles.userMessage,
       ]}
     >
-      {item.type === 'bot' && (
-        <Image
-          source={require('../../assets/images/chatbot1.png')}
-          style={styles.botImage}
-        />
-      )}
       <Text style={styles.messageText}>{item.text}</Text>
     </View>
+    )
   );
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
       
       {/* Wrapped the content in KeyboardAvoidingView and made the FlatList scrollable */}
@@ -196,6 +230,7 @@ const ChatbotScreen = ({ navigation, route }) => {
 
         {/* Input area remains visible */}
         <View style={styles.inputArea}>
+          <View style={styles.inputContainer}>
           <TextInput 
             style={styles.textInput} 
             placeholder={t("What do you want to know?")}
@@ -203,13 +238,14 @@ const ChatbotScreen = ({ navigation, route }) => {
             value={inputText}
             onChangeText={setInputText}
             onSubmitEditing={handleSend} 
-          />
+            />
           <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
             <Image
               source={require('../../assets/images/send.png')}
               style={styles.sendIcon}
-            />
+              />
           </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
     </View>

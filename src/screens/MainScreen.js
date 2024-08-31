@@ -40,6 +40,7 @@ const MainScreen = ({ navigation }) => {
       fontWeight: 'bold',
       color: theme === 'dark' ? '#fff' : '#333',
       paddingLeft: 15,
+      marginVertical: 30,
     },
   });
 
@@ -54,9 +55,6 @@ const MainScreen = ({ navigation }) => {
         <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
       ) : (
         <>
-          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-            <Image source={require('../../assets/images/Frame.png')} style={styles.logo} />
-          </View>
           <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>
           <ProductList navigation={navigation} />
         </>

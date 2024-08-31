@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image,ImageBackground, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
@@ -33,8 +33,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     productContainer: {
       alignItems: 'center',
       backgroundColor: theme === 'dark' ? '#333' : '#F8F8F8',
-      padding: 20,
-      borderRadius: 10,
+      borderRadius: 30,
       shadowColor: '#000',
       shadowOpacity: 0.1,
       shadowRadius: 10,
@@ -43,11 +42,15 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       marginBottom: 20,
       borderColor: '#2c7391',
     },
+    textContainer: {
+      padding: 20,
+    },
     productImage: {
-      width: 200,
+      width: '100%',
       height: 200,
-      resizeMode: 'contain',
+      resizeMode: 'cover',
       marginBottom: 20,
+      borderRadius: 30,
     },
     productName: {
       fontSize: 22,
@@ -64,7 +67,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     },
     readMoreText: {
       fontSize: 14,
-      color: '#2c7391',
+      color: '#daa163',
       marginBottom: 20,
       textAlign: 'right',
     },
@@ -77,15 +80,21 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       alignSelf: 'center',
     },
     chatbotButtonText: {
-      fontSize: 16,
+      fontSize: '1.2em',
       color: '#FFFFFF',
       textAlign: 'center',
-      fontWeight: '600',
+      fontWeight: '700',
     },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+    }
   });
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.productContainer}>
@@ -98,6 +107,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
           } 
           style={styles.productImage} 
          />
+         <View style={styles.textContainer}>
           <Text style={styles.productName}>{cleanText(product.product_name)}</Text>
           <Text style={styles.productDescription}>
             {showFullDescription ? cleanText(product.product_summary) : truncatedDescription}
@@ -109,6 +119,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
               </Text>
             </TouchableOpacity>
           )}
+          </View>
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate('Chatbot', { product })}

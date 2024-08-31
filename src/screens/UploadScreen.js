@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator, ImageBackground, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadBarcode, getProductSummary } from '../services/apiService';
 import { fetchImageFromUri } from '../utils/imageUtils';
@@ -21,6 +21,7 @@ const UploadScreen = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const { width } = Dimensions.get("window");
 
   useEffect(() => {
     registerForPushNotificationsAsync();
@@ -162,19 +163,24 @@ const handleError = ( err, bar_code ) => {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: -150,
+      zIndex: -1,
     },
     uploadButton: {
-      backgroundColor: '#319795',
-      padding: 10,
-      borderRadius: 5,
-      marginTop: 20,
+      backgroundColor: theme === 'light' ? '#15718e' : '#daa163',
+      padding: 12,
+      width: '70%',
+      borderRadius: 50,
     },
     uploadButtonText: {
       color: '#FFF',
-      fontSize: 16,
+      fontSize: '1.2em',
+      fontWeight: 700,
+      alignSelf: 'center',
     },
     loadingContainer: {
       alignItems: 'center',
+      width: '100%',
     },
     statusText: {
       color: theme === 'dark' ? '#FFF' : '#333',
@@ -183,6 +189,7 @@ const handleError = ( err, bar_code ) => {
     errorContainer: {
       alignItems: 'center',
       marginTop: 20,
+      width: '100%'
     },
     errorText: {
       color: '#FF0000',
@@ -191,19 +198,54 @@ const handleError = ( err, bar_code ) => {
     },
     retryButton: {
       backgroundColor: '#FF0000',
-      padding: 10,
-      borderRadius: 5,
+      padding: 12,
+      width: '70%',
+      borderRadius: 50,
     },
     retryButtonText: {
       color: '#FFF',
-      fontSize: 16,
+      fontSize: '1.2em',
+      fontWeight: 700,
+      alignSelf: 'center',
     },
+    art: {
+      width: width * 0.8,
+      height: width * 0.8,
+      resizeMode: 'contain',
+    },
+    imgContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      width: '80%',
+      alignSelf: 'center',
+    },
+    description: {
+      textAlign: 'center',
+      width: '85%',
+      color: theme === 'light' ? '#000' : '#fff',
+      fontSize: '1.2em',
+      fontWeight: '600',
+      alignSelf: 'center',
+      marginTop: -30,
+      marginBottom: 30,
+    },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+      zIndex: -1,
+    }
   });
 
   return (
     <View style={styles.container}>
-      <Header navigation={navigation} />
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <Header navigation={navigation}/>
       <View style={styles.content}>
+      <View style={styles.imgContainer}>
+        <Image source={require('../../assets/images/uploadArt.png')} style={styles.art}/>
+        <Text style={styles.description}>Upload an image with your barcode. and we'll do the rest</Text>
+      </View>
         {!product && !loading && !error && (
           <TouchableOpacity onPress={handleImagePick} style={styles.uploadButton}>
             <Text style={styles.uploadButtonText}>{t('Upload Image')}</Text>
@@ -211,7 +253,7 @@ const handleError = ( err, bar_code ) => {
         )}
         {loading && (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#4CAF50" />
+            <ActivityIndicator size="large" color={theme === 'light' ? '#15718e' : '#daa163'} />
             <Text style={styles.statusText}>{statusMessage}</Text>
           </View>
         )}

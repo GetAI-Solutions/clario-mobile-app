@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   texture: {
-    position: 'fixed',
+    ...StyleSheet.absoluteFillObject,
     width: '100%',
     height: '100%',
   },

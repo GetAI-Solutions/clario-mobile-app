@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+import { Fontisto, Ionicons } from '@expo/vector-icons';
 import MainDrawerNavigator from './DrawerNavigator'; 
 import SettingsScreen from '../screens/Settings';
 import AccountScreen from '../screens/Accounts';
 import HomeScreen from '../screens/HomeScreen';
 import { useTheme } from '../context/ThemeContext'; 
-import { useTranslation } from 'react-i18next'; 
-
+import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
@@ -28,28 +28,39 @@ export default function TabNavigator() {
           } else if (route.name === 'Accounts') {
             iconName = focused ? 'person' : 'person-outline';
           } else if (route.name === 'MainTabScreen') {
-            iconName = focused ? 'menu' : 'menu-outline';
+            iconName = focused ? 'barcode' : 'barcode-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: theme === 'dark' ? '#FF6347' : '#FF4500',
-        tabBarInactiveTintColor: theme === 'dark' ? '#B0B0B0' : '#808080',
+        tabBarActiveTintColor: '#daa163',
+        tabBarInactiveTintColor: '#fff',
         tabBarStyle: {
-          backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
+          border: 'none',
+          backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',
+          paddingBottom: 10,
+          height: 70,
         },
+        tabBarLabelStyle: {
+          fontSize: '1em',
+          fontWeight: '700',
+        },
+        tabBarBackground: () => {
+          return(
+          <View style={{backgroundColor: '#15718e', width: '100%', height: '100%', borderTopLeftRadius: 30, borderTopRightRadius: 30,}}></View>
+        )},
         headerShown: false,
       })}
     >
       <Tab.Screen
-        name="MainTabScreen"
-        component={MainDrawerNavigator}
-        options={{ tabBarLabel: t('Main Menu') }}
-      />
-      <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{ tabBarLabel: t('Home') }}
+      />
+      <Tab.Screen
+        name="MainTabScreen"
+        component={MainDrawerNavigator}
+        options={{ tabBarLabel: t('Scanned') }}
       />
       <Tab.Screen
         name="Settings"

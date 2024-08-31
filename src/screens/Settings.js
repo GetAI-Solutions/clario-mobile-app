@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Switch, TouchableOpacity, Image, StyleSheet, Modal, Alert } from 'react-native';
+import { View, Text, Switch, TouchableOpacity, Image,ImageBackground, StyleSheet, Modal, Alert } from 'react-native';
 import Header from '../components/Header'; 
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
@@ -46,6 +46,7 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={[styles.container, theme === 'light' ? lightStyles.container : darkStyles.container]}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
       <Text style={[styles.title, theme === 'light' ? lightStyles.title : darkStyles.title]}>{t('Settings')}</Text>
       
@@ -62,7 +63,7 @@ const SettingsScreen = ({ navigation }) => {
           <Image source={require('../../assets/images/languages.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Languages')}</Text>
         </View>
-        <Image source={require('../../assets/images/dropdown.png')} style={[styles.icon, { tintColor: theme === 'dark' ? 'fff' : null }]} />
+        <Image source={require('../../assets/images/dropdown.png')} style={[styles.icon, { tintColor: theme === 'dark' ? '#fff' : '#000' }]} />
       </TouchableOpacity>
 
       <Modal visible={languageModalVisible} transparent animationType="slide">
