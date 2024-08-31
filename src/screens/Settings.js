@@ -138,7 +138,7 @@ const SettingsScreen = ({ navigation }) => {
 
 const lightStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#FFF',
   },
   title: {
     color: '#000',

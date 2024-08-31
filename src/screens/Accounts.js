@@ -54,7 +54,7 @@ const AccountSecurityScreen = ({ navigation }) => {
     container: {
       flex: 1,
       paddingHorizontal: 20,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
     },
     title: {
       fontSize: 18,
