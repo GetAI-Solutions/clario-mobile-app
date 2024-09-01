@@ -39,11 +39,11 @@ const products = [
     section: 'Popular Today',
     items: [
       {
-        product_barcode: 9554100150802,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/cococrunch.png')
-      },
+        "product_barcode": 9554100150802,
+        "product_name": "Enrich Coco Crunch",
+        "product_summary": "Enrich Coco Crunch is a chocolate-flavored breakfast cereal made by Enrich, a brand based in Ethiopia. It is available in two sizes:\n\n- 500g package\n- 375g package\n\nKey features:\n\n- Made with whole grain\n- Shaped like wheat curls\n- Can be enjoyed for breakfast or as a snack\n- Comes in a sealed package\n- Provides a nutritious start to the day\n\nNutritional benefits:\n\n- High in protein, with an excellent amino acid profile including BCAAs and glutamic acid which stimulate muscle building\n- Contains prebiotics, probiotics, and fiber for digestive wellness\n\nEnrich Coco Crunch is a popular choice among kids and adults alike. It can be served with milk for breakfast or enjoyed as a standalone snack. Some people also use it as a topping for ice cream.\n\nThe cereal is made in Ethiopia and Thailand.",
+        "image_url": require("../../assets/images/cococrunch.png")
+    },
       {
         product_barcode: 6224009091270,
         product_name: 'Hub Mango Juice',
@@ -132,11 +132,12 @@ const products = [
         image_url: require('../../assets/images/cerelac.png')
       },
       {
-        product_barcode: 955001502,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/cococrunch.png')
-      },
+        "product_barcode": 9554100150802,
+        "product_name": "Enrich Coco Crunch",
+        "product_summary": "Enrich Coco Crunch is a chocolate-flavored breakfast cereal made by Enrich, a brand based in Ethiopia. It is available in two sizes:\n\n- 500g package\n- 375g package\n\nKey features:\n\n- Made with whole grain\n- Shaped like wheat curls\n- Can be enjoyed for breakfast or as a snack\n- Comes in a sealed package\n- Provides a nutritious start to the day\n\nNutritional benefits:\n\n- High in protein, with an excellent amino acid profile including BCAAs and glutamic acid which stimulate muscle building\n- Contains prebiotics, probiotics, and fiber for digestive wellness\n\nEnrich Coco Crunch is a popular choice among kids and adults alike. It can be served with milk for breakfast or enjoyed as a standalone snack. Some people also use it as a topping for ice cream.\n\nThe cereal is made in Ethiopia and Thailand.",
+        "image_url": require("../../assets/images/Dolce.jpg")
+    },
+    
       {
         product_barcode: 554100150802,
         product_name: 'Enrich Coco Crunch',
