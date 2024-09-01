@@ -174,7 +174,7 @@ const handleError = ( err, bar_code ) => {
     },
     uploadButtonText: {
       color: '#FFF',
-      fontSize: '1.2em',
+      fontSize: 18,
       fontWeight: 700,
       alignSelf: 'center',
     },
@@ -204,7 +204,7 @@ const handleError = ( err, bar_code ) => {
     },
     retryButtonText: {
       color: '#FFF',
-      fontSize: '1.2em',
+      fontSize: 18,
       fontWeight: 700,
       alignSelf: 'center',
     },
@@ -223,7 +223,7 @@ const handleError = ( err, bar_code ) => {
       textAlign: 'center',
       width: '85%',
       color: theme === 'light' ? '#000' : '#fff',
-      fontSize: '1.2em',
+      fontSize: 18,
       fontWeight: '600',
       alignSelf: 'center',
       marginTop: -30,

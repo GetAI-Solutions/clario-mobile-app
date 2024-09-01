@@ -41,13 +41,13 @@ const FeedbackScreen = ({ navigation }) => {
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F5F5F5',
     },
     title: {
-      fontSize: '1.4em',
+      fontSize: 20,
       fontWeight: '600',
       marginVertical: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     header: {
-      fontSize: '1em',
+      fontSize: 16,
       fontWeight: '500',
       marginBottom: 10,
       alignSelf: 'center',
@@ -60,7 +60,7 @@ const FeedbackScreen = ({ navigation }) => {
       marginBottom: 20,
     },
     subHeader: {
-      fontSize: '1em',
+      fontSize: 16,
       marginBottom: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
@@ -84,7 +84,7 @@ const FeedbackScreen = ({ navigation }) => {
     },
     buttonText: {
       color: '#FFF',
-      fontSize: '1.2em',
+      fontSize: 18,
       fontWeight: 700,
     },
     modalContainer: {
@@ -105,13 +105,13 @@ const FeedbackScreen = ({ navigation }) => {
       width: '80%',
     },
     modalHeader: {
-      fontSize: '1.5em',
+      fontSize: 21,
       fontWeight: 700,
       marginBottom: 20,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     modalText: {
-      fontSize: '1em',
+      fontSize: 16,
       marginBottom: 20,
       textAlign: 'center',
       color: theme === 'dark' ? '#FFFFFF' : '#000000',

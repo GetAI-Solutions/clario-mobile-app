@@ -80,7 +80,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       alignSelf: 'center',
     },
     chatbotButtonText: {
-      fontSize: '1.2em',
+      fontSize: 18,
       color: '#FFFFFF',
       textAlign: 'center',
       fontWeight: '700',

@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   modalTitle: {
-    fontSize: '1.8em',
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 5,
     color: theme === 'light' ? '#000' : '#daa163',
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   modalText: {
-    fontSize: '1em',
+    fontSize: 16,
     color: theme === 'light' ? '#000' : '#fff',
     marginBottom: 16,
   },
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
               style={styles.modalButton}
               labelStyle={{
                 color: 'white',
-                fontSize: '1.2em',
+                fontSize: 18,
                 fontWeight: '700',
               }}
             >
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
              style={[styles.modalButton, styles.modalOutlined]}
              labelStyle={{
               color: theme === 'light' ? '#15718e' : '#daa163',
-              fontSize: '1.2em',
+              fontSize: 18,
               fontWeight: '700',
             }}
              >

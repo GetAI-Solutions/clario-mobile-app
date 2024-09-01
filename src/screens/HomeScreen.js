@@ -197,7 +197,7 @@ const products = [
       justifyContent: 'space-between',
     },
     headerText: {
-      fontSize: '1.5em', // Adjust fontSize for better responsiveness
+      fontSize: 21, // Adjust fontSize for better responsiveness
       fontWeight: '700',
       color: theme === 'light' ? '#15718e' : '#fff',
       marginLeft: 20,

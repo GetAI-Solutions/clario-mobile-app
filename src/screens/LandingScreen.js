@@ -55,7 +55,7 @@ const Landing = () => {
       color: 'white',
       textAlign: 'center',
       fontWeight: 800,
-      fontSize: '1.2em',
+      fontSize: 18,
       letterSpacing: 1,
     },
     loginButton: {
@@ -70,12 +70,12 @@ const Landing = () => {
       color: theme === 'light'? '#15718E' : '#daa163',
       textAlign: 'center',
       fontWeight: 800,
-      fontSize: '1.2em',
+      fontSize: 18,
     },
     footerText: {
       display: 'flex',
       flexDirection: 'column',
-      fontSize: '0.8em',
+      fontSize: 14,
       color: theme === 'light' ? '#4a5568' : '#fff',
       textAlign: 'center',
     },

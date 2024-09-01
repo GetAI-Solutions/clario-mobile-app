@@ -205,7 +205,7 @@ const Login = ({ navigation }) => {
     buttonText: {
       color: '#FFFFFF',
       fontWeight: '700',
-      fontSize: '1.2em'
+      fontSize: 18,
     },
     disabledButton: {
       backgroundColor: '#A1A1AA',
