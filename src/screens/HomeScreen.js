@@ -100,7 +100,7 @@ const products = [
         These chips are marketed as a flavorful snack that highlights Ethiopian culinary traditions, appealing to both local consumers and tourists looking for authentic Ethiopian snacks.
 
         In summary, Habesha Spice Sun Chips offer a tasty and culturally resonant snacking option, combining quality ingredients with local flavor.`,
-          image_url: require('../../assets/images/sunchips.jpeg')
+          image_url: require('../../assets/images/sunchips.png')
       },
       {
         product_barcode: 4005808226740,
@@ -112,7 +112,7 @@ const products = [
         product_barcode: 6186000077021,
         product_name: 'Queen Elisabeth Cocoa Butter',
         product_summary: 'Queen Elisabeth Cocoa Butter is a rich, creamy lotion designed to deeply moisturize and soothe dry skin. It provides intense hydration, improves skin texture, and creates a protective barrier against environmental factors. Ideal for use on hands, feet, elbows, and knees, it also helps reduce the appearance of stretch marks and cracked heels.',
-        image_url: require('../../assets/images/butter.jpeg')
+        image_url: require('../../assets/images/butter.png')
       },
     ],
   },
@@ -123,7 +123,7 @@ const products = [
         product_barcode: 6154000082079,
         product_name: 'Bigi Cola',
         product_summary: 'Bigi Cola is a carbonated soft drink by Rite Foods Limited, introduced in 2016. It offers a refreshing taste with ingredients including sugar, caffeine, and flavorings. Available in cans and PET bottles, it’s widely sold across Nigeria and online. Bigi Cola provides an affordable alternative to other cola brands.',
-        image_url: require('../../assets/images/bigidrinks.jpg')
+        image_url: require('../../assets/images/bigidrinks.png')
       },
       {
         product_barcode: 6161106960842,
@@ -135,7 +135,7 @@ const products = [
         product_barcode: 9554100150802,
         product_name: "Enrich Coco Crunch",
         product_summary: "Enrich Coco Crunch is a chocolate-flavored breakfast cereal made by Enrich, a brand based in Ethiopia. It is available in two sizes:\n\n- 500g package\n- 375g package\n\nKey features:\n\n- Made with whole grain\n- Shaped like wheat curls\n- Can be enjoyed for breakfast or as a snack\n- Comes in a sealed package\n- Provides a nutritious start to the day\n\nNutritional benefits:\n\n- High in protein, with an excellent amino acid profile including BCAAs and glutamic acid which stimulate muscle building\n- Contains prebiotics, probiotics, and fiber for digestive wellness\n\nEnrich Coco Crunch is a popular choice among kids and adults alike. It can be served with milk for breakfast or enjoyed as a standalone snack. Some people also use it as a topping for ice cream.\n\nThe cereal is made in Ethiopia and Thailand.",
-        image_url: require("../../assets/images/Dolce.jpg")
+        image_url: require("../../assets/images/dolce.png")
     },
     
       {
@@ -244,7 +244,7 @@ const products = [
   return (
     <ScrollView >
     <View style={styles.header}>
-      <Image source={require('../../assets/images/getAI-logo.png')} style={styles.logo}></Image>
+      <Image source={require('../../assets/images/getai.png')} style={styles.logo}></Image>
       <Text style={styles.headerText}>GetAI</Text>
     </View>
     <View style={styles.container}>

@@ -93,7 +93,7 @@ const Landing = () => {
     <View style={styles.container}>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <View style={styles.content}>
-        <Image source={require('../../assets/images/getAI-logo.png')} style={styles.logo} />
+        <Image source={require('../../assets/images/getai.png')} style={styles.logo} />
         <Image source={require('../../assets/images/logo.png')} style={styles.mainLogo} />
         <Text style={styles.title}>Create your GetAI account</Text>
         <Text style={styles.description}>
