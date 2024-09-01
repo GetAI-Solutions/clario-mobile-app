@@ -67,7 +67,7 @@ const products = [
       The product is positioned as a healthy beverage choice, targeting those looking for natural fruit juices. Its sweet and fruity flavor profile is designed to attract mango lovers and those seeking a tropical taste experience.
 
       Overall, Hub Mango Juice offers a blend of quality, taste, and health benefits, making it a popular choice among consumers looking for natural fruit beverages.`,
-        image_url: require('../../assets/images/hub.png')
+        image_url: require('../../assets/images/hub1.png')
       },
     ],
   },
@@ -112,7 +112,7 @@ const products = [
         product_barcode: 6186000077021,
         product_name: 'Queen Elisabeth Cocoa Butter',
         product_summary: 'Queen Elisabeth Cocoa Butter is a rich, creamy lotion designed to deeply moisturize and soothe dry skin. It provides intense hydration, improves skin texture, and creates a protective barrier against environmental factors. Ideal for use on hands, feet, elbows, and knees, it also helps reduce the appearance of stretch marks and cracked heels.',
-        image_url: require('../../assets/images/butter.png')
+        image_url: require('../../assets/images/butter1.png')
       },
     ],
   },
@@ -123,7 +123,7 @@ const products = [
         product_barcode: 6154000082079,
         product_name: 'Bigi Cola',
         product_summary: 'Bigi Cola is a carbonated soft drink by Rite Foods Limited, introduced in 2016. It offers a refreshing taste with ingredients including sugar, caffeine, and flavorings. Available in cans and PET bottles, it’s widely sold across Nigeria and online. Bigi Cola provides an affordable alternative to other cola brands.',
-        image_url: require('../../assets/images/bigidrinks.png')
+        image_url: require('../../assets/images/realbigi.png')
       },
       {
         product_barcode: 6161106960842,
@@ -159,7 +159,7 @@ const products = [
         product_barcode: "6291007700213",
         product_name: "Nutro Marie Tea Time Biscuits",
         product_summary: "Nutro Marie Tea Time Biscuits are light and crispy, made from wheat flour with a subtly sweet flavor. Available in 200g and 45g packs, they're perfect for pairing with tea or coffee. Each 200g pack offers approximately 110 calories per 5 biscuits. Rated 4.1/5 for taste and texture.",
-        image_url: require('../../assets/images/marie.png')
+        image_url: require('../../assets/images/marie1.png')
       },
       {
         product_barcode: 8084100150802,
