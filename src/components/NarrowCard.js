@@ -40,7 +40,7 @@ const NarrowCard = ({ name, brand, image, onPress }) => {
             color: '#000',
             marginLeft: 12,
             marginTop: 5,
-            fontSize: '1em',
+            fontSize: 14,
             fontWeight: '600',
             color: theme === 'dark' ? '#fff' : '#1e1e1e',
             width: '60%'

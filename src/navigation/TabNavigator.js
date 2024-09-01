@@ -42,7 +42,7 @@ export default function TabNavigator() {
           height: 70,
         },
         tabBarLabelStyle: {
-          fontSize: '1em',
+          fontSize: 14,
           fontWeight: '700',
         },
         tabBarBackground: () => {

@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: '2em',
+    fontSize: 28,
     fontWeight: 700,
     margin: 0,
     lineHeight: 35,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
   },
   subtitle: {
-    fontSize: '1.1em',
+    fontSize: 16,
   },
   lightSubtitle: {
     color: '#333',
