@@ -34,7 +34,9 @@ const ProductList = ({ navigation }) => {
 
   const renderItem = ({ item, index }) => (
     <TouchableOpacity style={styles.productContainer} onPress={() => handleChatbot(item)}>
-      <Text style={styles.productName}>{item.product_name}</Text>
+      <Text style={styles.productName} numberOfLines={1} ellipsizeMode="tail">
+        {item.product_name}
+      </Text>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => handleDelete(index)}>
           <Image
@@ -49,6 +51,7 @@ const ProductList = ({ navigation }) => {
   const styles = StyleSheet.create({
     list: {
       paddingHorizontal: 16,
+      marginBottom: 64,
     },
     productContainer: {
       flexDirection: 'row',

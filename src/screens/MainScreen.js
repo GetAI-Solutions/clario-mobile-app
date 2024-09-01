@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Image, Text, SafeAreaView } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Image, Text, SafeAreaView, ImageBackground } from 'react-native';
 import Footer from '../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
@@ -35,6 +35,10 @@ const MainScreen = ({ navigation }) => {
       height: 100,
       resizeMode: 'contain',
     },
+    content: {
+      flex: 1, 
+      marginBottom: 64, 
+    },
     title: {
       fontSize: 22,
       fontWeight: 'bold',
@@ -42,6 +46,11 @@ const MainScreen = ({ navigation }) => {
       paddingLeft: 15,
       marginVertical: 30,
     },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+    }
   });
 
   return (
@@ -49,16 +58,20 @@ const MainScreen = ({ navigation }) => {
       {/* Custom Header */}
       <DrawerButton navigation={navigation} />
       {/* Content */}
-      {loading ? (
-        <ActivityIndicator size="large" color="#007bff" />
-      ) : products.length === 0 ? (
-        <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
-      ) : (
-        <>
-          <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>
-          <ProductList navigation={navigation} />
-        </>
-      )}
+      <View style={styles.content}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+          {loading ? (
+          <ActivityIndicator size="large" color="#007bff" />
+        ) : products.length === 0 ? (
+          <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
+        ) : (
+          <>
+            <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>
+            <ProductList navigation={navigation} />
+          </>
+        )}
+      </View>
+     
       {/* Footer */}
       <Footer onUpload={handleUpload} onScan={handleScan} />
     </SafeAreaView>

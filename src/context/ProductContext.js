@@ -11,14 +11,13 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      if (user) {
-        setLoading(true);
-      }
-      
       try {
-        const storedProducts = await AsyncStorage.getItem(`products_${user?.uid}`);
-        if (storedProducts) {
-          setProducts(JSON.parse(storedProducts));
+        if (user) {
+          setLoading(true);
+          const storedProducts = await AsyncStorage.getItem(`products_${user.uid}`);
+          if (storedProducts) {
+            setProducts(JSON.parse(storedProducts));
+          }
         }
       } catch (error) {
         console.error('Failed to load products:', error);
@@ -28,15 +27,20 @@ export const ProductProvider = ({ children }) => {
     };
     fetchProducts();
   }, [user]);
-
+  
   useEffect(() => {
     const storeProducts = async () => {
-      if (user) {
-        await AsyncStorage.setItem(`products_${user?.uid}`, JSON.stringify(products));
+      try {
+        if (user && products.length > 0) {
+          await AsyncStorage.setItem(`products_${user.uid}`, JSON.stringify(products));
+        }
+      } catch (error) {
+        console.error('Failed to store products:', error);
       }
     };
     storeProducts();
   }, [products, user]);
+  
 
   const addProduct = async (product) => {
     const updatedProducts = [...products, product];

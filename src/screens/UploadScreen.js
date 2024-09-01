@@ -18,7 +18,7 @@ const UploadScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { width } = Dimensions.get("window");

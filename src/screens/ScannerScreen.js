@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
-  const { user } = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

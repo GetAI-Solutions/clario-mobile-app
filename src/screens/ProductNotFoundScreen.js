@@ -122,13 +122,25 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
     },
     input: {
       flex: 1,
-      paddingVertical: 8,
+      paddingVertical: 12,
+      paddingHorizontal: 16,
+      fontSize: 16,
       color: theme === 'dark' ? '#fff' : '#000',
     },
     searchButton: {
-      padding: 3,
+      padding: 8,
       backgroundColor: theme === 'dark' ? '#2c7391' : '#2c7391',
       borderRadius: 20,
+      marginLeft: -10,
+    },
+    searchIcon: {
+      width: 20,
+      height: 20,
+      marginRight: 10,
+    },
+    sendIcon: {
+      width: 20,
+      height: 20,
     },
     searchButtonText: {
       fontSize: 20,
@@ -160,7 +172,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
         </Text>
 
         <View style={styles.inputContainer}>
-          <Image source={require('../../assets/images/search.png')} />
+          <Image source={require('../../assets/images/search.png')} style={styles.searchIcon} />
           <TextInput
             style={styles.input}
             placeholder={t('Enter name of product')}
@@ -169,7 +181,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
             onChangeText={setProductName}
           />
           <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
-            <Image source={require('../../assets/images/send.png')} />
+            <Image source={require('../../assets/images/send.png')} style={styles.sendIcon} />
           </TouchableOpacity>
         </View>
         {loading && <Text>Loading...</Text>}
