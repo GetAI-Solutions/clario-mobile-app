@@ -171,7 +171,7 @@ const products = [
         product_barcode: 6290400030095,
         product_name: "Quaker White Oats",
         product_summary: "Quaker White Oats are 100% whole grain rolled oats, providing a nutritious start to your day. Each 500g pack from PepsiCo offers 374 kcal per 100g, with high fiber and protein content. Ideal for oatmeal, baking, and smoothies. No artificial additives.",
-        image_url: require('../../assets/images/quaker.png')
+        image_url: require('../../assets/images/butter1.png')
       },
     ],
   },
