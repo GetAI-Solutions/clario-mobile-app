@@ -93,7 +93,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       backgroundColor: theme === 'dark' ? '#daa163' : '#15718e',
       width: 35,
       height: 35,
-      borderRadius: '100%',
+      borderRadius: 100,
     },
     sendIcon: {
       width: 20,

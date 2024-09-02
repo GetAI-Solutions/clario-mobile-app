@@ -34,14 +34,14 @@ const WideCard = ({ name, brand, image, onPress }) => {
         },
         productBrand: {
             marginLeft: 12,
-            fontWeight: '600',
+            fontWeight: 600,
             
         },
         productName: {
             marginLeft: 12,
             marginTop: 5,
             fontSize: 17,
-            fontWeight: '600',
+            fontWeight: 600,
             color: theme === 'dark' ? '#fff' : '#1e1e1e',
             width: '80%',
         },  

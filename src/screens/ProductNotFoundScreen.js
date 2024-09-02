@@ -4,7 +4,6 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
-import { BASEURL } from '../services/api';
 import { chatPerplexityAi, getDetailsFromPerplexity } from '../services/apiService';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';

@@ -224,7 +224,7 @@ const handleError = ( err, bar_code ) => {
       width: '85%',
       color: theme === 'light' ? '#000' : '#fff',
       fontSize: 17,
-      fontWeight: '600',
+      fontWeight: 600,
       alignSelf: 'center',
       marginTop: -30,
       marginBottom: 30,

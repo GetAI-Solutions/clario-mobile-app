@@ -42,13 +42,13 @@ const FeedbackScreen = ({ navigation }) => {
     },
     title: {
       fontSize: 14,
-      fontWeight: '600',
+      fontWeight: 600,
       marginVertical: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     header: {
       fontSize: 14,
-      fontWeight: '500',
+      fontWeight: 500,
       marginBottom: 10,
       alignSelf: 'center',
       marginTop: 20,

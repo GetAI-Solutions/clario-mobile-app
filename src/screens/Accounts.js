@@ -58,7 +58,7 @@ const AccountSecurityScreen = ({ navigation }) => {
     },
     title: {
       fontSize: 18,
-      fontWeight: '600',
+      fontWeight: 600,
       marginVertical: 10,
       color: theme === 'dark' ? '#FFF' : '#000',
     },
@@ -122,7 +122,7 @@ const AccountSecurityScreen = ({ navigation }) => {
     saveButtonText: {
       color: '#FFF',
       fontSize: 16,
-      fontWeight: '600',
+      fontWeight: 600,
     },
     texture: {
       ...StyleSheet.absoluteFillObject,

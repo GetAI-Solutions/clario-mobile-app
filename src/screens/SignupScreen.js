@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
               labelStyle={{
                 color: 'white',
                 fontSize: 16,
-                fontWeight: '700',
+                fontWeight: 700,
               }}
             >
               <Text>Continue</Text>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
              labelStyle={{
               color: theme === 'light' ? '#15718e' : '#daa163',
               fontSize: 17,
-              fontWeight: '700',
+              fontWeight: 700,
             }}
              >
               Edit

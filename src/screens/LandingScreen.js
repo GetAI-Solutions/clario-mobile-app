@@ -52,7 +52,7 @@ const Landing = () => {
     signupButtonText: {
       color: 'white',
       textAlign: 'center',
-      fontWeight: '800', // Retained as a string
+      fontWeight: 800, // Retained as a string
       fontSize: 16, // Changed from '1.2em'
       letterSpacing: 1,
     },
@@ -67,7 +67,7 @@ const Landing = () => {
     loginButtonText: {
       color: theme === 'light' ? '#15718E' : '#daa163',
       textAlign: 'center',
-      fontWeight: '800', // Retained as a string
+      fontWeight: 800, // Retained as a string
       fontSize: 16, // Changed from '1.2em'
     },
     footerText: {

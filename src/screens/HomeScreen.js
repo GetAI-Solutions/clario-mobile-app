@@ -199,7 +199,7 @@ const products = [
     },
     headerText: {
       fontSize: 20, // Adjust fontSize for better responsiveness
-      fontWeight: '700',
+      fontWeight: 700,
       color: theme === 'light' ? '#15718e' : '#fff',
       marginLeft: 20,
       marginTop: 20,
@@ -218,7 +218,7 @@ const products = [
     },
     sectionTitle: {
       fontSize: 28,
-      fontWeight: '700',
+      fontWeight: 700,
       color: theme === 'dark' ? '#FFF' : '#15718e',
       marginBottom: 10,
     },

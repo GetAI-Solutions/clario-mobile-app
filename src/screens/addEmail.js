@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: 600,
     textAlign: 'center',
     marginVertical: 8,
   },
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     textAlign: 'center',
-    fontWeight: '600',
+    fontWeight: 600
   },
   disabledButton: {
     backgroundColor: '#E5E7EB',

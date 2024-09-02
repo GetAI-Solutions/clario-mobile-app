@@ -83,7 +83,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       fontSize: 17,
       color: '#FFFFFF',
       textAlign: 'center',
-      fontWeight: '700',
+      fontWeight: 700,
     },
     texture: {
       ...StyleSheet.absoluteFillObject,

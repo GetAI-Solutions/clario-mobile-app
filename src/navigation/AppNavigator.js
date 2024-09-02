@@ -16,6 +16,7 @@ import UserContext from '../context/UserContext';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import TabNavigator from './TabNavigator';
 import HomeScreen from '../screens/HomeScreen';
+import ProductNotFoundScreen from '../screens/ProductNotFoundScreen';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,7 @@ const AppNavigator = () => {
           <Stack.Screen name="ScannerScreen" component={ScannerScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Chatbot" component={Chatbot} options={{ headerShown: false }} />
           <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='ProductNotFound' component={ProductNotFoundScreen} options={{headerShown: false}} />
           
         </>
       )}
