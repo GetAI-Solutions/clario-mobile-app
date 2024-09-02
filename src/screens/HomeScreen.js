@@ -135,16 +135,11 @@ const products = [
         product_barcode: 9554100150802,
         product_name: "Enrich Coco Crunch",
         product_summary: "Enrich Coco Crunch is a chocolate-flavored breakfast cereal made by Enrich, a brand based in Ethiopia. It is available in two sizes:\n\n- 500g package\n- 375g package\n\nKey features:\n\n- Made with whole grain\n- Shaped like wheat curls\n- Can be enjoyed for breakfast or as a snack\n- Comes in a sealed package\n- Provides a nutritious start to the day\n\nNutritional benefits:\n\n- High in protein, with an excellent amino acid profile including BCAAs and glutamic acid which stimulate muscle building\n- Contains prebiotics, probiotics, and fiber for digestive wellness\n\nEnrich Coco Crunch is a popular choice among kids and adults alike. It can be served with milk for breakfast or enjoyed as a standalone snack. Some people also use it as a topping for ice cream.\n\nThe cereal is made in Ethiopia and Thailand.",
-        image_url: require("../../assets/images/dolce.png")
+        image_url: require("../../assets/images/cococrunch.png")
     },
     
-      {
-        product_barcode: 554100150802,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/cococrunch.png')
-      },
-    ],
+     
+    ],  
   },
   {
     section: 'Latest Additions',
@@ -161,17 +156,12 @@ const products = [
         product_summary: "Nutro Marie Tea Time Biscuits are light and crispy, made from wheat flour with a subtly sweet flavor. Available in 200g and 45g packs, they're perfect for pairing with tea or coffee. Each 200g pack offers approximately 110 calories per 5 biscuits. Rated 4.1/5 for taste and texture.",
         image_url: require('../../assets/images/marie1.png')
       },
-      {
-        product_barcode: 8084100150802,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/cococrunch.png')
-      },
+     
       {
         product_barcode: 6290400030095,
         product_name: "Quaker White Oats",
         product_summary: "Quaker White Oats are 100% whole grain rolled oats, providing a nutritious start to your day. Each 500g pack from PepsiCo offers 374 kcal per 100g, with high fiber and protein content. Ideal for oatmeal, baking, and smoothies. No artificial additives.",
-        image_url: require('../../assets/images/butter1.png')
+        image_url: require('../../assets/images/quaker.png')
       },
     ],
   },

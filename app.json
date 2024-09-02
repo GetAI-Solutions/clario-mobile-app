@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "get-ai",
-    "slug": "get-ai-s2x3dehyrzdxi9cegx5p",
+    "slug": "get-ai-f7slulsglgb-rd9cunazv",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo2.png",
@@ -39,7 +39,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "a75de3ba-d932-4685-94d8-fe811b6726ce"
+        "projectId": "9552f1b5-966e-48ec-8d82-4e2a0bcb2b51"
       }
     },
     "author": "GetAi Team",
