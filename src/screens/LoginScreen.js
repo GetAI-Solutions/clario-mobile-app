@@ -60,7 +60,7 @@ const Login = ({ navigation }) => {
         await storeUserData(userData);
         setUser(userData);
         await AsyncStorage.removeItem(`products_${userData.uid}`);
-        navigation.navigate('MainScreen');
+        navigation.navigate('MainTabScreen');
       }
     } catch (error) {
       handleError(error);
@@ -112,7 +112,7 @@ const Login = ({ navigation }) => {
     title: {
       color: theme === 'light' ? '#000' : '#daa163',
       fontSize: 22,
-      fontWeight: 600,
+      fontWeight: '600',
       textAlign: 'left',
       marginVertical: 8,
     },
@@ -204,7 +204,7 @@ const Login = ({ navigation }) => {
     },
     buttonText: {
       color: '#FFFFFF',
-      fontWeight: 700,
+      fontWeight: '700',
       fontSize: 16
     },
     disabledButton: {

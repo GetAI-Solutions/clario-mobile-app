@@ -46,7 +46,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       padding: 20,
     },
     productImage: {
-      width: '100%',
+      width: 120,
       height: 200,
       resizeMode: 'cover',
       marginBottom: 20,
@@ -83,7 +83,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       fontSize: 17,
       color: '#FFFFFF',
       textAlign: 'center',
-      fontWeight: 700,
+      fontWeight: '700',
     },
     texture: {
       ...StyleSheet.absoluteFillObject,

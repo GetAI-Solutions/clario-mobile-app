@@ -33,7 +33,7 @@ const NarrowCard = ({ name, brand, image, onPress }) => {
         },
         productBrand: {
             marginLeft: 12,
-            fontWeight: 600,
+            fontWeight: '600',
             color: '#000',
         },
         productName: {
@@ -41,7 +41,7 @@ const NarrowCard = ({ name, brand, image, onPress }) => {
             marginLeft: 12,
             marginTop: 5,
             fontSize: 14,
-            fontWeight: 600,
+            fontWeight: '600',
             color: theme === 'dark' ? '#fff' : '#1e1e1e',
             width: '60%'
         },  

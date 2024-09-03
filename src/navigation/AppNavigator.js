@@ -47,7 +47,6 @@ const AppNavigator = () => {
           <Stack.Screen name="Chatbot" component={Chatbot} options={{ headerShown: false }} />
           <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ headerShown: false }} />
           <Stack.Screen name='ProductNotFound' component={ProductNotFoundScreen} options={{headerShown: false}} />
-          
         </>
       )}
     </Stack.Navigator>

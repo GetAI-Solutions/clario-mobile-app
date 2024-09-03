@@ -36,7 +36,7 @@ export default function MainDrawerNavigator() {
       <Drawer.Screen name="Share" component={ShareScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="ProductDetails" component={ProductDetailsScreen} />
-      <Drawer.Screen name="ProductNotFound" component={ProductNotFoundScreen} />
+      
       <Drawer.Screen name="Profile" component={AccountScreen} />
       <Drawer.Screen name="Landing" component={LandingScreen} />
       <Drawer.Screen name="Home" component={HomeScreen} />

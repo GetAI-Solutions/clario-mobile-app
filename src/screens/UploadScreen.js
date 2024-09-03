@@ -175,7 +175,7 @@ const handleError = ( err, bar_code ) => {
     uploadButtonText: {
       color: '#FFF',
       fontSize: 17,
-      fontWeight: 700,
+      fontWeight: '700',
       alignSelf: 'center',
     },
     loadingContainer: {
@@ -205,7 +205,7 @@ const handleError = ( err, bar_code ) => {
     retryButtonText: {
       color: '#FFF',
       fontSize: 17,
-      fontWeight: 700,
+      fontWeight: '700',
       alignSelf: 'center',
     },
     art: {
@@ -224,7 +224,7 @@ const handleError = ( err, bar_code ) => {
       width: '85%',
       color: theme === 'light' ? '#000' : '#fff',
       fontSize: 17,
-      fontWeight: 600,
+      fontWeight: '600',
       alignSelf: 'center',
       marginTop: -30,
       marginBottom: 30,
@@ -243,7 +243,7 @@ const handleError = ( err, bar_code ) => {
       <Header navigation={navigation}/>
       <View style={styles.content}>
       <View style={styles.imgContainer}>
-        <Image source={require('../../assets/images/uploadart.png')} style={styles.art}/>
+        <Image source={require('../../assets/images/uploadArt.png')} style={styles.art}/>
         <Text style={styles.description}>Upload an image with your barcode. and we'll do the rest</Text>
       </View>
         {!product && !loading && !error && (

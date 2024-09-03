@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
+import { BASEURL } from '../services/api';
 import { chatPerplexityAi, getDetailsFromPerplexity } from '../services/apiService';
 import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
@@ -83,6 +84,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
     imageContainer: {
       position: 'relative',
       marginBottom: 20,
+      marginTop: 100,
     },
     placardImage: {
       width: 150,
@@ -115,14 +117,14 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
       borderColor: theme === 'dark' ? '#bbb' : '#319795',
       borderRadius: 25,
       paddingHorizontal: 10,
-      width: '90%',
-      marginBottom: 20,
+      width: '100%',
+      marginBottom: 220,
       backgroundColor: theme === 'dark' ? '#333' : '#fff',
     },
     input: {
       flex: 1,
       paddingVertical: 12,
-      paddingHorizontal: 16,
+      paddingHorizontal: 8,
       fontSize: 16,
       color: theme === 'dark' ? '#fff' : '#000',
     },
@@ -133,8 +135,8 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
       marginLeft: -10,
     },
     searchIcon: {
-      width: 20,
-      height: 20,
+      width: 30,
+      height: 30,
       marginRight: 10,
     },
     sendIcon: {
