@@ -114,20 +114,6 @@ const SettingsScreen = ({ navigation }) => {
 
       <TouchableOpacity style={styles.option}>
         <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/share.png')} style={styles.icon} />
-          <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Share App')}</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.option}>
-        <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/star.png')} style={styles.icon} />
-          <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Rate GetAI')}</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.option}>
-        <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/analyze.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Terms and Conditions')}</Text>
         </View>

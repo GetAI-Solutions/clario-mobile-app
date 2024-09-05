@@ -85,40 +85,38 @@ const CustomDrawerContent = (props) => {
       </View>
       <View style={styles.menuContainer}>
         <DrawerItem
-          label={t('Home')}
+          label={t('Share GetAI')}
           labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
           icon={({ focused, size }) => (
             <Icon
-              name={focused ? 'home' : 'home-outline'}
+              name={'share-outline'}
               size={size}
               color={theme === 'dark' ? '#fff' : '#000'}
             />
           )}
-          onPress={() => navigation.navigate('MainScreen')}
         />
         <DrawerItem
-          label={t('Profile')}
+          label={t('Rate GetAI')}
           labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
           icon={({ focused, size }) => (
             <Icon
-              name={focused ? 'person' : 'person-outline'}
+              name={'star-outline'}
               size={size}
               color={theme === 'dark' ? '#fff' : '#000'}
             />
           )}
-          onPress={() => navigation.navigate('Profile')}
         />
         <DrawerItem
-          label={t('Settings')}
+          label={t('FAQ')}
           labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
           icon={({ focused, size }) => (
             <Icon
-              name={focused ? 'settings' : 'settings-outline'}
+              name={'help'}
               size={size}
               color={theme === 'dark' ? '#fff' : '#000'}
             />
           )}
-          onPress={() => navigation.navigate('Settings')}
+          onPress={() => navigation.navigate('FAQ')}
         />
         <DrawerItem
           label={t('Feedback')}

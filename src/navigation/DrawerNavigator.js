@@ -13,6 +13,8 @@ import SettingsScreen from '../screens/Settings';
 import AccountScreen from '../screens/Accounts';
 import LandingScreen from '../screens/LandingScreen';
 import HomeScreen from '../screens/HomeScreen';
+import FaqPage from '../screens/FaqPage';
+
 const Drawer = createDrawerNavigator();
 
 export default function MainDrawerNavigator() {
@@ -36,10 +38,10 @@ export default function MainDrawerNavigator() {
       <Drawer.Screen name="Share" component={ShareScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="ProductDetails" component={ProductDetailsScreen} />
-      
       <Drawer.Screen name="Profile" component={AccountScreen} />
       <Drawer.Screen name="Landing" component={LandingScreen} />
       <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name='FAQ' component={FaqPage} />
     </Drawer.Navigator>
   );
 }
