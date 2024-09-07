@@ -18,6 +18,9 @@ import TabNavigator from './TabNavigator';
 import HomeScreen from '../screens/HomeScreen';
 import ProductNotFoundScreen from '../screens/ProductNotFoundScreen';
 import FaqPage from '../screens/FaqPage';
+import ForgotPassword from '../screens/ForgotPassword';
+import OTPPage from '../screens/OTPPage';
+import PasswordReset from '../screens/PasswordReset';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +41,9 @@ const AppNavigator = () => {
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
           <Stack.Screen name="EmailSignup" component={AddEmail} options={{ headerShown: false }} />
           <Stack.Screen name="VerifyEmail" component={VerifyPhone} options={{ headerShown: false }} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
+          <Stack.Screen name="OTPPage" component={OTPPage} options={{ headerShown: false }} />
+          <Stack.Screen name="PasswordReset" component={PasswordReset} options={{ headerShown: false }} />
         </>
       ) : (
         <>
