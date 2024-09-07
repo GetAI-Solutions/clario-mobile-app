@@ -105,7 +105,7 @@ const Landing = () => {
         <Text style={styles.footerText}>
           <Text>By continuing you accept our </Text>
           <Text>
-            <Text style={styles.link} onPress={() => Linking.openURL('#')}>Terms of Service</Text> and <Text style={styles.link} onPress={() => Linking.openURL('#')}>Privacy Policy</Text>
+            <Text style={styles.link} onPress={() => Linking.openURL('Terms')}>Terms of Service</Text> and <Text style={styles.link} onPress={() => Linking.openURL('#')}>Privacy Policy</Text>
           </Text>
         </Text>
       </View>

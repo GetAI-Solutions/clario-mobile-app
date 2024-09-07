@@ -45,6 +45,7 @@ const AppNavigator = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
           <Stack.Screen name="OTPPage" component={OTPPage} options={{ headerShown: false }} />
           <Stack.Screen name="PasswordReset" component={PasswordReset} options={{ headerShown: false }} />
+          <Stack.Screen name='Terms' component={TermsPage} options={{headerShown: false}}/>
         </>
       ) : (
         <>
