@@ -10,10 +10,10 @@ import {
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 
-const OTPPage = ({ navigation }) => {
+const OTPPage  = ({ navigation }) => {
   const [entered_otp, setEnetered_otp] = useState(['', '', '', '', '', '']);
   const route = useRoute();
-  const { phoneNumber, dialCode, email, otp } = route.params || {};
+  const { otp, email } = route.params || {};
 
   const handleChange = (text, index) => {
     const newOtp = [...entered_otp];
@@ -36,8 +36,8 @@ const OTPPage = ({ navigation }) => {
   
     if (enteredOtp === serverOtpStr) {
       Alert.alert('Success', 'OTP verified successfully!');
-      console.log('Navigating to Login');
-      navigation.navigate('PassawordReset');
+      console.log('Navigating to PasswordReset');
+      navigation.navigate('PasswordReset');
     } else {
       Alert.alert('Error', 'Invalid OTP. Please try again.');
     }
@@ -159,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OTPPage;
+export default OTPPage ;

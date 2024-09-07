@@ -243,7 +243,7 @@ const handleError = ( err, bar_code ) => {
       <Header navigation={navigation}/>
       <View style={styles.content}>
       <View style={styles.imgContainer}>
-        <Image source={require('../../assets/images/uploadArt.png')} style={styles.art}/>
+        <Image source={require('../../assets/images/uploadart.png')} style={styles.art}/>
         <Text style={styles.description}>Upload an image with your barcode. and we'll do the rest</Text>
       </View>
         {!product && !loading && !error && (

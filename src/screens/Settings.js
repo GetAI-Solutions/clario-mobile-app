@@ -6,7 +6,8 @@ import { useTheme } from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
 import { BASEURL } from '../services/api';
 import axios from 'axios';
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
+import PushNotification from 'react-native-push-notification';
+
 
 
 const SettingsScreen = ({ navigation }) => {
@@ -14,6 +15,25 @@ const SettingsScreen = ({ navigation }) => {
   const { theme, toggleTheme } = useTheme();
   const { user, setUser } = useContext(UserContext);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+
+
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    if (isEnabled) {
+      PushNotification.requestPermissions();
+      Alert.alert(
+        'Notifications',
+        'Notifications have been turned on'
+      );
+    } else {
+      Alert.alert(
+        'Notifications',
+        'Notifications have been turned off'
+      );
+    }
+  };
+  
 
   const handleLanguageChange = async (language) => {
     i18n.changeLanguage(language); 
@@ -55,8 +75,15 @@ const SettingsScreen = ({ navigation }) => {
           <Image source={require('../../assets/images/bell.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Notifications')}</Text>
         </View>
-        <Switch />
+        <Switch
+          trackColor={{ false: '#767577', true: '#81b0ff' }}
+          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
       </View>
+
 
       <TouchableOpacity style={styles.option} onPress={() => setLanguageModalVisible(true)}>
         <View style={styles.optionLeft}>
@@ -112,7 +139,7 @@ const SettingsScreen = ({ navigation }) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.option}>
+      <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Terms')}>
         <View style={styles.optionLeft}>
           <Image source={require('../../assets/images/analyze.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Terms and Conditions')}</Text>

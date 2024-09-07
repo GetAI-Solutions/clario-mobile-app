@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect  } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, ScrollView, Alert } from 'react-native';
 import Header from '../components/Header'; 
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { updateUser } from '../services/apiService';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const AccountSecurityScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -15,18 +16,43 @@ const AccountSecurityScreen = ({ navigation }) => {
 
   console.log('user...', user)
 
-  const [fullName, setFullName] = useState(user.user_name);
-  const [email, setEmail] = useState(user.email);
-  const [phoneNumber, setPhoneNumber] = useState(user.phone_no);
+  const [fullName, setFullName] = useState(user ? user.user_name : '');
+  const [email, setEmail] = useState(user ? user.email : '');
+  const [phoneNumber, setPhoneNumber] = useState(user ? user.phone_no : '');
+
+  const [profileImage, setProfileImage] = useState(user.profileImage || 'https://via.placeholder.com/100x100.png');
+  
   const user_id = user.uid
 
+  const initialDetails = {
+    fullName: user ? user.user_name : '',
+    email: user ? user.email : '',
+    phoneNumber: user ? user.phone_no : '',
+  };
+
   const handleSaveChanges = async () => {
+    if (!fullName && !email && !phoneNumber) {
+      Alert.alert('Error', 'All fields are empty. Please fill in your details.');
+      return;
+    }
+
+    if (
+      fullName === initialDetails.fullName &&
+      email === initialDetails.email &&
+      phoneNumber === initialDetails.phoneNumber
+    ) {
+      Alert.alert('Notice', 'No changes detected.');
+      return;
+    }
+
+
     setLoading(true);
     const preferences = {
       user_id: user_id,
       email: email,
       user_name: fullName,
       phone_no: phoneNumber,
+      profileImage: profileImage,
     };
 
 
@@ -45,9 +71,26 @@ const AccountSecurityScreen = ({ navigation }) => {
 
   };
 
-  useEffect(() => {
-    console.log('User changed:', user); 
-  }, [user]);
+  const handleProfileImageChange = async () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+    };
+
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.errorMessage) {
+        console.error('Image picker error:', response.errorMessage);
+      } else {
+        const imageUri = response.assets[0].uri;
+        setProfileImage(imageUri);
+        setUser({ ...user, profileImage: imageUri });
+      }
+    });
+  };
+
+
   
 
   const styles = StyleSheet.create({
@@ -139,10 +182,10 @@ const AccountSecurityScreen = ({ navigation }) => {
 
       <View style={styles.profileContainer}>
         <Image 
-          source={{ uri: 'https://via.placeholder.com/100x100.png' }} 
+          source={{ uri: profileImage }} 
           style={styles.profileImage}
         />
-        <TouchableOpacity style={styles.changePictureButton}>
+        <TouchableOpacity style={styles.changePictureButton} onPress={handleProfileImageChange}>
           <Text style={styles.changePictureText}>{t('Change Picture')}</Text>
         </TouchableOpacity>
       </View>

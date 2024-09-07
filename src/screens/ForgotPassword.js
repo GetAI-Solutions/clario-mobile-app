@@ -1,32 +1,56 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator, ScrollView, Modal, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator, ScrollView, Alert, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
 import EmailInput from '../components/EmailInput';
 import Header from '../components/AuthHeader';
+import { sendOtp } from '../services/authService';
 
 const AddEmail = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleSendOtp = async () => {
+    console.log('handle send otp triggered...')
+    setIsLoading(true);
+    try {
+      const otpResponse = await sendOtp(email);
+      if (otpResponse.status === 200) {
+        const { otp } = otpResponse.data;
+        navigation.navigate('OTPPage', { otp, email });
+      } else {
+        throw Error('Failed to send OTP');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to send OTP. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <Header navigation={navigation} />
-      <ScrollView contentContainerStyle={styles.content}>
-        <EmailInput email={email} onEmailChange={setEmail} />
-        <Image source={require('../../assets/images/Password.png')} style={styles.image}/>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps='handled'>
+        
         <Text style={styles.title}>Forgot Password?</Text>
         <Text style={styles.subtitle}>Enter your email address. We'll send an OTP to reset your password</Text>
 
+        <EmailInput email={email} onEmailChange={setEmail} />
+        
+        <Image source={require('../../assets/images/Password.png')} style={styles.image}/>
+
         <TouchableOpacity
-          onPress={() => navigation.navigate('OTPPage')}
+          onPress={handleSendOtp}
           style={[styles.button, (!email) && styles.disabledButton]}
-          disabled={!email}
+          disabled={!email || isLoading}
         >
-          {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Signup</Text>}
+          {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Send OTP</Text>}
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -50,6 +74,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     alignSelf: 'center',
+    marginBottom: 20,
   },
   subtitle: {
     fontSize: 14,
@@ -64,9 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     alignItems: 'center',
     paddingVertical: 16,
-    bottom: 20,
-    position: 'fixed',
-    width: '100%',
+    marginTop: 20,
   },
   buttonText: {
     color: '#FFFFFF',
@@ -75,28 +98,6 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: '#E5E7EB',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
-    alignItems: 'center',
-  },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: '#2c7391',
-    padding: 10,
-    borderRadius: 8,
-  },
-  closeButtonText: {
-    color: '#fff',
   },
   texture: {
     ...StyleSheet.absoluteFillObject,

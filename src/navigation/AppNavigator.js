@@ -21,6 +21,7 @@ import FaqPage from '../screens/FaqPage';
 import ForgotPassword from '../screens/ForgotPassword';
 import OTPPage from '../screens/OTPPage';
 import PasswordReset from '../screens/PasswordReset';
+import TermsPage from '../screens/TermsAndConditions';
 
 const Stack = createStackNavigator();
 
@@ -55,6 +56,7 @@ const AppNavigator = () => {
           <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ headerShown: false }} />
           <Stack.Screen name='ProductNotFound' component={ProductNotFoundScreen} options={{headerShown: false}} />
           <Stack.Screen name='FAQ' component={FaqPage} options={{headerShown: false}}/>
+          <Stack.Screen name='Terms' component={TermsPage} options={{headerShown: false}}/>
         </>
       )}
     </Stack.Navigator>

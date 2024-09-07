@@ -96,17 +96,6 @@ const CustomDrawerContent = (props) => {
           )}
         />
         <DrawerItem
-          label={t('Rate GetAI')}
-          labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
-          icon={({ focused, size }) => (
-            <Icon
-              name={'star-outline'}
-              size={size}
-              color={theme === 'dark' ? '#fff' : '#000'}
-            />
-          )}
-        />
-        <DrawerItem
           label={t('FAQ')}
           labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
           icon={({ focused, size }) => (
