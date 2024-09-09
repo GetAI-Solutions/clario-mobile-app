@@ -29,6 +29,16 @@ export const updateUser = async (preferences) => {
   return response
 }
 
+export const updatePassword = async (newData) => {
+  const response = await axios.patch(`${BASEURL}/users/reset-user-password`,
+    newData,
+    {
+      headers: { 'Content-Type': 'application/json' }
+    },
+  )
+  return response
+}
+
 
 export const getDetailsFromPerplexity = async (product_name, bar_code, userID) => {
   const response = await axios.post(

@@ -39,7 +39,6 @@ export default function MainDrawerNavigator() {
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="ProductDetails" component={ProductDetailsScreen} />
       <Drawer.Screen name="Profile" component={AccountScreen} />
-      <Drawer.Screen name="Landing" component={LandingScreen} />
       <Drawer.Screen name="Home" component={HomeScreen} />
       <Drawer.Screen name='FAQ' component={FaqPage} />
     </Drawer.Navigator>

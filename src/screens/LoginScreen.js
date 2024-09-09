@@ -215,6 +215,9 @@ const Login = ({ navigation }) => {
       width: '100%',
       height: '100%',
     },
+    errorText: {
+      color: 'red'
+    }
   });
 
 

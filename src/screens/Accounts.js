@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect  } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, ScrollView, Alert, Platform } from 'react-native';
 import Header from '../components/Header'; 
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { updateUser } from '../services/apiService';
-import { launchImageLibrary } from 'react-native-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+
 
 const AccountSecurityScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
@@ -20,7 +21,8 @@ const AccountSecurityScreen = ({ navigation }) => {
   const [email, setEmail] = useState(user ? user.email : '');
   const [phoneNumber, setPhoneNumber] = useState(user ? user.phone_no : '');
 
-  const [profileImage, setProfileImage] = useState(user.profileImage || 'https://via.placeholder.com/100x100.png');
+  const [profileImage, setProfileImage] = useState(user?.profileImage || 'https://via.placeholder.com/100x100.png');
+
   
   const user_id = user.uid
 
@@ -45,53 +47,48 @@ const AccountSecurityScreen = ({ navigation }) => {
       return;
     }
 
-
     setLoading(true);
     const preferences = {
       user_id: user_id,
       email: email,
       user_name: fullName,
       phone_no: phoneNumber,
-      profileImage: profileImage,
     };
-
 
     try {
       console.log("Data...", preferences)
       const response = await updateUser(preferences);
       if (response.status === 200 || response.status === 204) {
         setUser({ ...user, ...preferences });
+        Alert.alert('Success', 'Changes saved successfully.');
       }
       console.log('Changes saved:', preferences);
     } catch (error) {
+      Alert.alert('Error', 'Failed to save changes.');
       console.error('Error saving changes:', error);
     } finally {
       setLoading(false);
     }
-
   };
 
   const handleProfileImageChange = async () => {
-    const options = {
-      mediaType: 'photo',
+    console.log('handleProfileImageChange called');
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: false,
       quality: 1,
-    };
-
-    launchImageLibrary(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.errorMessage) {
-        console.error('Image picker error:', response.errorMessage);
-      } else {
-        const imageUri = response.assets[0].uri;
-        setProfileImage(imageUri);
-        setUser({ ...user, profileImage: imageUri });
-      }
+      ...(Platform.OS === 'web' ? { aspect: [4, 3] } : {}),
     });
+
+    if (!result.canceled) {
+      const imageUri = result.assets[0].uri;
+      setProfileImage(imageUri);
+      setUser({ ...user, profileImage: imageUri });
+      console.log('Image selected:', imageUri);
+    } else {
+      console.log('User cancelled image picker');
+    }
   };
-
-
-  
 
   const styles = StyleSheet.create({
     container: {

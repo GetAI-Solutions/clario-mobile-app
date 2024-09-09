@@ -32,12 +32,19 @@ export const UserProvider = ({ children }) => {
 
   const updateUser = async (updatedUser) => {
     try {
-      await AsyncStorage.setItem('userData', JSON.stringify(updatedUser));
-      setUser(updatedUser);
+      if (updatedUser) {
+        // If there's user data, store it in AsyncStorage
+        await AsyncStorage.setItem('userData', JSON.stringify(updatedUser));
+      } else {
+        // If no user data is provided (null/undefined), remove user data from AsyncStorage (logout scenario)
+        await AsyncStorage.removeItem('userData');
+      }
+      setUser(updatedUser); // Update the state accordingly
     } catch (error) {
       console.error('Failed to update user data', error);
     }
   };
+  
 
   if (loading) {
     return <></>; // Render nothing while loading

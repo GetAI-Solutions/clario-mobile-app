@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { updateUser } from '../services/apiService';
+import { updatePassword } from '../services/apiService';
 import Header from '../components/Header';
+import { useRoute } from '@react-navigation/native';
 
 const PasswordReset = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const route = useRoute();
+  const { email } = route.params || {};
+
 
   const handlePasswordReset = async () => {
     if (password !== confirmPassword) {
@@ -18,8 +23,8 @@ const PasswordReset = ({ navigation }) => {
     setLoading(true);
 
     try {
-      const preferences = { password }; 
-      const response = await updateUser(preferences);
+      const newData = { password, email }; 
+      const response = await updatePassword(newData);
 
       if (response.status === 200 || response.status === 204) {
         Alert.alert('Success', 'Password has been reset!');

@@ -37,7 +37,7 @@ const OTPPage  = ({ navigation }) => {
     if (enteredOtp === serverOtpStr) {
       Alert.alert('Success', 'OTP verified successfully!');
       console.log('Navigating to PasswordReset');
-      navigation.navigate('PasswordReset');
+      navigation.navigate('PasswordReset', { email });
     } else {
       Alert.alert('Error', 'Invalid OTP. Please try again.');
     }
