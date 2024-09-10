@@ -4,44 +4,46 @@ import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../context/ThemeContext';
 import Header from '../components/Header';
+import { useTranslation } from 'react-i18next';
 
 const FaqPage = ({navigation}) => {
     const { theme } = useTheme();
     const [active, setActive] = useState([]);
     const { height } = Dimensions.get('window');
+    const { t } = useTranslation()
 
     const data = [
       {
-          question: 'What is this application for?',
-          answer: 'Our app allows you to scan or upload a barcode to retrieve detailed information about a product. You can also proceed to our chatbot for further information and support in various languages including English, French, Swahili, Hausa, Amharic, Zulu, Twi, and Omoro.'
+          question: t('What is this application for?'),
+          answer: t('Our app allows you to scan or upload a barcode to retrieve detailed information about a product. You can also proceed to our chatbot for further information and support in various languages including English, French, Swahili, Hausa, Amharic, Zulu, Twi, and Omoro.')
       },
       {
-          question: 'How do I use the barcode scanner?',
-          answer: 'To use the barcode scanner, simply tap on the "Scan" button, align the barcode within the viewfinder, and the app will automatically detect and retrieve the product details. Ensure your camera has sufficient lighting for accurate scanning.'
+          question: t('How do I use the barcode scanner?'),
+          answer: t('To use the barcode scanner, simply tap on the "Scan" button, align the barcode within the viewfinder, and the app will automatically detect and retrieve the product details. Ensure your camera has sufficient lighting for accurate scanning.')
       },
       {
-          question: 'Can I upload a barcode image instead of scanning?',
-          answer: 'Yes, you can upload a barcode image by selecting the "Upload" option. Choose an image from your gallery that clearly shows the barcode. The app will process the image and provide product details similar to scanning.'
+          question: t('Can I upload a barcode image instead of scanning?'),
+          answer: ('Yes, you can upload a barcode image by selecting the "Upload" option. Choose an image from your gallery that clearly shows the barcode. The app will process the image and provide product details similar to scanning.')
       },
       {
-          question: 'What languages does the app support?',
-          answer: 'Our app supports multiple languages, including English, French, Swahili, Hausa, Amharic, Zulu, Twi, and Omoro. You can select your preferred language from the settings to view product information and interact with the chatbot in that language.'
+          question: ('What languages does the app support?'),
+          answer: ('Our app supports multiple languages, including English, French, Swahili, Hausa, Amharic, Zulu, Twi, and Omoro. You can select your preferred language from the settings to view product information and interact with the chatbot in that language.')
       },
       {
-          question: 'How can I get more information about a product?',
-          answer: 'After retrieving the product details, you have the option to chat with our chatbot for more in-depth information. The chatbot can assist you with additional product inquiries, availability, and other related questions.'
+          question: t('How can I get more information about a product?'),
+          answer: t('After retrieving the product details, you have the option to chat with our chatbot for more in-depth information. The chatbot can assist you with additional product inquiries, availability, and other related questions.')
       },
       {
-          question: 'What should I do if the app does not recognize my barcode?',
-          answer: 'If the app does not recognize your barcode, please ensure the barcode is clear and well-lit. If you still encounter issues, try uploading a different image or contacting our support team for assistance.'
+          question: t('What should I do if the app does not recognize my barcode?'),
+          answer: t('If the app does not recognize your barcode, please ensure the barcode is clear and well-lit. If you still encounter issues, try uploading a different image or contacting our support team for assistance.')
       },
       {
-          question: 'How do I contact support?',
-          answer: 'For any issues or support inquiries, you can contact us through the "Help" section in the app or email us directly at support@yourappdomain.com. We’re here to help you with any questions or problems you may have.'
+          question: t('How do I contact support?'),
+          answer: t('For any issues or support inquiries, you can contact us through the "Help" section in the app or email us directly at support@yourappdomain.com. We’re here to help you with any questions or problems you may have.')
       },
       {
-          question: 'Is my data safe with this app?',
-          answer: 'Yes, your data privacy and security are our top priorities. We use encryption and secure protocols to protect your information. For more details, please refer to our privacy policy available in the app.'
+          question: t('Is my data safe with this app?'),
+          answer: t('Yes, your data privacy and security are our top priorities. We use encryption and secure protocols to protect your information. For more details, please refer to our privacy policy available in the app.')
       }
   ];
   
