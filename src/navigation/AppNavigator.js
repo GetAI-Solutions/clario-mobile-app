@@ -22,6 +22,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import OTPPage from '../screens/OTPPage';
 import PasswordReset from '../screens/PasswordReset';
 import TermsPage from '../screens/TermsAndConditions';
+import OnboardingPages from '../components/OnboardingPages';
 
 const Stack = createStackNavigator();
 
@@ -37,6 +38,7 @@ const AppNavigator = () => {
       {!user ? (
         <>
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="OnboardingPages" component={OnboardingPages} options={{ headerShown: false }} />
           <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
