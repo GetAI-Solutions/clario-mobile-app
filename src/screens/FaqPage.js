@@ -19,11 +19,11 @@ const FaqPage = ({navigation}) => {
       },
       {
           question: t('How do I use the barcode scanner?'),
-          answer: t('To use the barcode scanner, simply tap on the "Scan" button, align the barcode within the viewfinder, and the app will automatically detect and retrieve the product details. Ensure your camera has sufficient lighting for accurate scanning.')
+          answer: t('To use the barcode scanner, simply tap on the Scan button, align the barcode within the viewfinder, and the app will automatically detect and retrieve the product details. Ensure your camera has sufficient lighting for accurate scanning.')
       },
       {
           question: t('Can I upload a barcode image instead of scanning?'),
-          answer: ('Yes, you can upload a barcode image by selecting the "Upload" option. Choose an image from your gallery that clearly shows the barcode. The app will process the image and provide product details similar to scanning.')
+          answer: ('Yes, you can upload a barcode image by selecting the Upload option. Choose an image from your gallery that clearly shows the barcode. The app will process the image and provide product details similar to scanning.')
       },
       {
           question: ('What languages does the app support?'),
@@ -39,7 +39,7 @@ const FaqPage = ({navigation}) => {
       },
       {
           question: t('How do I contact support?'),
-          answer: t('For any issues or support inquiries, you can contact us through the "Help" section in the app or email us directly at support@yourappdomain.com. We’re here to help you with any questions or problems you may have.')
+          answer: t('For any issues or support inquiries, you can contact us through the Help section in the app or email us directly at support@yourappdomain.com. We’re here to help you with any questions or problems you may have.')
       },
       {
           question: t('Is my data safe with this app?'),
