@@ -17,7 +17,10 @@ const CustomDrawerContent = (props) => {
     try {
       await AsyncStorage.removeItem('userData');
       setUser(null);
-      navigation.navigate('Landing');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Landing' }], 
+      });
     } catch (error) {
       console.error('Error logging out: ', error);
     }

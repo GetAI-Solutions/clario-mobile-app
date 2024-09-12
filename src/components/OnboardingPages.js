@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Swiper from 'react-native-swiper';
 
 const { width, height } = Dimensions.get('window');
@@ -8,15 +9,17 @@ const OnboardingScreen = ({ navigation }) => {
   const [activeIndex, setActiveIndex] = useState(0); // 
   const swiperRef = useRef(null);
 
+
   const dotColors = ['#15718e', '#daa163', '#000'];
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (activeIndex < 2) {
       setActiveIndex((prevIndex) => {
         swiperRef.current.scrollBy(1);
         return (prevIndex + 1);
       }); // Navigate to the next slide
     } else {
+      await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
       navigation.navigate('Landing'); // Navigate to the next screen after the last slide
     }
   };
@@ -44,8 +47,8 @@ const OnboardingScreen = ({ navigation }) => {
       resizeMode: 'contain',
     },
     image3: {
-      marginTop: 120,
-      marginBottom: 20,
+      marginTop: 60,
+      marginBottom: 10,
       width: '100%',
       resizeMode: 'contain',
     },
@@ -60,6 +63,7 @@ const OnboardingScreen = ({ navigation }) => {
       fontSize: 16,
       marginTop: 10,
       color: '#888',
+      marginBottom: 50,
     },
     dot: {
       backgroundColor: '#d9d9d9',

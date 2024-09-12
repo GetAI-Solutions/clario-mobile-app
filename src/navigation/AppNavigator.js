@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LandingScreen from '../screens/LandingScreen';
@@ -11,11 +11,10 @@ import ScannerScreen from '../screens/ScannerScreen';
 import UploadScreen from '../screens/UploadScreen';
 import Chatbot from '../screens/Chatbot';
 import OnboardingScreen from '../screens/OnboardingScreen';
-import MainDrawerNavigator from './DrawerNavigator';
 import UserContext from '../context/UserContext';
 import FeedbackScreen from '../screens/FeedbackScreen';
 import TabNavigator from './TabNavigator';
-import HomeScreen from '../screens/HomeScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import ProductNotFoundScreen from '../screens/ProductNotFoundScreen';
 import FaqPage from '../screens/FaqPage';
 import ForgotPassword from '../screens/ForgotPassword';
@@ -28,17 +27,32 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const { user, loading } = useContext(UserContext);
+  const [showOnboarding, setShowOnboarding] = useState(true);
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
   }
 
+  useEffect(() => {
+    // Check if onboarding was completed
+    const checkOnboardingStatus = async () => {
+      const hasCompletedOnboarding = await AsyncStorage.getItem('hasCompletedOnboarding');
+      if (hasCompletedOnboarding) {
+        setShowOnboarding(false);
+      }
+    };
+    checkOnboardingStatus();
+  }, []);
+
   return (
     <Stack.Navigator initialRouteName="OnboardingScreen">
-      {!user ? (
+      {!user && showOnboarding ? (
         <>
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="OnboardingPages" component={OnboardingPages} options={{ headerShown: false }} />
+        </>
+      ) : !user ? (
+        <>
           <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Signup" component={SignupScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
