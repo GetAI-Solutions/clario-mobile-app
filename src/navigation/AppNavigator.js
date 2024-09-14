@@ -50,6 +50,7 @@ const AppNavigator = () => {
         <>
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="OnboardingPages" component={OnboardingPages} options={{ headerShown: false }} />
+          <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
         </>
       ) : !user ? (
         <>

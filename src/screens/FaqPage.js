@@ -23,11 +23,11 @@ const FaqPage = ({navigation}) => {
       },
       {
           question: t('Can I upload a barcode image instead of scanning?'),
-          answer: ('Yes, you can upload a barcode image by selecting the Upload option. Choose an image from your gallery that clearly shows the barcode. The app will process the image and provide product details similar to scanning.')
+          answer: t('Yes, you can upload a barcode image by selecting the Upload option. Choose an image from your gallery that clearly shows the barcode. The app will process the image and provide product details similar to scanning.')
       },
       {
-          question: ('What languages does the app support?'),
-          answer: ('Our app supports multiple languages, including English, French, Swahili, Hausa, Amharic, Zulu, Twi, and Omoro. You can select your preferred language from the settings to view product information and interact with the chatbot in that language.')
+          question: t('What languages does the app support?'),
+          answer: t('Our app supports multiple languages, including English, French, Swahili, Hausa, Amharic, Zulu, Twi, and Omoro. You can select your preferred language from the settings to view product information and interact with the chatbot in that language.')
       },
       {
           question: t('How can I get more information about a product?'),
