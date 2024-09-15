@@ -23,6 +23,7 @@ import OTPPage from '../screens/OTPPage';
 import PasswordReset from '../screens/PasswordReset';
 import TermsPage from '../screens/TermsAndConditions';
 import OnboardingPages from '../components/OnboardingPages';
+import SearchPage from '../screens/SearchPage';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,7 @@ const AppNavigator = () => {
 
   return (
     <Stack.Navigator initialRouteName="OnboardingScreen">
-      {!user ? (
+      {/* {!user ? (
         <>
           <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }} />
           <Stack.Screen name="OnboardingPages" component={OnboardingPages} options={{ headerShown: false }} />
@@ -49,19 +50,20 @@ const AppNavigator = () => {
           <Stack.Screen name="PasswordReset" component={PasswordReset} options={{ headerShown: false }} />
           <Stack.Screen name='Terms' component={TermsPage} options={{headerShown: false}}/>
         </>
-      ) : (
+      ) : ( */}
         <>
           <Stack.Screen name="MainTabScreen" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="NoProductHistory" component={NoProductHistoryScreen} options={{ headerShown: false }} />
           <Stack.Screen name="UploadScreen" component={UploadScreen} options={{ headerShown: false }} />
           <Stack.Screen name="ScannerScreen" component={ScannerScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="SearchPage" component={SearchPage} options={{ headerShown: false }} />
           <Stack.Screen name="Chatbot" component={Chatbot} options={{ headerShown: false }} />
           <Stack.Screen name="Feedback" component={FeedbackScreen} options={{ headerShown: false }} />
           <Stack.Screen name='ProductNotFound' component={ProductNotFoundScreen} options={{headerShown: false}} />
           <Stack.Screen name='FAQ' component={FaqPage} options={{headerShown: false}}/>
           <Stack.Screen name='Terms' component={TermsPage} options={{headerShown: false}}/>
         </>
-      )}
+      {/* )} */}
     </Stack.Navigator>
   );
 };

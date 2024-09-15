@@ -5,7 +5,7 @@ import Swiper from 'react-native-swiper';
 const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen = ({ navigation }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // 
+  const [activeIndex, setActiveIndex] = useState(0); 
   const swiperRef = useRef(null);
 
   const dotColors = ['#15718e', '#daa163', '#000'];
@@ -80,7 +80,7 @@ const OnboardingScreen = ({ navigation }) => {
     button: {
       position: 'absolute',
       marginTop: 30,
-      paddingVertical: 18,
+      paddingVertical: 14,
       width: '90%',
       borderRadius: 50,
       bottom: 20,

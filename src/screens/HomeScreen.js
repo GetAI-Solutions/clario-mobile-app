@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Touchable, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import WideCard from '../components/WideCard';
 import NarrowCard from '../components/NarrowCard';
 import MediumCard from '../components/MediumCard';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
+import { Ionicons } from '@expo/vector-icons';
 // import { LinearGradient } from 'react-native-linear-gradient';
 
 /** an array of objects that represent each
@@ -175,17 +176,20 @@ const products = [
       flex: 1,
       backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e',
       padding: 20,
-      paddingTop: 0,
     },
     header: {
       position: 'sticky',
       top: 0,
       left: 0,
-      backgroundColor: theme === 'light' ? 'white' : '#1e1e1e',
       zIndex: 1,
       height: 80,
+      width: '100%',
+      backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e',
       display: 'flex',
+      flexDirection: 'row',
       justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      paddingTop: 20,
     },
     headerText: {
       fontSize: 20, // Adjust fontSize for better responsiveness
@@ -195,12 +199,13 @@ const products = [
       marginTop: 20,
     },
     logo: {
-      position: 'absolute',
-      top: 15,
-      left: '80%',
       width: 50,
       height: 50,
       resizeMode: 'contain',
+    },
+    searchButton: {
+      width: 30,
+      height: 30,
     },
     section: {
       marginTop: 20,
@@ -234,8 +239,15 @@ const products = [
   return (
     <ScrollView >
     <View style={styles.header}>
+    <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
       <Image source={require('../../assets/images/getai.png')} style={styles.logo}></Image>
-      <Text style={styles.headerText}>GetAI</Text>
+      <TouchableOpacity style={styles.searchButton} onPress={() => {navigation.navigate('SearchPage')}}>
+        <Ionicons
+          name='search'
+          size={30}
+          color={'#15718e'}
+        />
+      </TouchableOpacity>
     </View>
     <View style={styles.container}>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
