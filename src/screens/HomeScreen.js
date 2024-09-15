@@ -67,7 +67,7 @@ const products = [
       The product is positioned as a healthy beverage choice, targeting those looking for natural fruit juices. Its sweet and fruity flavor profile is designed to attract mango lovers and those seeking a tropical taste experience.
 
       Overall, Hub Mango Juice offers a blend of quality, taste, and health benefits, making it a popular choice among consumers looking for natural fruit beverages.`,
-        image_url: require('../../assets/images/hub1.png')
+        image_url: require('../../assets/images/hub.png')
       },
     ],
   },
@@ -175,7 +175,10 @@ const products = [
       flex: 1,
       backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e',
       padding: 20,
-      paddingTop: 0,
+      paddingTop: 10,
+      paddingHorizontal: 0,
+      zIndex: 1,
+
     },
     header: {
       position: 'sticky',
@@ -186,6 +189,7 @@ const products = [
       height: 80,
       display: 'flex',
       justifyContent: 'space-between',
+      paddingTop: 22,
     },
     headerText: {
       fontSize: 20, // Adjust fontSize for better responsiveness
@@ -193,6 +197,8 @@ const products = [
       color: theme === 'light' ? '#15718e' : '#fff',
       marginLeft: 20,
       marginTop: 20,
+      zIndex: 1,
+
     },
     logo: {
       position: 'absolute',
@@ -201,6 +207,10 @@ const products = [
       width: 50,
       height: 50,
       resizeMode: 'contain',
+      zIndex: 1,
+      paddingTop: 70,
+
+
     },
     section: {
       marginTop: 20,
@@ -211,9 +221,12 @@ const products = [
       fontWeight: '700',
       color: theme === 'dark' ? '#FFF' : '#15718e',
       marginBottom: 10,
+      paddingHorizontal: 5,
+
     },
     sponsoredTitle: {
       color:  '#faad5e',
+      paddingHorizontal: 5,
     },
     productsRow: {
       flexDirection: 'row',
@@ -222,6 +235,8 @@ const products = [
       alignItems: 'center',
       width: '48%',
       marginBottom: 20,
+      paddingHorizontal: 5,
+
     },
     texture: {
       ...StyleSheet.absoluteFillObject,

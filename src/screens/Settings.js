@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Switch, TouchableOpacity, Image,ImageBackground, StyleSheet, Modal, Alert } from 'react-native';
-import Header from '../components/Header'; 
+import { View, Text, Switch, TouchableOpacity, Image, ImageBackground, StyleSheet, Modal, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import UserContext from '../context/UserContext';
@@ -8,15 +7,12 @@ import { BASEURL } from '../services/api';
 import axios from 'axios';
 import PushNotification from 'react-native-push-notification';
 
-
-
 const SettingsScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const { user, setUser } = useContext(UserContext);
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
-
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
@@ -33,14 +29,12 @@ const SettingsScreen = ({ navigation }) => {
       );
     }
   };
-  
 
   const handleLanguageChange = async (language) => {
     i18n.changeLanguage(language); 
     setUser((prevUser) => ({ ...prevUser, preferred_language: language }));
 
     try {
-      console.log('id', user.uid)
       const response = await axios.patch(`${BASEURL}/users/update-user-preference`, {
         user_id: user.uid,
         preferred_language: language,
@@ -48,26 +42,20 @@ const SettingsScreen = ({ navigation }) => {
       
       if (response.status === 200) {
         const updatedUser = { ...user, preferred_language: language };
-        console.log('Language preference updated successfully');
         setUser(updatedUser);
         Alert.alert(t('Language preference updated successfully'));
-        
       } else {
         Alert.alert(t('Failed to update language preference'));
-        console.error('Failed to update language preference');
       }
     } catch (error) {
       Alert.alert(t('Error updating language preference'));
-
-      console.error('Error updating language preference:', error);
     }
     setLanguageModalVisible(false); 
   };
 
   return (
     <View style={[styles.container, theme === 'light' ? lightStyles.container : darkStyles.container]}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Header navigation={navigation} />
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
       <Text style={[styles.title, theme === 'light' ? lightStyles.title : darkStyles.title]}>{t('Settings')}</Text>
       
       <View style={styles.option}>
@@ -83,7 +71,6 @@ const SettingsScreen = ({ navigation }) => {
           value={isEnabled}
         />
       </View>
-
 
       <TouchableOpacity style={styles.option} onPress={() => setLanguageModalVisible(true)}>
         <View style={styles.optionLeft}>
@@ -123,7 +110,6 @@ const SettingsScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => setLanguageModalVisible(false)}>
               <Text style={styles.modalCancel}>Cancel</Text>
             </TouchableOpacity>
-            
           </View>
         </View>
       </Modal>
@@ -176,11 +162,13 @@ const darkStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 3,
+    paddingTop: 20,
+    justifyContent: 'flex-start', // Center content vertically
   },
   title: {
-    fontSize: 18,
-    fontWeight: 600,
+    fontSize: 25,
+    fontWeight: '600',
     marginVertical: 10,
   },
   option: {
@@ -225,6 +213,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'red',
     marginTop: 10,
+  },
+  texture: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+    zIndex: -1, // Ensure the texture is in the background
   },
 });
 

@@ -14,6 +14,7 @@ const TermsPage = ({ navigation }) => {
       flex: 1,
       padding: 20,
       backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',
+      paddingHorizontal: 0,
     },
     title: {
       fontSize: 24,
@@ -27,6 +28,7 @@ const TermsPage = ({ navigation }) => {
       color: theme === 'dark' ? '#fff' : '#1e1e1e',
       marginBottom: 10,
       lineHeight: 24,
+      paddingHorizontal: 10,
     },
     texture: {
       ...StyleSheet.absoluteFillObject,

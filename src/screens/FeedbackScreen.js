@@ -42,13 +42,13 @@ const FeedbackScreen = ({ navigation }) => {
     },
     title: {
       fontSize: 14,
-      fontWeight: 600,
+      fontWeight: '600',
       marginVertical: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     header: {
       fontSize: 14,
-      fontWeight: 500,
+      fontWeight: '500',
       marginBottom: 10,
       alignSelf: 'center',
       marginTop: 20,
@@ -85,7 +85,7 @@ const FeedbackScreen = ({ navigation }) => {
     buttonText: {
       color: '#FFF',
       fontSize: 14,
-      fontWeight: 700,
+      fontWeight: '700',
     },
     modalContainer: {
       flex: 1,
@@ -106,7 +106,7 @@ const FeedbackScreen = ({ navigation }) => {
     },
     modalHeader: {
       fontSize: 20,
-      fontWeight: 700,
+      fontWeight: '700',
       marginBottom: 20,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },

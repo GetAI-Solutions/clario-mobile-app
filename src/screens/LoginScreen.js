@@ -22,8 +22,6 @@ const Login = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
 
-
-
   const handlePhoneNumberChange = (text) => {
     setPhoneNumber(text);
   };
@@ -40,10 +38,9 @@ const Login = ({ navigation }) => {
     setShowPassword(!showPassword);
   };
 
-
   const handleLogin = async () => {
     setIsLoading(true);
-    setErrorMessage(''); 
+    setErrorMessage('');
     try {
       const loginData = {
         email: isPhoneLogin ? undefined : email,
@@ -52,7 +49,7 @@ const Login = ({ navigation }) => {
         phone_no: isPhoneLogin ? `${selectedCountry.dial_code}${phoneNumber}` : '',
       };
 
-      console.log(loginData)
+      console.log(loginData);
 
       const userData = await loginUser(loginData);
 
@@ -77,7 +74,6 @@ const Login = ({ navigation }) => {
       
       switch (error.response.status) {
         case 400:
-          return setErrorMessage('Invalid email or password.');
         case 401:
           return setErrorMessage('Invalid email or password.');
         case 500:
@@ -94,16 +90,18 @@ const Login = ({ navigation }) => {
     }
   };
 
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'light' ? '#fff' : '#2a2a2a',
+    },
+    contentContainer: {
+      flex: 1,
+      backgroundColor: 'transparent',  // Transparent background to let the texture show through
       paddingHorizontal: 16,
       paddingVertical: 16,
     },
     head: {
-      textAlign: 'left'
+      textAlign: 'left',
     },
     backButton: {
       alignSelf: 'flex-start',
@@ -205,126 +203,129 @@ const Login = ({ navigation }) => {
     buttonText: {
       color: '#FFFFFF',
       fontWeight: '700',
-      fontSize: 16
+      fontSize: 16,
     },
     disabledButton: {
       backgroundColor: '#A1A1AA',
     },
     texture: {
-      ...StyleSheet.absoluteFillObject,
+      flex: 1,
+      resizeMode: 'cover',
       width: '100%',
       height: '100%',
     },
     errorText: {
-      color: 'red'
-    }
+      color: 'red',
+    },
   });
 
-
   return (
-    <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Header navigation={navigation} />
-      <View style={styles.head}>
-        <Text style={styles.title}>Log in to your account</Text>
-        <Text style={styles.subtitle}>Enter your number or email with password</Text>
-      </View>
+    <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+      <View style={styles.contentContainer}>
+        <Header navigation={navigation} />
+        <View style={styles.head}>
+          <Text style={styles.title}>Log in to your account</Text>
+          <Text style={styles.subtitle}>Enter your number or email with password</Text>
+        </View>
 
-      {isPhoneLogin ? (
-        <View style={styles.inputContainer}>
-          <Text style={styles.label} htmlFor="phoneNumber">Phone</Text>
-          <View style={styles.phoneInputContainer}>
-            <TouchableOpacity
-              onPress={() => setShowCountryPicker(true)}
-              style={styles.countryPickerButton}
-            >
-      <Text style={{color: theme === 'light' ? '#000' : '#daa163',}}>{selectedCountry.dial_code}</Text>
-            </TouchableOpacity>
+        {isPhoneLogin ? (
+          <View style={styles.inputContainer}>
+            <Text style={styles.label} htmlFor="phoneNumber">Phone</Text>
+            <View style={styles.phoneInputContainer}>
+              <TouchableOpacity
+                onPress={() => setShowCountryPicker(true)}
+                style={styles.countryPickerButton}
+              >
+                <Text style={{color: theme === 'light' ? '#000' : '#daa163',}}>{selectedCountry.dial_code}</Text>
+              </TouchableOpacity>
+              <TextInput
+                id="phoneNumber"
+                style={styles.phoneInput}
+                placeholder="Mobile Number"
+                value={phoneNumber}
+                onChangeText={handlePhoneNumberChange}
+                keyboardType="phone-pad"
+                placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
+              />
+            </View>
+          </View>
+        ) : (
+          <View style={styles.inputContainer}>
+            <Text style={styles.label} htmlFor="email">Email</Text>
             <TextInput
-              id="phoneNumber"
-              style={styles.phoneInput}
-              placeholder="Mobile Number"
-              value={phoneNumber}
-              onChangeText={handlePhoneNumberChange}
-              keyboardType="phone-pad"
+              id="email"
+              style={styles.input}
+              placeholder="name@example.com"
+              value={email}
+              onChangeText={handleEmailChange}
+              keyboardType="email-address"
               placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
             />
           </View>
-        </View>
-      ) : (
-        <View style={styles.inputContainer}>
-          <Text style={styles.label} htmlFor="email">Email</Text>
-          <TextInput
-            id="email"
-            style={styles.input}
-            placeholder="name@example.com"
-            value={email}
-            onChangeText={handleEmailChange}
-            keyboardType="email-address"
-            placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
-          />
-        </View>
-      )}
+        )}
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label} htmlFor="password">Password</Text>
-        <View style={styles.passwordInputContainer}>
-          <TextInput
-            id="password"
-            style={styles.passwordInput}
-            placeholder="Password"
-            value={password}
-            onChangeText={handlePasswordChange}
-            secureTextEntry={!showPassword}
-            placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
-          />
-          <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
-            <Icon name={showPassword ? 'eye-off-outline' : 'eye-outline'} size={24} color={theme === 'light' ? '#000' : '#daa163'} />
+        <View style={styles.inputContainer}>
+          <Text style={styles.label} htmlFor="password">Password</Text>
+          <View style={styles.passwordInputContainer}>
+            <TextInput
+              id="password"
+              style={styles.passwordInput}
+              placeholder="Enter your password"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={handlePasswordChange}
+              placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
+            />
+            <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
+              <Icon name={showPassword ? 'eye' : 'eye-off'} size={20} color={theme === 'light' ? '#000' : '#fff'} />
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.footer}>
+          <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={styles.forgotPassword}>
+            <Text style={styles.linkText}>Forgot Password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsPhoneLogin(!isPhoneLogin)} style={styles.switchLoginMethod}>
+            <Text style={styles.linkText}>
+              {isPhoneLogin ? 'Login with email' : 'Login with phone'}
+            </Text>
           </TouchableOpacity>
         </View>
-      </View>
 
-      {errorMessage ? (
         <Text style={styles.errorText}>{errorMessage}</Text>
-      ) : null}
 
-      <View style={styles.footer}>
-        <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={styles.forgotPassword}>
-          <Text style={styles.linkText}>Forgot password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setIsPhoneLogin(!isPhoneLogin)} style={styles.switchLoginMethod}>
-          <Text style={styles.linkText}>{isPhoneLogin ? "Use email instead" : "Use phone instead"}</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity
-        onPress={handleLogin}
-        style={[
-          styles.loginButton,
-          ((!phoneNumber || !password) && isPhoneLogin) && styles.disabledButton,
-          ((!email || !password) && !isPhoneLogin) && styles.disabledButton
-        ]}
-        disabled={(isPhoneLogin && (!phoneNumber || !password)) || (!isPhoneLogin && (!email || !password))}
-      >
         {isLoading ? (
-          <ActivityIndicator color="#fff" />
+          <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <Text style={styles.buttonText}>Log in</Text>
+          <TouchableOpacity
+            onPress={handleLogin}
+            style={[styles.loginButton, (isPhoneLogin && phoneNumber === '') || (!isPhoneLogin && email === '' && password === '') ? styles.disabledButton : null]}
+            disabled={(isPhoneLogin && phoneNumber === '') || (!isPhoneLogin && email === '' && password === '')}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
         )}
-      </TouchableOpacity>
 
-      <CountryPicker
-        show={showCountryPicker}
-        pickerButtonOnPress={(country) => {
-          setSelectedCountry({ dial_code: country.dial_code, name: country.name.en });
-          setShowCountryPicker(false);
-        }}
-        style={{ modal: { height: '80%' } }} // Adjust the modal height
-      />
-    </View>
+        <CountryPicker
+          show={showCountryPicker}
+          pickerButtonOnPress={(item) => {
+            setSelectedCountry(item);
+            setShowCountryPicker(false);
+          }}
+          style={{
+            modal: {
+              height: '50%',
+              backgroundColor: '#fff',
+            },
+            inputLabel: {
+              color: '#000',
+            },
+          }}
+        />
+      </View>
+    </ImageBackground>
   );
 };
-
-
 
 export default Login;

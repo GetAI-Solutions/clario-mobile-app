@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +17,10 @@ const CustomDrawerContent = (props) => {
     try {
       await AsyncStorage.removeItem('userData');
       setUser(null);
-      navigation.navigate('Landing');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Landing' }], 
+      });
     } catch (error) {
       console.error('Error logging out: ', error);
     }
@@ -26,7 +29,10 @@ const CustomDrawerContent = (props) => {
   const styles = StyleSheet.create({
     drawerContainer: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
+    },
+    backgroundImage: {
+      flex: 1,
+      resizeMode: 'cover',
     },
     header: {
       alignItems: 'center',
@@ -74,56 +80,61 @@ const CustomDrawerContent = (props) => {
   });
 
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
-      <View style={styles.header}>
-        <Image
-          source={{ uri: user?.profileImage || 'https://via.placeholder.com/150' }}
-          style={styles.profileImage}
-        />
-        <Text style={styles.name}>{user?.user_name || t('Guest')}</Text>
-        <Text style={styles.email}>{user?.email || t('guest@example.com')}</Text>
-      </View>
-      <View style={styles.menuContainer}>
-        <DrawerItem
-          label={t('Share GetAI')}
-          labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
-          icon={({ focused, size }) => (
-            <Icon
-              name={'share-outline'}
-              size={size}
-              color={theme === 'dark' ? '#fff' : '#000'}
-            />
-          )}
-        />
-        <DrawerItem
-          label={t('FAQ')}
-          labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
-          icon={({ focused, size }) => (
-            <Icon
-              name={'help'}
-              size={size}
-              color={theme === 'dark' ? '#fff' : '#000'}
-            />
-          )}
-          onPress={() => navigation.navigate('FAQ')}
-        />
-        <DrawerItem
-          label={t('Feedback')}
-          labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
-          icon={({ focused, size }) => (
-            <Icon
-              name={focused ? 'chatbox' : 'chatbox-outline'}
-              size={size}
-              color={theme === 'dark' ? '#fff' : '#000'}
-            />
-          )}
-          onPress={() => navigation.navigate('Feedback')}
-        />
-      </View>
-      <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-        <Text style={styles.logoutText}>{t('Logout')}</Text>
-      </TouchableOpacity>
-    </DrawerContentScrollView>
+    <ImageBackground
+      source={require('../../assets/images/texture.png')} // Add your texture image here
+      style={styles.backgroundImage}
+    >
+      <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
+        <View style={styles.header}>
+          <Image
+            source={{ uri: user?.profileImage || 'https://via.placeholder.com/150' }}
+            style={styles.profileImage}
+          />
+          <Text style={styles.name}>{user?.user_name || t('Guest')}</Text>
+          <Text style={styles.email}>{user?.email || t('guest@example.com')}</Text>
+        </View>
+        <View style={styles.menuContainer}>
+          <DrawerItem
+            label={t('Share GetAI')}
+            labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
+            icon={({ focused, size }) => (
+              <Icon
+                name={'share-outline'}
+                size={size}
+                color={theme === 'dark' ? '#fff' : '#000'}
+              />
+            )}
+          />
+          <DrawerItem
+            label={t('FAQ')}
+            labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
+            icon={({ focused, size }) => (
+              <Icon
+                name={'help'}
+                size={size}
+                color={theme === 'dark' ? '#fff' : '#000'}
+              />
+            )}
+            onPress={() => navigation.navigate('FAQ')}
+          />
+          <DrawerItem
+            label={t('Feedback')}
+            labelStyle={{ color: theme === 'dark' ? '#fff' : '#000' }}
+            icon={({ focused, size }) => (
+              <Icon
+                name={focused ? 'chatbox' : 'chatbox-outline'}
+                size={size}
+                color={theme === 'dark' ? '#fff' : '#000'}
+              />
+            )}
+            onPress={() => navigation.navigate('Feedback')}
+          />
+        </View>
+        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+          <Text style={styles.logoutText}>{t('Logout')}</Text>
+        </TouchableOpacity>
+      </DrawerContentScrollView>
+    </ImageBackground>
   );
 };
 

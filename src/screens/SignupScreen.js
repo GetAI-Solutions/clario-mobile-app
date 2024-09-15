@@ -8,7 +8,6 @@ import { useTheme } from '../context/ThemeContext';
 
 const SignupPhone = ({ navigation }) => {
   const { theme } = useTheme();
-  // let theme = 'light';
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -24,13 +23,10 @@ const SignupPhone = ({ navigation }) => {
     setPassword(text);
   };
 
-
   const handleContinueClick = () => {
-    // Check if phone number and password are filled
     if (phoneNumber && password) {
       setShowModal(true);
     } else {
-      // Optionally show an error message if inputs are not valid
       alert("Please enter a valid phone number and password.");
     }
   };
@@ -52,128 +48,124 @@ const SignupPhone = ({ navigation }) => {
     });
   };
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme === 'light'? '#fff' : '#2a2a2a',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-    boxSize: 'border-box',
-  },
-  content: {
-    marginTop: 8,
-    flex: 1,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: theme === 'light' ? '#000' : '#daa163',
-  },
-  subtitle: {
-    color: theme === 'light' ? '#000' : '#fff',
-    marginBottom: 24,
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: theme === 'light' ? '#000' : '#fff',
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    marginBottom: 16,
-    backgroundColor: 'transparent',
-  },
-  countryPicker: {
-    marginRight: 8,
-    paddingVertical: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    padding: 8,
-  },
-  toggleButton: {
-    padding: 8,
-  },
-  button: {
-    backgroundColor: '#2c7391',
-    borderRadius: 28,
-    alignItems: 'center',
-    paddingVertical: 16,
-    borderRadius: 100,
-    marginTop: 24,
-  },
-  disabledButton: {
-    backgroundColor: '#acacac',
-  },
-  activeButton: {
-    backgroundColor: '#15718E',
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: theme === 'light' ? 'white' : '#4f4f4f',
-    borderRadius: 25,
-    padding: 16,
-    paddingBottom: 32,
-    width: '90%',
-    alignItems: 'center',
-  },
-  modalCloseButton: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
-  },
-  modalCloseText: {
-    fontSize: 28,
-    color: theme === 'light' ? '#000' : '#fff',
-  },
-  modalImage: {
-    marginBottom: 16,
-  },
-  modalTitle: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: theme === 'light' ? '#000' : '#daa163',
-    width: '90%',
-    textAlign: 'center',
-  },
-  modalText: {
-    fontSize: 14,
-    color: theme === 'light' ? '#000' : '#fff',
-    marginBottom: 16,
-  },
-  modalButton: {
-    width: '75%',
-    paddingVertical: 8,
-    borderRadius: 100,
-    marginBottom: 8,
-    fontWeight: 700,
-  },
-  modalOutlined: {
-    borderColor: theme === 'light' ? '#15718e' : '#daa163',
-    borderWidth: 2,
-  },
-  texture: {
-    ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: '100%',
-    zIndex: -1,
-  }
-});
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingHorizontal: 16,
+      paddingVertical: 16,
+      boxSize: 'border-box',
+    },
+    content: {
+      marginTop: 8,
+      flex: 1,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 8,
+      color: theme === 'light' ? '#000' : '#daa163',
+    },
+    subtitle: {
+      color: theme === 'light' ? '#000' : '#fff',
+      marginBottom: 24,
+    },
+    inputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: theme === 'light' ? '#000' : '#fff',
+      borderRadius: 10,
+      paddingHorizontal: 8,
+      marginBottom: 16,
+      backgroundColor: 'transparent',
+    },
+    countryPicker: {
+      marginRight: 8,
+      paddingVertical: 10,
+    },
+    input: {
+      flex: 1,
+      height: 40,
+      padding: 8,
+    },
+    toggleButton: {
+      padding: 8,
+    },
+    button: {
+      backgroundColor: '#2c7391',
+      borderRadius: 28,
+      alignItems: 'center',
+      paddingVertical: 16,
+      borderRadius: 100,
+      marginTop: 24,
+    },
+    disabledButton: {
+      backgroundColor: '#acacac',
+    },
+    activeButton: {
+      backgroundColor: '#15718E',
+    },
+    buttonText: {
+      fontSize: 20,
+      textAlign: 'center',
+      fontWeight: 'bold',
+      color: 'white',
+    },
+    modalOverlay: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+      backgroundColor: theme === 'light' ? 'white' : '#4f4f4f',
+      borderRadius: 25,
+      padding: 16,
+      paddingBottom: 32,
+      width: '90%',
+      alignItems: 'center',
+    },
+    modalCloseButton: {
+      position: 'absolute',
+      top: 16,
+      right: 16,
+    },
+    modalCloseText: {
+      fontSize: 28,
+      color: theme === 'light' ? '#000' : '#fff',
+    },
+    modalImage: {
+      marginBottom: 16,
+    },
+    modalTitle: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      marginBottom: 5,
+      color: theme === 'light' ? '#000' : '#daa163',
+      width: '90%',
+      textAlign: 'center',
+    },
+    modalText: {
+      fontSize: 14,
+      color: theme === 'light' ? '#000' : '#fff',
+      marginBottom: 16,
+    },
+    modalButton: {
+      width: '75%',
+      paddingVertical: 8,
+      borderRadius: 100,
+      marginBottom: 8,
+      fontWeight: '700',
+    },
+    modalOutlined: {
+      borderColor: theme === 'light' ? '#15718e' : '#daa163',
+      borderWidth: 2,
+    },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      resizeMode: 'cover',
+    }
+  });
 
   return (
     <View style={styles.container}>
@@ -242,7 +234,7 @@ const styles = StyleSheet.create({
               labelStyle={{
                 color: 'white',
                 fontSize: 16,
-                fontWeight: 700,
+                fontWeight: '700',
               }}
             >
               <Text>Continue</Text>
@@ -254,7 +246,7 @@ const styles = StyleSheet.create({
              labelStyle={{
               color: theme === 'light' ? '#15718e' : '#daa163',
               fontSize: 17,
-              fontWeight: 700,
+              fontWeight: '700',
             }}
              >
               Edit

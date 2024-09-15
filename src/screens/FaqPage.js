@@ -39,7 +39,7 @@ const FaqPage = ({navigation}) => {
       },
       {
           question: t('How do I contact support?'),
-          answer: t('For any issues or support inquiries, you can contact us through the Help section in the app or email us directly at support@yourappdomain.com. We’re here to help you with any questions or problems you may have.')
+          answer: t('For any issues or support inquiries, you can contact us through the Help section in the app or email us directly at GETAiAfrica@gmail.com. We’re here to help you with any questions or problems you may have.')
       },
       {
           question: t('Is my data safe with this app?'),
@@ -60,7 +60,7 @@ const FaqPage = ({navigation}) => {
     const styles = StyleSheet.create({
         container: {
           flex: 1,
-          padding: 20,
+          padding: 0,
           backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',
         },
         title: {
@@ -68,6 +68,7 @@ const FaqPage = ({navigation}) => {
           fontWeight: 'bold',
           marginBottom: 20,
           color: theme === 'dark' ? '#fff' : '#000',
+          paddingHorizontal: 10,
         },
         faqContainer: {
           marginBottom: 10,
@@ -78,10 +79,11 @@ const FaqPage = ({navigation}) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          paddingVertical: 15,
+          paddingVertical: 14,
+          paddingHorizontal: 10,
         },
         questionText: {
-          fontSize: 18,
+          fontSize: 17,
           color: theme === 'dark' ? '#daa163' : '#15718e',
         },
         answer: {

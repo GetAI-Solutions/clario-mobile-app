@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image,ImageBackground, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
@@ -23,8 +23,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFFFFF',
-      paddingHorizontal: 20,
+      backgroundColor: theme === 'dark' ? '#000' : '#FFF', // Set background color based on theme
     },
     content: {
       alignItems: 'center',
@@ -86,48 +85,48 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       fontWeight: '700',
     },
     texture: {
-      ...StyleSheet.absoluteFillObject,
+      flex: 1,
       width: '100%',
       height: '100%',
-    }
+    },
   });
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Header navigation={navigation} />
-      <ScrollView contentContainerStyle={styles.content}>
-        <View style={styles.productContainer}>
-        <Image 
-          source={
-            // Check if image_url is a remote URI or a local image
-            typeof product.image_url === 'string' && product.image_url !== "" 
-              ? { uri: product.image_url } 
-              : product.image_url || require('../../assets/images/else.png')
-          } 
-          style={styles.productImage} 
-         />
-         <View style={styles.textContainer}>
-          <Text style={styles.productName}>{cleanText(product.product_name)}</Text>
-          <Text style={styles.productDescription}>
-            {showFullDescription ? cleanText(product.product_summary) : truncatedDescription}
-          </Text>
-          {product.product_summary.length > 150 && (
-            <TouchableOpacity onPress={toggleDescription}>
-              <Text style={styles.readMoreText}>
-                {showFullDescription ? t('Read Less') : t('Read More')}
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+        <Header navigation={navigation} />
+        <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.productContainer}>
+            <Image 
+              source={
+                typeof product.image_url === 'string' && product.image_url !== "" 
+                  ? { uri: product.image_url } 
+                  : product.image_url || require('../../assets/images/else.png')
+              } 
+              style={styles.productImage} 
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.productName}>{cleanText(product.product_name)}</Text>
+              <Text style={styles.productDescription}>
+                {showFullDescription ? cleanText(product.product_summary) : truncatedDescription}
               </Text>
-            </TouchableOpacity>
-          )}
+              {product.product_summary.length > 150 && (
+                <TouchableOpacity onPress={toggleDescription}>
+                  <Text style={styles.readMoreText}>
+                    {showFullDescription ? t('Read Less') : t('Read More')}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
-        </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Chatbot', { product })}
-          style={styles.chatbotButton}
-        >
-          <Text style={styles.chatbotButtonText}>{t('Proceed to Chatbot')}</Text>
-        </TouchableOpacity>
-      </ScrollView>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Chatbot', { product })}
+            style={styles.chatbotButton}
+          >
+            <Text style={styles.chatbotButtonText}>{t('Proceed to Chatbot')}</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </ImageBackground>
     </View>
   );
 };

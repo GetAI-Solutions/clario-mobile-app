@@ -65,7 +65,7 @@ const ProductList = ({ navigation }) => {
     },
     productName: {
       fontSize: 17,
-      fontWeight: 600,
+      fontWeight: '600',
       color: '#fff',
       marginLeft: 30,
     },

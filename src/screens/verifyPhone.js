@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,24 +6,25 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const VerifyPhone = ({ navigation }) => {
-  const [entered_otp, setEnetered_otp] = useState(['', '', '', '', '', '']);
+  const [entered_otp, setEnteredOtp] = useState(['', '', '', '', '', '']);
   const route = useRoute();
   const { phoneNumber, dialCode, email, otp } = route.params || {};
+  const otpInputs = useRef([]);
 
   const handleChange = (text, index) => {
     const newOtp = [...entered_otp];
     newOtp[index] = text;
-    setEnetered_otp(newOtp);
+    setEnteredOtp(newOtp);
 
     // Automatically focus the next input field
     if (text && index < 5) {
-      const nextInput = `otp-input-${index + 1}`;
-      this[nextInput] && this[nextInput].focus();
+      otpInputs.current[index + 1]?.focus();
     }
   };
 
@@ -49,6 +50,11 @@ const VerifyPhone = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <ImageBackground 
+        source={require('../../assets/images/texture.png')} 
+        style={styles.texture}
+        resizeMode="cover" // Ensures the image covers the entire background
+      />
       <Header navigation={navigation} />
       <View style={styles.content}>
         <Text style={styles.title}>Confirm Your Email</Text>
@@ -58,7 +64,7 @@ const VerifyPhone = ({ navigation }) => {
           {entered_otp.map((digit, index) => (
             <TextInput
               key={index}
-              ref={(input) => (this[`otp-input-${index}`] = input)}
+              ref={(input) => (otpInputs.current[index] = input)}
               style={styles.otpInput}
               maxLength={1}
               value={digit}
@@ -91,20 +97,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f7fafc',
-    paddingHorizontal: 16,
-    paddingLeft: 16,
+    paddingHorizontal: 0, // Remove paddingHorizontal to avoid extra space
+    paddingLeft: 0, // Remove paddingLeft to avoid extra space
   },
   content: {
     flex: 1,
     justifyContent: 'flex-start',
-  },
-  backButton: {
-    alignSelf: 'flex-start',
-    padding: 8,
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
   },
   title: {
     fontSize: 24,
@@ -149,9 +147,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     position: 'absolute',
     bottom: 40, // adjust this value to your liking
-    left: 0,
-    right: 0,
-    marginHorizontal: 20,
+    left: 20,
+    right: 20,
   },
   verifyButtonText: {
     color: '#ffffff',
@@ -160,6 +157,12 @@ const styles = StyleSheet.create({
   },
   disabledButton: {
     backgroundColor: '#cbd5e0',
+  },
+  texture: {
+    ...StyleSheet.absoluteFillObject,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
   },
 });
 

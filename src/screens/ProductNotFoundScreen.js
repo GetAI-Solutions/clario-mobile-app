@@ -1,13 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ActivityIndicator, ImageBackground, SafeAreaView } from 'react-native';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { getDetailsFromPerplexity } from '../services/apiService';
-import ProductContext from '../context/ProductContext';
 import UserContext from '../context/UserContext';
-
 
 const ProductNotFoundScreen = ({ navigation, route }) => {
   const { bar_code } = route.params;
@@ -17,46 +15,41 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
 
   const handleSearch = async () => {
     if (!bar_code) {
       console.error('bar_code is not defined');
       return;
     }
-    console.log('barcode...', bar_code)
+    console.log('barcode...', bar_code);
     setLoading(true);
     setTimeout(async () => {
-    try {
-      const userID = user.uid
-      const response = await getDetailsFromPerplexity(productName, bar_code, userID);
+      try {
+        const userID = user.uid;
+        const response = await getDetailsFromPerplexity(productName, bar_code, userID);
+        
+        if (response.data) {
+          const mappedProduct = {
+            product_summary: response.data.product.product_details,
+            product_name: response.data.product.product_name,
+            product_barcode: response.data.product.product_code,
+            perplexity: true,
+          };
 
-      
-      if (response.data) {
-        const mappedProduct = {
-          product_summary: response.data.product.product_details, // Example of renaming
-          product_name: response.data.product.product_name,
-          product_barcode: response.data.product.product_code,
-          perplexity: true,
+          navigation.navigate('ProductDetails', { product: mappedProduct });
+        } else if (response.status === 400) {
+          setError(t('Please provide a more specific product name'));
+        } else {
+          setError(t('An error occurred while searching for the product'));
         }
-
-
-
-
-        navigation.navigate('ProductDetails', { product: mappedProduct });
-      }else if (response.status === 400) {
-        setError(t('Please provide a more specific product name'));
-      } else {
+      } catch (error) {
         setError(t('An error occurred while searching for the product'));
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setError(t('An error occurred while searching for the product'));
-    } finally {
-      setLoading(false);
-    }
-  }, 100);
+    }, 100);
   };
-
 
   const handleUpload = () => {
     navigation.navigate('UploadScreen');
@@ -66,22 +59,31 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
     navigation.navigate('ScannerScreen');
   };
 
+  const backgroundColor = theme === 'dark' ? '#000' : '#FFF';
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
-      paddingHorizontal: 20,
+      justifyContent: 'flex-start',
+      backgroundColor: backgroundColor, // Background color based on theme
+    },
+    background: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%',
+      resizeMode: 'cover', // Ensure the texture covers the entire screen
     },
     content: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
+      zIndex: 1, // Ensure content is above the background
     },
     imageContainer: {
       position: 'relative',
-      marginBottom: 20,
-      marginTop: 100,
+      marginBottom: 18,
+      marginTop: 75,
     },
     placardImage: {
       width: 150,
@@ -113,7 +115,8 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
       borderWidth: 1,
       borderColor: theme === 'dark' ? '#bbb' : '#319795',
       borderRadius: 25,
-      paddingHorizontal: 10,
+      paddingHorizontal: 15,
+      paddingVertical: 0,
       width: '100%',
       marginBottom: 220,
       backgroundColor: theme === 'dark' ? '#333' : '#fff',
@@ -151,7 +154,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
       width: 100,
     },
     loadingIndicator: {
-      marginVertical: 20, 
+      marginVertical: 20,
     },
     optionButtonText: {
       color: '#fff',
@@ -160,7 +163,11 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground 
+        source={require('../../assets/images/texture.png')} 
+        style={styles.background} 
+      />
       <Header navigation={navigation} />
       <View style={styles.content}>
         <View style={styles.imageContainer}>
@@ -172,7 +179,13 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
           {t('We might not have your product yet, try searching by name.')}
         </Text>
 
-        {loading && <ActivityIndicator size="large" color={theme === 'dark' ? '#fff' : '#000'} style={styles.loadingIndicator} />}
+        {loading && (
+          <ActivityIndicator
+            size="large"
+            color={theme === 'dark' ? '#fff' : '#000'}
+            style={styles.loadingIndicator}
+          />
+        )}
         {error && <Text style={{ color: theme === 'dark' ? '#fff' : '#000' }}>{error}</Text>}
 
         <View style={styles.inputContainer}>
@@ -187,13 +200,11 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
           <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
             <Image source={require('../../assets/images/send.png')} style={styles.sendIcon} />
           </TouchableOpacity>
-          
         </View>
-        
 
         <Footer onUpload={handleUpload} onScan={handleScan} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

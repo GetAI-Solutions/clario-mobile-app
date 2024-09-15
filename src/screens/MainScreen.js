@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator, Image, Text, SafeAreaView, ImageBackground } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Text, SafeAreaView, ImageBackground } from 'react-native';
 import Footer from '../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
@@ -30,11 +30,6 @@ const MainScreen = ({ navigation }) => {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
     },
-    logo: {
-      width: 100,
-      height: 100,
-      resizeMode: 'contain',
-    },
     content: {
       flex: 1, 
       marginBottom: 64, 
@@ -47,7 +42,7 @@ const MainScreen = ({ navigation }) => {
       marginVertical: 30,
     },
     texture: {
-      ...StyleSheet.absoluteFillObject,
+      flex: 1,
       width: '100%',
       height: '100%',
     }
@@ -55,25 +50,27 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Custom Header */}
-      <DrawerButton navigation={navigation} />
-      {/* Content */}
-      <View style={styles.content}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+        {/* Custom Header */}
+        <DrawerButton navigation={navigation} />
+
+        {/* Content */}
+        <View style={styles.content}>
           {loading ? (
-          <ActivityIndicator size="large" color="#007bff" />
-        ) : products.length === 0 ? (
-          <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
-        ) : (
-          <>
-            <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>
-            <ProductList navigation={navigation} />
-          </>
-        )}
-      </View>
-     
-      {/* Footer */}
-      <Footer onUpload={handleUpload} onScan={handleScan} />
+            <ActivityIndicator size="large" color="#007bff" />
+          ) : products.length === 0 ? (
+            <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
+          ) : (
+            <>
+              <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>
+              <ProductList navigation={navigation} />
+            </>
+          )}
+        </View>
+
+        {/* Footer */}
+        <Footer onUpload={handleUpload} onScan={handleScan} />
+      </ImageBackground>
     </SafeAreaView>
   );
 };

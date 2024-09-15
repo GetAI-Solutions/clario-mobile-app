@@ -1,35 +1,30 @@
-import React, { useState, useContext, useEffect  } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, ScrollView, Alert, Platform } from 'react-native';
-import Header from '../components/Header'; 
+import React, { useState, useContext } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { updateUser } from '../services/apiService';
 import * as ImagePicker from 'expo-image-picker';
-
+import { Platform } from 'react-native';
 
 const AccountSecurityScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
   const { t } = useTranslation();
   const { theme } = useTheme();
-
-  const [loading, setLoading] = useState(false)
-
-  console.log('user...', user)
-
-  const [fullName, setFullName] = useState(user ? user.user_name : '');
-  const [email, setEmail] = useState(user ? user.email : '');
-  const [phoneNumber, setPhoneNumber] = useState(user ? user.phone_no : '');
-
-  const [profileImage, setProfileImage] = useState(user?.profileImage || 'https://via.placeholder.com/100x100.png');
-
   
-  const user_id = user.uid
+  // Ensure default values if user is null/undefined
+  const [fullName, setFullName] = useState(user?.user_name || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone_no || '');
+  const [profileImage, setProfileImage] = useState(user?.profileImage || 'https://via.placeholder.com/100x100.png');
+  const [loading, setLoading] = useState(false);
+  
+  const user_id = user?.uid;
 
   const initialDetails = {
-    fullName: user ? user.user_name : '',
-    email: user ? user.email : '',
-    phoneNumber: user ? user.phone_no : '',
+    fullName: user?.user_name || '',
+    email: user?.email || '',
+    phoneNumber: user?.phone_no || '',
   };
 
   const handleSaveChanges = async () => {
@@ -53,19 +48,19 @@ const AccountSecurityScreen = ({ navigation }) => {
       email: email,
       user_name: fullName,
       phone_no: phoneNumber,
+      profileImage: profileImage,
     };
 
     try {
-      console.log("Data...", preferences)
+      console.log('Data...', preferences);
       const response = await updateUser(preferences);
       if (response.status === 200 || response.status === 204) {
         setUser({ ...user, ...preferences });
         Alert.alert('Success', 'Changes saved successfully.');
       }
-      console.log('Changes saved:', preferences);
     } catch (error) {
-      Alert.alert('Error', 'Failed to save changes.');
       console.error('Error saving changes:', error);
+      Alert.alert('Error', 'Failed to save changes.');
     } finally {
       setLoading(false);
     }
@@ -93,14 +88,16 @@ const AccountSecurityScreen = ({ navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: 20,
+      paddingHorizontal: 0,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
     },
     title: {
-      fontSize: 18,
-      fontWeight: '600',
-      marginVertical: 10,
+      fontSize: 20,
+      fontWeight: '700',
+      marginVertical: 20,
       color: theme === 'dark' ? '#FFF' : '#000',
+      zIndex: 1,
+      paddingHorizontal: 10,
     },
     profileContainer: {
       alignItems: 'center',
@@ -124,14 +121,22 @@ const AccountSecurityScreen = ({ navigation }) => {
       fontSize: 14,
     },
     inputContainer: {
-      marginBottom: 20,
+      marginBottom: 30,
+      alignItems: 'center', // Center the contents horizontally
+
     },
     label: {
-      fontSize: 14,
+      fontSize: 18,
+      fontWeight: "500",
       color: theme === 'dark' ? '#CCC' : '#333',
       marginBottom: 5,
+      textAlign: 'left',  // Align label text to the left
+
     },
     inputWrapper: {
+      width: '80%',  // Set a percentage width (adjust as needed)
+      maxWidth: 400,  // Set a maximum width (adjust as needed)
+  
       flexDirection: 'row',
       alignItems: 'center',
       borderColor: theme === 'dark' ? '#555' : '#E0E0E0',
@@ -145,6 +150,8 @@ const AccountSecurityScreen = ({ navigation }) => {
       height: 40,
       fontSize: 16,
       color: theme === 'dark' ? '#FFF' : '#333',
+      paddingHorizontal: 10,  // Adds padding inside the text box
+
     },
     icon: {
       width: 20,
@@ -168,20 +175,17 @@ const AccountSecurityScreen = ({ navigation }) => {
       ...StyleSheet.absoluteFillObject,
       width: '100%',
       height: '100%',
+      zIndex: -1,
     },
   });
 
   return (
     <View style={styles.container}>
-        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Header navigation={navigation} />
+      <ImageBackground source={theme === 'dark' ? { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/7o9AAAAAElFTkSuQmCC' } : require('../../assets/images/texture.png')} style={styles.texture}/>
       <Text style={styles.title}>{t('Account & Security')}</Text>
 
       <View style={styles.profileContainer}>
-        <Image 
-          source={{ uri: profileImage }} 
-          style={styles.profileImage}
-        />
+        <Image source={{ uri: profileImage }} style={styles.profileImage} />
         <TouchableOpacity style={styles.changePictureButton} onPress={handleProfileImageChange}>
           <Text style={styles.changePictureText}>{t('Change Picture')}</Text>
         </TouchableOpacity>
@@ -195,10 +199,7 @@ const AccountSecurityScreen = ({ navigation }) => {
             value={fullName}
             onChangeText={setFullName}
           />
-          <Image 
-            source={require('../../assets/images/edit_icon.png')} 
-            style={styles.icon}
-          />
+          <Image source={require('../../assets/images/edit_icon.png')} style={styles.icon} />
         </View>
       </View>
 
@@ -211,10 +212,7 @@ const AccountSecurityScreen = ({ navigation }) => {
             onChangeText={setEmail}
             keyboardType="email-address"
           />
-          <Image 
-            source={require('../../assets/images/edit_icon.png')} 
-            style={styles.icon}
-          />
+          <Image source={require('../../assets/images/edit_icon.png')} style={styles.icon} />
         </View>
       </View>
 
@@ -227,24 +225,14 @@ const AccountSecurityScreen = ({ navigation }) => {
             onChangeText={setPhoneNumber}
             keyboardType="phone-pad"
           />
-          <Image 
-            source={require('../../assets/images/edit_icon.png')} 
-            style={styles.icon}
-          />
+          <Image source={require('../../assets/images/edit_icon.png')} style={styles.icon} />
         </View>
       </View>
 
       <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-        {loading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.saveButtonText}>{t('Save Changes')}</Text>
-        )}
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>{t('Save Changes')}</Text>}
       </TouchableOpacity>
-
     </View>
- 
-    
   );
 };
 

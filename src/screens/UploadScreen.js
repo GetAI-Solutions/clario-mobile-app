@@ -18,7 +18,7 @@ const UploadScreen = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [product, setProduct] = useState(null);
   const [statusMessage, setStatusMessage] = useState('');
-  const { user, updateUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { width } = Dimensions.get("window");
@@ -35,18 +35,18 @@ const UploadScreen = ({ navigation }) => {
       quality: 1,
       ...(Platform.OS === 'web' ? { aspect: [4, 3] } : {}), 
     });
-  
+
     console.log('ImagePicker result:', result);
-  
+
     let bar_code = ''; // Declare bar_code here
     if (!result.canceled) {
       try {
         setLoading(true);
         setError(null);
         setStatusMessage(t('Extracting barcode...'));
-  
+
         let formData = new FormData();
-  
+
         if (Platform.OS === 'web') {
           const imageBlob = await fetchImageFromUri(result.assets[0].uri);
           formData.append('file', imageBlob);
@@ -64,14 +64,14 @@ const UploadScreen = ({ navigation }) => {
             type: 'image/jpeg',
           });
         }
-  
+
         formData.append('id', user.uid);
         console.log('formData:', formData);
-  
+
         const barcodeData = await uploadBarcode(formData);
         bar_code = barcodeData.product_barcode; // Assign value to the existing variable
         console.log("barcode...", bar_code);
-  
+
         if (bar_code && bar_code !== '') {
           setStatusMessage(t('Barcode detected! Retrieving product details...'));
           const productData = await getProductSummary(bar_code, user.uid);
@@ -91,7 +91,7 @@ const UploadScreen = ({ navigation }) => {
         } else {
           setError(t('No barcode detected.'));
         }
-  
+
       } catch (err) {
         console.error('Upload error:', err);
         handleError(err, bar_code); // Pass the barcode variable here
@@ -101,70 +101,67 @@ const UploadScreen = ({ navigation }) => {
       }
     }
   };
-  
 
-const handleError = ( err, bar_code ) => {
-  console.error('Error details:', { err });
+  const handleError = (err, bar_code) => {
+    console.error('Error details:', { err });
 
-  if (err.response) {
-    switch (err.response.status) {
-      case 400:
-        console.log('barcode...', bar_code)
-        navigation.navigate('ProductNotFound', { bar_code: bar_code });
-        break;
-      case 401:
-        setError(t('Unauthorized access.'));
-        break;
-      case 403:
-        setError(t('Forbidden access.'));
-        break;
-      case 404:
-        console.log('barcode...', bar_code)
-        navigation.navigate('ProductNotFound', { bar_code: bar_code });
-        break;
-      case 408:
-        setError(t('Request timeout.'));
-        break;
-      case 422:
-        setError(t('Validation error. Please check your input.'));
-        break;
-      case 429:
-        setError(t('Too many requests. Please try again later.'));
-        break;
-      case 500:
-        setError(t('Internal server error.'));
-        break;
-      case 502:
-        setError(t('Bad gateway.'));
-        break;
-      case 503:
-        setError(t('Service unavailable.'));
-        break;
-      case 504:
-        setError(t('Gateway timeout.'));
-        break;
-      default:
-        setError(t('An error occurred. Please try again.'));
+    if (err.response) {
+      switch (err.response.status) {
+        case 400:
+        case 404:
+          console.log('barcode...', bar_code)
+          navigation.navigate('ProductNotFound', { bar_code: bar_code });
+          break;
+        case 401:
+          setError(t('Unauthorized access.'));
+          break;
+        case 403:
+          setError(t('Forbidden access.'));
+          break;
+        case 408:
+          setError(t('Request timeout.'));
+          break;
+        case 422:
+          setError(t('Validation error. Please check your input.'));
+          break;
+        case 429:
+          setError(t('Too many requests. Please try again later.'));
+          break;
+        case 500:
+          setError(t('Internal server error.'));
+          break;
+        case 502:
+          setError(t('Bad gateway.'));
+          break;
+        case 503:
+          setError(t('Service unavailable.'));
+          break;
+        case 504:
+          setError(t('Gateway timeout.'));
+          break;
+        default:
+          setError(t('An error occurred. Please try again.'));
+      }
+    } else if (err.request) {
+      setError(t('Network error. Please check your connection.'));
+    } else {
+      setError(t('Unknown error. Please try again.'));
     }
-  } else if (err.request) {
-    setError(t('Network error. Please check your connection.'));
-  } else {
-    setError(t('Unknown error. Please try again.'));
-  }
-};
+  };
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
-      paddingHorizontal: 20,
+      paddingHorizontal: 0, // Remove paddingHorizontal to avoid extra space
+      paddingLeft: 0, // Remove paddingLeft to avoid extra space
     },
     content: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: -150,
-      zIndex: -1,
+      zIndex: 1,
     },
     uploadButton: {
       backgroundColor: theme === 'light' ? '#15718e' : '#daa163',
@@ -189,7 +186,7 @@ const handleError = ( err, bar_code ) => {
     errorContainer: {
       alignItems: 'center',
       marginTop: 20,
-      width: '100%'
+      width: '100%',
     },
     errorText: {
       color: '#FF0000',
@@ -239,13 +236,13 @@ const handleError = ( err, bar_code ) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} resizeMode="cover"/>
       <Header navigation={navigation}/>
       <View style={styles.content}>
-      <View style={styles.imgContainer}>
-        <Image source={require('../../assets/images/uploadart.png')} style={styles.art}/>
-        <Text style={styles.description}>Upload an image with your barcode. and we'll do the rest</Text>
-      </View>
+        <View style={styles.imgContainer}>
+          <Image source={require('../../assets/images/uploadArt.png')} style={styles.art}/>
+          <Text style={styles.description}>Upload an image with your barcode and we'll do the rest</Text>
+        </View>
         {!product && !loading && !error && (
           <TouchableOpacity onPress={handleImagePick} style={styles.uploadButton}>
             <Text style={styles.uploadButtonText}>{t('Upload Image')}</Text>

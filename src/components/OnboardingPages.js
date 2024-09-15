@@ -6,24 +6,19 @@ import Swiper from 'react-native-swiper';
 const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen = ({ navigation }) => {
-  const [activeIndex, setActiveIndex] = useState(0); // 
+  const [activeIndex, setActiveIndex] = useState(0);
   const swiperRef = useRef(null);
-
 
   const dotColors = ['#15718e', '#daa163', '#000'];
 
   const handleNext = async () => {
-    if (activeIndex < 2) {
-      setActiveIndex((prevIndex) => {
-        swiperRef.current.scrollBy(1);
-        return (prevIndex + 1);
-      }); // Navigate to the next slide
+    if (swiperRef.current && activeIndex < 2) {
+      swiperRef.current.scrollBy(1);  // Scroll to the next slide
     } else {
       await AsyncStorage.setItem('hasCompletedOnboarding', 'true');
-      navigation.navigate('Landing'); // Navigate to the next screen after the last slide
+      navigation.navigate('Landing'); // Navigate after the last slide
     }
   };
-
 
   const styles = StyleSheet.create({
     wrapper: {
@@ -32,38 +27,40 @@ const OnboardingScreen = ({ navigation }) => {
     slide: {
       flex: 1,
       alignItems: 'center',
-      padding: 35,
+      justifyContent: 'center',
     },
     image1: {
-      marginTop: 100,
-      marginBottom: -50,
+      marginTop: 80,
+      marginBottom: 210,
       width: '100%',
       resizeMode: 'contain',
     },
     image2: {
       marginTop: 80,
-      marginBottom: -20,
+      marginBottom: 250,
       width: '110%',
       resizeMode: 'contain',
     },
     image3: {
       marginTop: 60,
-      marginBottom: 10,
+      marginBottom: 260,
       width: '100%',
       resizeMode: 'contain',
     },
     title: {
       fontFamily: 'Antipasto Pro',
-      fontSize: 40,
+      fontSize: 35,
       fontWeight: 'bold',
       marginTop: 20,
       lineHeight: 36,
+      textAlign: 'center',
     },
     subtitle: {
       fontSize: 16,
       marginTop: 10,
       color: '#888',
       marginBottom: 50,
+      textAlign: 'center',
     },
     dot: {
       backgroundColor: '#d9d9d9',
@@ -79,7 +76,7 @@ const OnboardingScreen = ({ navigation }) => {
       borderRadius: 6,
     },
     pagination: {
-      bottom: 120,
+      bottom: 90,  // Move the dots up
     },
     button: {
       position: 'absolute',
@@ -91,38 +88,50 @@ const OnboardingScreen = ({ navigation }) => {
     },
     buttonText: {
       color: '#fff',
-      fontWeight: 800,
+      fontWeight: '800',
       textAlign: 'center',
       fontSize: 17,
     },
     texture: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFillObject, // Ensure the texture covers the entire screen
       width: '100%',
       height: '100%',
+    },
+    textContainer: {
+      position: 'absolute',
+      top: height * 0.57, // Adjust this to push text further above the dots
+      paddingHorizontal: 20,
+      alignItems: 'center',
     },
   });
 
   return (
     <Swiper
       ref={swiperRef}
-      index={activeIndex} // Control the current slide using the activeIndex state
-      onIndexChanged={(index) => setActiveIndex(index)} // Update state when the user swipes manually
+      index={activeIndex}
+      onIndexChanged={(index) => setActiveIndex(index)}
       style={styles.wrapper}
       dotStyle={styles.dot}
       activeDotStyle={styles.activeDot}
       paginationStyle={styles.pagination}
       loop={false}
-      scrollEnabled={false}
+      scrollEnabled={true} // Enable swiping manually
+      showsPagination={true} // Show dots for pagination
+      autoplay={false} // Disable auto play
+      autoplayTimeout={3} // Auto-play timeout if enabled
+      removeClippedSubviews={false} // To prevent clipping issues
     >
       <View style={styles.slide}>
-        <ImageBackground source={'../../assets/images/texture.png'} style={styles.texture}/>
+        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
         <Image source={require('../../assets/images/wondering.png')} style={styles.image1} />
-        <Text style={[styles.title, { color: '#15718e' }]}>
-          Explore Products with AI-Powered Insights
-        </Text>
-        <Text style={[styles.subtitle, { color: '#000' }]}>
-          Discover everything about the products you use or plan to try with our smart AI-powered chatbot!
-        </Text>
+        <View style={styles.textContainer}>
+          <Text style={[styles.title, { color: '#15718e' }]}>
+            Explore Products with AI-Powered Insights
+          </Text>
+          <Text style={[styles.subtitle, { color: '#000' }]}>
+            Discover everything about the products you use or plan to try with our smart AI-powered chatbot!
+          </Text>
+        </View>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#15718e' }]}
           onPress={handleNext}
@@ -132,12 +141,14 @@ const OnboardingScreen = ({ navigation }) => {
       </View>
 
       <View style={[styles.slide, { backgroundColor: '#15718e' }]}>
-        <ImageBackground source={'../../assets/images/texture.png'} style={styles.texture}/>
+        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
         <Image source={require('../../assets/images/searching.png')} style={styles.image2} />
-        <Text style={[styles.title, { color: '#daa163' }]}>Scan, Search, Discover!</Text>
-        <Text style={[styles.subtitle, { color: '#fff' }]}>
-          Instantly scan barcodes for quick product details at your fingertips. Can’t find a barcode? Search by name and still get the info you need in a flash.
-        </Text>
+        <View style={styles.textContainer}>
+          <Text style={[styles.title, { color: '#daa163' }]}>Scan, Search, Discover!</Text>
+          <Text style={[styles.subtitle, { color: '#fff' }]}>
+            Instantly scan barcodes for quick product details at your fingertips. Can’t find a barcode? Search by name and still get the info you need in a flash.
+          </Text>
+        </View>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#daa163' }]}
           onPress={handleNext}
@@ -147,12 +158,14 @@ const OnboardingScreen = ({ navigation }) => {
       </View>
 
       <View style={[styles.slide, { backgroundColor: '#daa163' }]}>
-        <ImageBackground source={'../../assets/images/texture.png'} style={styles.texture}/>
+        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
         <Image source={require('../../assets/images/global.png')} style={styles.image3} />
-        <Text style={[styles.title, { color: '#000' }]}>Speak Your Language, Anytime!</Text>
-        <Text style={[styles.subtitle, { color: '#fff' }]}>
-          We’ve got you covered in English, Swahili, Amharic, and more – get instant answers in the language that speaks to you.
-        </Text>
+        <View style={styles.textContainer}>
+          <Text style={[styles.title, { color: '#000' }]}>Speak Your Language, Anytime!</Text>
+          <Text style={[styles.subtitle, { color: '#fff' }]}>
+            We’ve got you covered in English, Swahili, Amharic, and more – get instant answers in the language that speaks to you.
+          </Text>
+        </View>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: '#000' }]}
           onPress={handleNext}
@@ -165,7 +178,5 @@ const OnboardingScreen = ({ navigation }) => {
     </Swiper>
   );
 };
-
-
 
 export default OnboardingScreen;

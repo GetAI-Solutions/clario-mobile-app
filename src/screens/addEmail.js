@@ -94,6 +94,7 @@ const AddEmail = ({ navigation }) => {
       Alert.alert('Error', error.message || 'An error occurred. Please try again.');
     }
   };
+
   return (
     <View style={styles.container}>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
@@ -109,7 +110,6 @@ const AddEmail = ({ navigation }) => {
           onCountryChange={setSelectedCountry}
           countries={countries}
         />
-
 
         <TouchableOpacity
           onPress={handleSignup}
@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 16,
     paddingVertical: 16,
+    position: 'relative', // Ensure the container has relative positioning
+  },
+  content: {
+    flexGrow: 1, // Allow the content to grow and fill the space
+    zIndex: 1, // Ensure content is above the background image
   },
   title: {
     fontSize: 20,
@@ -199,9 +204,8 @@ const styles = StyleSheet.create({
   },
   texture: {
     ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: '100%',
-    zIndex: -1,
+    resizeMode: 'cover',
+    zIndex: -1, // Ensure the background image is behind everything else
   }
 });
 

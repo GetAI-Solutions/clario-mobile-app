@@ -1,13 +1,38 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Dimensions, useColorScheme, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Svg, { Path } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
+  const colorScheme = useColorScheme(); // Determine if dark mode is active
+  const [keyboardOffset, setKeyboardOffset] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      (e) => {
+        // Adjust offset based on the keyboard height
+        setKeyboardOffset(e.endCoordinates.height);
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => {
+        setKeyboardOffset(0);
+      }
+    );
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, []);
+
   return (
-    <View style={styles.tabBarContainer}>
+    <View style={[styles.tabBarContainer, { bottom: keyboardOffset }]}>
       {/* SVG as the background of the entire Tab Bar */}
       <Svg
         width={width + 20}  // Slightly wider to avoid gaps on the sides
@@ -16,7 +41,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
         style={styles.svgStyle}
       >
         <Path
-          fill="#15718e"
+          fill={colorScheme === 'dark' ? '#1a1a1a' : '#15718e'}
           d="M165.826 28.399C157.947 13.6652 145.337 0 128.629 0H-1V75H403V0H267.368C250.661 0 238.051 13.6628 230.174 28.396C221.757 44.1407 208.274 50 198 50C187.727 50 174.243 44.1415 165.826 28.399Z"
         />
       </Svg>
@@ -80,6 +105,7 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'transparent', // Ensure the background is transparent if needed
   },
   svgStyle: {
     position: 'absolute',
@@ -92,9 +118,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    backgroundColor: 'transparent', // Make background transparent to show SVG
     height: 80,
     paddingBottom: 10,
+    backgroundColor: 'transparent', // Make background transparent to show SVG
   },
   tabItem: {
     flex: 1,

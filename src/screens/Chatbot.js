@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, FlatList,  KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
 import { BASEURL } from '../services/api';
@@ -15,19 +15,18 @@ const ChatbotScreen = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const flatListRef = useRef(null);
   const { theme } = useTheme();
-  const { user } = useContext(UserContext)
-  const { t } = useTranslation()
+  const { user } = useContext(UserContext);
+  const { t } = useTranslation();
 
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
-      paddingHorizontal: 20,
-      paddingRight: 0,
+      paddingHorizontal: 0, // Set to 0 to remove side padding
     },
     messageArea: {
       paddingHorizontal: 16,
-      paddingBottom: 20, 
+      paddingBottom: 20,
     },
     messageContainer: {
       marginVertical: 8,
@@ -68,7 +67,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       paddingHorizontal: 16,
       paddingVertical: 8,
       backgroundColor: 'transparent',
-      marginBottom: 0,
+      marginBottom: -5,
     },
     inputContainer: {
       borderRadius: 20,
@@ -112,7 +111,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       ...StyleSheet.absoluteFillObject,
       width: '100%',
       height: '100%',
-    }
+    },
   });
 
   useEffect(() => {
@@ -136,36 +135,23 @@ const ChatbotScreen = ({ navigation, route }) => {
       setLoading(true);
 
       try {
-        console.log('user_id: ', user.uid)
-        console.log('product_barcode: ', product.product_barcode)
-        console.log('user_message', inputText)
-        console.log('perplexity...', product.perplexity)
         const response = await axios.post(`${BASEURL}/common/chat`, {
           userID: user.uid,
           bar_code: `${product.product_barcode}`,
           user_message: inputText,
           perplexity: product.perplexity || false,
+        });
+
+        if (response.status === 200) {
+          const botMessage = {
+            type: 'bot',
+            text: cleanText(response.data.model_resp),
+          };
+          setMessages((prevMessages) => [...prevMessages, botMessage]);
+        } else {
+          throw new Error('There was an error');
         }
-      );
-
-      console.log('data...', response)
-
-      if(response.status === 200){
-        console.log(response.data)
-
-        const botMessage = {
-          type: 'bot',
-          text: cleanText(response.data.model_resp),
-        };
-        setMessages((prevMessages) => [...prevMessages, botMessage]);
-      } else{
-        throw new Error("there was an error")
-        console.log(response.data)
-      }
-
-        
       } catch (error) {
-        console.error(error);
         const errorMessage = {
           type: 'bot',
           text: t('Sorry, something went wrong. Please try again later.'),
@@ -176,44 +162,26 @@ const ChatbotScreen = ({ navigation, route }) => {
       }
     }
   };
-  const renderMessage = ({ item }) => (
-    item.type == 'bot' ? (
-    <View style={{flexDirection: 'row'}}>
-      <Image
-        source={require('../../assets/images/chatbot1.png')}
-        style={styles.botImage}
-      />
-      <View
-        style={[
-          styles.messageContainer,
-          styles.botMessage,
-        ]}
-      >
+
+  const renderMessage = ({ item }) =>
+    item.type === 'bot' ? (
+      <View style={{ flexDirection: 'row' }}>
+        <Image source={require('../../assets/images/chatbot1.png')} style={styles.botImage} />
+        <View style={[styles.messageContainer, styles.botMessage]}>
+          <Text style={styles.messageText}>{item.text}</Text>
+        </View>
+      </View>
+    ) : (
+      <View style={[styles.messageContainer, styles.userMessage]}>
         <Text style={styles.messageText}>{item.text}</Text>
       </View>
-    </View>) : (
-    <View
-      style={[
-        styles.messageContainer,
-        styles.userMessage,
-      ]}
-    >
-      <Text style={styles.messageText}>{item.text}</Text>
-    </View>
-    )
-  );
+    );
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
       <Header navigation={navigation} />
-      
-      {/* Wrapped the content in KeyboardAvoidingView and made the FlatList scrollable */}
-      <KeyboardAvoidingView 
-        style={{ flex: 1 }} 
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={50}
-      >
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={50}>
         <FlatList
           ref={flatListRef}
           data={messages}
@@ -223,29 +191,20 @@ const ChatbotScreen = ({ navigation, route }) => {
           onContentSizeChange={() => flatListRef.current.scrollToEnd({ animated: true })}
           onLayout={() => flatListRef.current.scrollToEnd({ animated: true })}
         />
-        {loading && (
-          <View >
-            <TypingIndicator />
-          </View>
-        )}
-
-        {/* Input area remains visible */}
+        {loading && <TypingIndicator />}
         <View style={styles.inputArea}>
           <View style={styles.inputContainer}>
-          <TextInput 
-            style={styles.textInput} 
-            placeholder={t("What do you want to know?")}
-            placeholderTextColor={theme === 'dark' ? '#aaa' : '#666'} // Added placeholder color
-            value={inputText}
-            onChangeText={setInputText}
-            onSubmitEditing={handleSend} 
+            <TextInput
+              style={styles.textInput}
+              placeholder={t('What do you want to know?')}
+              placeholderTextColor={theme === 'dark' ? '#aaa' : '#666'}
+              value={inputText}
+              onChangeText={setInputText}
+              onSubmitEditing={handleSend}
             />
-          <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
-            <Image
-              source={require('../../assets/images/send.png')}
-              style={styles.sendIcon}
-              />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
+              <Image source={require('../../assets/images/send.png')} style={styles.sendIcon} />
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
