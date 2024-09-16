@@ -10,6 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
   const { user, updateUser } = useContext(UserContext);
+  const [scanned, setScanned] = useState(false);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -111,13 +112,30 @@ const ScannerScreen = ({ navigation }) => {
       <BarCodeScanner
         style={styles.cameraView}
         onBarCodeScanned={handleBarCodeScanned}
-        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13]} // Adjust as needed
+        barCodeTypes={[
+          BarCodeScanner.Constants.BarCodeType.aztec,
+          BarCodeScanner.Constants.BarCodeType.codabar,
+          BarCodeScanner.Constants.BarCodeType.code39,
+          BarCodeScanner.Constants.BarCodeType.code93,
+          BarCodeScanner.Constants.BarCodeType.code128,
+          BarCodeScanner.Constants.BarCodeType.datamatrix,
+          BarCodeScanner.Constants.BarCodeType.ean13,
+          BarCodeScanner.Constants.BarCodeType.ean8,
+          BarCodeScanner.Constants.BarCodeType.itf14,
+          BarCodeScanner.Constants.BarCodeType.pdf417,
+          BarCodeScanner.Constants.BarCodeType.qr,
+          BarCodeScanner.Constants.BarCodeType.upc_a,
+          BarCodeScanner.Constants.BarCodeType.upc_e,
+          BarCodeScanner.Constants.BarCodeType.interleaved2of5,
+          BarCodeScanner.Constants.BarCodeType.rss14,
+          BarCodeScanner.Constants.BarCodeType.rss_expanded,
+        ]} 
       >
         {loading && <ActivityIndicator size="large" color="#fff" />}
         {error && (
           <View style={styles.overlay}>
             <Text style={styles.errorText}>{error}</Text>
-            <TouchableOpacity onPress={() => setError(null)} style={styles.retryButton}>
+            <TouchableOpacity onPress={() => { setError(null); setScanned(false); }} style={styles.retryButton}>
               <Text style={styles.retryButtonText}>{t('Try Again')}</Text>
             </TouchableOpacity>
           </View>
