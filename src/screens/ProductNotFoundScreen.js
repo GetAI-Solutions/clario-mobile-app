@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 import { getDetailsFromPerplexity } from '../services/apiService';
 import UserContext from '../context/UserContext';
+import ProductContext from '../context/ProductContext';
 
 const ProductNotFoundScreen = ({ navigation, route }) => {
   const { bar_code } = route.params;
@@ -16,6 +17,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const { user } = useContext(UserContext);
+  const { setProducts } = useContext(ProductContext)
 
   const handleSearch = async () => {
     if (!bar_code) {
@@ -36,6 +38,8 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
             product_barcode: response.data.product.product_code,
             perplexity: true,
           };
+
+          setProducts((prev) => [...prev, mappedProduct]);
 
           navigation.navigate('ProductDetails', { product: mappedProduct });
         } else if (response.status === 400) {
