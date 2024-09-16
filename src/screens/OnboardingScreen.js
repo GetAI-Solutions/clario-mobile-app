@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   text: {
-    fontFamily: 'Antipasto Pro',
+    // fontFamily: 'Antipasto Pro',
     fontSize: 36,
     color: '#fff',
     fontWeight: 'bold',

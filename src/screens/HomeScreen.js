@@ -1,13 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, Touchable, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, ScrollView, ImageBackground } from 'react-native';
 import WideCard from '../components/WideCard';
 import NarrowCard from '../components/NarrowCard';
 import MediumCard from '../components/MediumCard';
 import { useTheme } from '../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-// import { LinearGradient } from 'react-native-linear-gradient';
+import { JumpingTransition } from 'react-native-reanimated';
 
-/** an array of objects that represent each
+
+/** 
+ * An array of objects that represent each
  * section, in each object the following data/properties are required:
  *  - section: which has the section type string
  *  - items: an array of all the products in that section
@@ -34,43 +36,6 @@ const HomeScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const { t } = useTranslation();
 const products = [
-  
-  {
-    section: 'Popular Today',
-    items: [
-      {
-        product_barcode: 9554100150802,
-        product_name: "Enrich Coco Crunch",
-        product_summary: "Enrich Coco Crunch is a chocolate-flavored breakfast cereal made by Enrich, a brand based in Ethiopia. It is available in two sizes:\n\n- 500g package\n- 375g package\n\nKey features:\n\n- Made with whole grain\n- Shaped like wheat curls\n- Can be enjoyed for breakfast or as a snack\n- Comes in a sealed package\n- Provides a nutritious start to the day\n\nNutritional benefits:\n\n- High in protein, with an excellent amino acid profile including BCAAs and glutamic acid which stimulate muscle building\n- Contains prebiotics, probiotics, and fiber for digestive wellness\n\nEnrich Coco Crunch is a popular choice among kids and adults alike. It can be served with milk for breakfast or enjoyed as a standalone snack. Some people also use it as a topping for ice cream.\n\nThe cereal is made in Ethiopia and Thailand.",
-        image_url: require("../../assets/images/cococrunch.png")
-    },
-      {
-        product_barcode: 6224009091270,
-        product_name: 'Hub Mango Juice',
-        product_summary: `Hub Mango Juice, specifically known as Hub Nectar, is a refreshing beverage made from high-quality local mangoes. Here are the key details about this product:
-
-      Product Overview
-      - Brand: Hub Nectar
-      - Origin: Made in Egypt
-      - Packaging Sizes: Available in 200ml and 250ml bottles.
-
-      Ingredients
-      Hub Mango Nectar is crafted from real mango fruit, ensuring a natural taste without the use of artificial additives. The juice is designed to provide a flavorful alternative to fizzy drinks, appealing to health-conscious consumers.
-
-      Nutritional Aspects
-      The juice is rich in vitamins and nutrients, derived from the fresh mangoes used in its production. This makes it not only a delicious option but also a nutritious one.
-
-      Availability
-      Hub Mango Nectar is available in various online stores, including specialized beverage retailers, and is marketed as a refreshing drink suitable for various occasions.
-
-      Consumer Appeal
-      The product is positioned as a healthy beverage choice, targeting those looking for natural fruit juices. Its sweet and fruity flavor profile is designed to attract mango lovers and those seeking a tropical taste experience.
-
-      Overall, Hub Mango Juice offers a blend of quality, taste, and health benefits, making it a popular choice among consumers looking for natural fruit beverages.`,
-        image_url: require('../../assets/images/hub.png')
-      },
-    ],
-  },
   {
     section: 'African Made',
     items: [
@@ -117,6 +82,42 @@ const products = [
     ],
   },
   {
+    section: 'Popular Today',
+    items: [
+      {
+        product_barcode: 9554100150802,
+        product_name: "Enrich Coco Crunch",
+        product_summary: "Enrich Coco Crunch is a chocolate-flavored breakfast cereal made by Enrich, a brand based in Ethiopia. It is available in two sizes:\n\n- 500g package\n- 375g package\n\nKey features:\n\n- Made with whole grain\n- Shaped like wheat curls\n- Can be enjoyed for breakfast or as a snack\n- Comes in a sealed package\n- Provides a nutritious start to the day\n\nNutritional benefits:\n\n- High in protein, with an excellent amino acid profile including BCAAs and glutamic acid which stimulate muscle building\n- Contains prebiotics, probiotics, and fiber for digestive wellness\n\nEnrich Coco Crunch is a popular choice among kids and adults alike. It can be served with milk for breakfast or enjoyed as a standalone snack. Some people also use it as a topping for ice cream.\n\nThe cereal is made in Ethiopia and Thailand.",
+        image_url: require("../../assets/images/cococrunch.png")
+    },
+      {
+        product_barcode: 6224009091270,
+        product_name: 'Hub Mango Juice',
+        product_summary: `Hub Mango Juice, specifically known as Hub Nectar, is a refreshing beverage made from high-quality local mangoes. Here are the key details about this product:
+
+      Product Overview
+      - Brand: Hub Nectar
+      - Origin: Made in Egypt
+      - Packaging Sizes: Available in 200ml and 250ml bottles.
+
+      Ingredients
+      Hub Mango Nectar is crafted from real mango fruit, ensuring a natural taste without the use of artificial additives. The juice is designed to provide a flavorful alternative to fizzy drinks, appealing to health-conscious consumers.
+
+      Nutritional Aspects
+      The juice is rich in vitamins and nutrients, derived from the fresh mangoes used in its production. This makes it not only a delicious option but also a nutritious one.
+
+      Availability
+      Hub Mango Nectar is available in various online stores, including specialized beverage retailers, and is marketed as a refreshing drink suitable for various occasions.
+
+      Consumer Appeal
+      The product is positioned as a healthy beverage choice, targeting those looking for natural fruit juices. Its sweet and fruity flavor profile is designed to attract mango lovers and those seeking a tropical taste experience.
+
+      Overall, Hub Mango Juice offers a blend of quality, taste, and health benefits, making it a popular choice among consumers looking for natural fruit beverages.`,
+        image_url: require('../../assets/images/hub.png')
+      },
+    ],
+  },
+  {
     section: 'Sponsored',
     items: [
       {
@@ -145,12 +146,6 @@ const products = [
     section: 'Latest Additions',
     items: [
       {
-        product_barcode: 955410015080,
-        product_name: 'Enrich Coco Crunch',
-        product_summary: 'A hydrating and strengthening hair mask...',
-        image_url:  require('../../assets/images/cococrunch.png')
-      },
-      {
         product_barcode: "6291007700213",
         product_name: "Nutro Marie Tea Time Biscuits",
         product_summary: "Nutro Marie Tea Time Biscuits are light and crispy, made from wheat flour with a subtly sweet flavor. Available in 200g and 45g packs, they're perfect for pairing with tea or coffee. Each 200g pack offers approximately 110 calories per 5 biscuits. Rated 4.1/5 for taste and texture.",
@@ -173,32 +168,26 @@ const products = [
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e',
+      backgroundColor: 'transparent',
       padding: 20,
       paddingTop: 10,
-      paddingHorizontal: 0,
+      paddingHorizontal: 16,
       zIndex: 1,
-
     },
     header: {
-      position: 'sticky',
+      position: 'fixed',
       top: 0,
       left: 0,
       backgroundColor: theme === 'light' ? 'white' : '#1e1e1e',
-      zIndex: 1,
       height: 80,
-      display: 'flex',
-      justifyContent: 'space-between',
-      paddingTop: 22,
     },
     headerText: {
-      fontSize: 20, // Adjust fontSize for better responsiveness
+      fontSize: 20,
       fontWeight: '700',
       color: theme === 'light' ? '#15718e' : '#fff',
       marginLeft: 20,
       marginTop: 20,
       zIndex: 1,
-
     },
     logo: {
       position: 'absolute',
@@ -209,8 +198,6 @@ const products = [
       resizeMode: 'contain',
       zIndex: 1,
       paddingTop: 70,
-
-
     },
     section: {
       marginTop: 20,
@@ -225,7 +212,7 @@ const products = [
 
     },
     sponsoredTitle: {
-      color:  '#faad5e',
+      color:  '#daa163',
       paddingHorizontal: 5,
     },
     productsRow: {
@@ -249,11 +236,13 @@ const products = [
   return (
     <ScrollView >
     <View style={styles.header}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
       <Image source={require('../../assets/images/getai.png')} style={styles.logo}></Image>
       <Text style={styles.headerText}>GetAI</Text>
     </View>
-    <View style={styles.container}>
+    <View style={{backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e'}}>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
+    <View style={styles.container}>
     {products.map((category, categoryIndex) => (
       <View key={categoryIndex} style={styles.section}>
         <Text style={[styles.sectionTitle, (category.section === 'Sponsored' || category.section === 'Latest Additions') && styles.sponsoredTitle]}>
@@ -265,38 +254,39 @@ const products = [
               case 'Popular Today':
                 return (
                   <WideCard
-                      key={index}
-                      name={product.product_name}
-                      brand={product.product_brand}
-                      image={product.image_url}
-                      onPress={() => handlePress(product)}
-                    />
+                  key={index}
+                  name={product.product_name}
+                  brand={product.product_brand}
+                  image={product.image_url}
+                  onPress={() => handlePress(product)}
+                  />
                 );
-              case 'African Made':
-                return (
-                  <NarrowCard
-                      key={index}
-                      name={product.product_name}
-                      brand={product.product_brand}
-                      image={product.image_url}
-                      onPress={() => handlePress(product)}
+                case 'African Made':
+                  return (
+                    <NarrowCard
+                    key={index}
+                    name={product.product_name}
+                    brand={product.product_brand}
+                    image={product.image_url}
+                    onPress={() => handlePress(product)}
                     />
-                );
-              default:
-                return (
+                  );
+                  default:
+                    return (
                   <MediumCard
-                      key={index}
-                      name={product.product_name}
-                      brand={product.product_brand}
-                      image={product.image_url}
-                      onPress={() => handlePress(product)}
-                    />
+                  key={index}
+                  name={product.product_name}
+                  brand={product.product_brand}
+                  image={product.image_url}
+                  onPress={() => handlePress(product)}
+                  />
                 );
             }
           })}
         </ScrollView>
       </View>
     ))}
+    </View>
     </View>
   </ScrollView>
   );

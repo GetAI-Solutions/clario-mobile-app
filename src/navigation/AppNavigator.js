@@ -62,7 +62,7 @@ const AppNavigator = () => {
           <Stack.Screen name='FAQ' component={FaqPage} options={{headerShown: false}}/>
           <Stack.Screen name='Terms' component={TermsPage} options={{headerShown: false}}/>
           <Stack.Screen name="Landing" component={LandingScreen} options={{ headerShown: false }} />
-
+          <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         </>
       )}
     </Stack.Navigator>

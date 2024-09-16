@@ -28,7 +28,7 @@ const MainScreen = ({ navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
     },
     content: {
       flex: 1, 
@@ -42,7 +42,7 @@ const MainScreen = ({ navigation }) => {
       marginVertical: 30,
     },
     texture: {
-      flex: 1,
+      ...StyleSheet.absoluteFillObject,
       width: '100%',
       height: '100%',
     }
@@ -50,7 +50,7 @@ const MainScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
         {/* Custom Header */}
         <DrawerButton navigation={navigation} />
 
@@ -70,7 +70,6 @@ const MainScreen = ({ navigation }) => {
 
         {/* Footer */}
         <Footer onUpload={handleUpload} onScan={handleScan} />
-      </ImageBackground>
     </SafeAreaView>
   );
 };

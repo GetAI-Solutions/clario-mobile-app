@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, Scrol
 import { useTranslation } from 'react-i18next';
 import Header from '../components/Header';
 import { useTheme } from '../context/ThemeContext';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { product } = route.params;
@@ -23,11 +24,10 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#000' : '#FFF', // Set background color based on theme
+      backgroundColor: theme === 'dark' ? '#1e1e1e' : '#FFF', // Set background color based on theme
     },
     content: {
       alignItems: 'center',
-      padding: 20,
     },
     productContainer: {
       alignItems: 'center',
@@ -39,39 +39,46 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       shadowOffset: { width: 0, height: 5 },
       elevation: 3,
       marginBottom: 20,
-      borderColor: '#2c7391',
+      width: '85%',
     },
     textContainer: {
-      padding: 20,
+      marginTop: 20,
+      paddingHorizontal: 20,
+    },
+    productImageContainer: {
+      width: '100%',
+      backgroundColor: '#fff',
+      borderRadius: 30,
+      border: 0,
     },
     productImage: {
-      width: 120,
-      height: 200,
+      width: '100%',
+      height: 334,
       resizeMode: 'cover',
-      marginBottom: 20,
       borderRadius: 30,
     },
     productName: {
       fontSize: 22,
-      fontWeight: 'bold',
-      color: theme === 'dark' ? '#FFF' : '#333',
+      fontWeight: '800',
+      color: '#FFF',
       marginBottom: 10,
       textAlign: 'center',
+      paddingHorizontal: 20,
     },
     productDescription: {
       fontSize: 14,
-      color: theme === 'dark' ? '#CCC' : '#666',
+      color: '#fff',
       marginBottom: 10,
       textAlign: 'center',
     },
     readMoreText: {
       fontSize: 14,
-      color: '#daa163',
+      color: '#fff',
       marginBottom: 20,
       textAlign: 'right',
     },
     chatbotButton: {
-      backgroundColor: '#2c7391',
+      backgroundColor:  '#15718e',
       padding: 15,
       borderRadius: 50,
       width: '80%',
@@ -84,6 +91,16 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       textAlign: 'center',
       fontWeight: '700',
     },
+    gradient: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 30,
+  },
     texture: {
       flex: 1,
       width: '100%',
@@ -97,6 +114,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
         <Header navigation={navigation} />
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.productContainer}>
+            <View style={styles.productImageContainer}>
             <Image 
               source={
                 typeof product.image_url === 'string' && product.image_url !== "" 
@@ -105,6 +123,14 @@ const ProductDetailsScreen = ({ route, navigation }) => {
               } 
               style={styles.productImage} 
             />
+            </View>
+            <LinearGradient
+            colors={['rgba(217, 217, 217, 0)', '#15718e' ]}
+            start={{ x: 0.5, y: 0.1 }}
+            end={{ x: 0.5, y: .5 }} 
+            style={styles.gradient}
+            >
+            </LinearGradient>
             <View style={styles.textContainer}>
               <Text style={styles.productName}>{cleanText(product.product_name)}</Text>
               <Text style={styles.productDescription}>

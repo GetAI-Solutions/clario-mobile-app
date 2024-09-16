@@ -60,8 +60,7 @@ const FaqPage = ({navigation}) => {
     const styles = StyleSheet.create({
         container: {
           flex: 1,
-          padding: 0,
-          backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',
+          padding: 20,
         },
         title: {
           fontSize: 24,
@@ -102,9 +101,9 @@ const FaqPage = ({navigation}) => {
       });
 
     return (
-        <ScrollView>
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={{          backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',}}>
             <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
+        <View style={styles.container}>
             <Header navigation={navigation} />
             <Text style={styles.title}>FAQ</Text>
           <View style={{height: height}}>

@@ -31,8 +31,10 @@ const AddEmail = ({ navigation }) => {
       style={styles.container} 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
+      <View style={{paddingHorizontal: 16}}>
+        <Header navigation={navigation} />
+      </View>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps='handled'>
         
         <Text style={styles.title}>Forgot Password?</Text>
@@ -42,6 +44,7 @@ const AddEmail = ({ navigation }) => {
         
         <Image source={require('../../assets/images/Password.png')} style={styles.image}/>
 
+      </ScrollView>
         <TouchableOpacity
           onPress={handleSendOtp}
           style={[styles.button, (!email) && styles.disabledButton]}
@@ -49,7 +52,6 @@ const AddEmail = ({ navigation }) => {
         >
           {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Send OTP</Text>}
         </TouchableOpacity>
-      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -58,11 +60,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 16,
+    // paddingHorizontal: 16,
     paddingVertical: 16,
   },
   content: {
     marginTop: 100,
+    paddingHorizontal: 32,
+    height: '100%',
   },
   title: {
     fontSize: 20,
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     alignSelf: 'center',
-    marginBottom: 20,
+    marginTop: 24,
   },
   subtitle: {
     fontSize: 14,
@@ -90,6 +94,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     marginTop: 20,
+    width: '90%',
+    alignSelf: 'center',
   },
   buttonText: {
     color: '#FFFFFF',

@@ -38,6 +38,7 @@ const TypingIndicator = () => {
       alignItems: 'center',
       marginVertical: 8,
       alignSelf: 'flex-start',
+      marginLeft: 20,
     },
     typingText: {
       color: theme === 'dark' ? '#aaa' : '#666',

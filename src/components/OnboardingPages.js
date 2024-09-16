@@ -48,7 +48,7 @@ const OnboardingScreen = ({ navigation }) => {
       resizeMode: 'contain',
     },
     title: {
-      fontFamily: 'Antipasto Pro',
+      // fontFamily: 'Antipasto Pro',
       fontSize: 35,
       fontWeight: 'bold',
       marginTop: 20,

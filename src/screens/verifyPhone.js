@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7fafc',
     paddingHorizontal: 0, // Remove paddingHorizontal to avoid extra space
     paddingLeft: 0, // Remove paddingLeft to avoid extra space
+    paddingTop: 30,
   },
   content: {
     flex: 1,

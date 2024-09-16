@@ -152,7 +152,7 @@ const UploadScreen = ({ navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F0F0F0',
+      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
       paddingHorizontal: 0, // Remove paddingHorizontal to avoid extra space
       paddingLeft: 0, // Remove paddingLeft to avoid extra space
     },
@@ -189,7 +189,7 @@ const UploadScreen = ({ navigation }) => {
       width: '100%',
     },
     errorText: {
-      color: '#FF0000',
+      color: '#FF000',
       marginBottom: 20,
       fontSize: 18,
     },

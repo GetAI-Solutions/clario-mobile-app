@@ -1,5 +1,7 @@
 import { View, TouchableOpacity, Image, StyleSheet, Text, Dimensions, Platform } from 'react-native';
 import { useTheme } from '../context/ThemeContext';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -32,18 +34,29 @@ const NarrowCard = ({ name, brand, image, onPress }) => {
             borderRadius: 15,
         },
         productBrand: {
-            marginLeft: 12,
             fontWeight: '600',
-            color: '#000',
+            
+        },
+        textContainer: {
+            position: 'absolute',
+            bottom: 16,
+            left: 16,
+            width: '80%',
+        },
+        gradient: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 15,
         },
         productName: {
-            color: '#000',
-            marginLeft: 12,
-            marginTop: 5,
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: '600',
-            color: theme === 'dark' ? '#fff' : '#1e1e1e',
-            width: '60%'
+            color: '#fff',
         },  
     });
 
@@ -51,11 +64,18 @@ const NarrowCard = ({ name, brand, image, onPress }) => {
         <View>
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <Image source={image} style={styles.productImage} resizeMode="cover" />
-        </TouchableOpacity>
-            <View>
+            <LinearGradient
+            colors={['rgba(217, 217, 217, 0)', '#15718e']}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }} 
+            style={styles.gradient}
+            >
+            </LinearGradient>
+            <View style={styles.textContainer}>
                 <Text style={styles.productBrand}>{brand}</Text>
                 <Text style={styles.productName}>{name}</Text>
             </View>
+        </TouchableOpacity>
         </View>
     );
 };

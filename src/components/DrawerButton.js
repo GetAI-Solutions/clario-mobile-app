@@ -9,7 +9,7 @@ const DrawerButton = ({ navigation }) => {
   }
 
   return (
-    <View style={[styles.header, theme === 'dark' ? styles.darkHeader : styles.lightHeader]}>
+    <View style={styles.header}>
       <TouchableOpacity onPress={toggleDrawer} style={styles.hamburgerButton}>
         <Icon name="menu" size={28} color={theme === 'dark' ? '#fff' : '#000'} />
       </TouchableOpacity>
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default DrawerButton
+export default DrawerButton;

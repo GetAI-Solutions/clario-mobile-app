@@ -16,6 +16,7 @@ const Header = ({ navigation }) => {
       marginBottom: 16,
       marginTop: 25,
       backgroundColor: 'transparent',
+      paddingLeft: 16,
     },
   });
 

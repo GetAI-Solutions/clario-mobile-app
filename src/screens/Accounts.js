@@ -88,16 +88,15 @@ const AccountSecurityScreen = ({ navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: 0,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF',
+      paddingHorizontal: 20,
+      paddingVertical: 10,
     },
     title: {
-      fontSize: 20,
+      fontSize: 25,
       fontWeight: '700',
       marginVertical: 20,
       color: theme === 'dark' ? '#FFF' : '#000',
       zIndex: 1,
-      paddingHorizontal: 10,
     },
     profileContainer: {
       alignItems: 'center',
@@ -164,7 +163,6 @@ const AccountSecurityScreen = ({ navigation }) => {
       paddingVertical: 15,
       borderRadius: 25,
       alignItems: 'center',
-      marginBottom: 20,
     },
     saveButtonText: {
       color: '#FFF',
@@ -180,9 +178,10 @@ const AccountSecurityScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={{flex: 1,  backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF'}}>
       <ImageBackground source={theme === 'dark' ? { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/7o9AAAAAElFTkSuQmCC' } : require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Text style={styles.title}>{t('Account & Security')}</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>{t('Account')}</Text>
 
       <View style={styles.profileContainer}>
         <Image source={{ uri: profileImage }} style={styles.profileImage} />
@@ -232,6 +231,7 @@ const AccountSecurityScreen = ({ navigation }) => {
       <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
         {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>{t('Save Changes')}</Text>}
       </TouchableOpacity>
+    </View>
     </View>
   );
 };

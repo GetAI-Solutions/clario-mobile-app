@@ -54,8 +54,9 @@ const SettingsScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={[styles.container, theme === 'light' ? lightStyles.container : darkStyles.container]}>
+    <View style={[{flex: 1}, theme === 'light' ? lightStyles.container : darkStyles.container]}>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
+    <View style={styles.container}>
       <Text style={[styles.title, theme === 'light' ? lightStyles.title : darkStyles.title]}>{t('Settings')}</Text>
       
       <View style={styles.option}>
@@ -64,8 +65,8 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Notifications')}</Text>
         </View>
         <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+          trackColor={{ false: '#767577', true: '#daa163' }}
+          thumbColor={isEnabled ? '#daa163' : '#f4f3f4'}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
           value={isEnabled}
@@ -122,6 +123,9 @@ const SettingsScreen = ({ navigation }) => {
         <Switch 
           value={theme === 'dark'} 
           onValueChange={toggleTheme} 
+          trackColor={{ false: '#767577', true: '#daa163' }}
+          thumbColor={isEnabled ? '#daa163' : '#f4f3f4'}
+          ios_backgroundColor="#3e3e3e"
         />
       </View>
 
@@ -131,6 +135,7 @@ const SettingsScreen = ({ navigation }) => {
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Terms and Conditions')}</Text>
         </View>
       </TouchableOpacity>
+    </View>
     </View>
   );
 };
@@ -162,8 +167,7 @@ const darkStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 3,
-    paddingTop: 20,
+    padding: 20,
     justifyContent: 'flex-start', // Center content vertically
   },
   title: {

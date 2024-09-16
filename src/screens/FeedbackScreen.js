@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, Alert, ActivityIndicator, ImageBackground } from 'react-native';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { submitFeedback } from '../services/apiService';
@@ -38,7 +38,6 @@ const FeedbackScreen = ({ navigation }) => {
     container: {
       flex: 1,
       paddingHorizontal: 20,
-      backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F5F5F5',
     },
     title: {
       fontSize: 14,
@@ -90,9 +89,9 @@ const FeedbackScreen = ({ navigation }) => {
     modalContainer: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center',
       backgroundColor: 'rgba(0,0,0,0.5)',
       padding: 20,
+      width: '100%',
     },
     modalContent: {
       backgroundColor: theme === 'dark' ? '#333333' : '#FFF',
@@ -105,14 +104,14 @@ const FeedbackScreen = ({ navigation }) => {
       width: '80%',
     },
     modalHeader: {
-      fontSize: 20,
-      fontWeight: '700',
-      marginBottom: 20,
+      fontSize: 25,
+      fontWeight: '800',
+      marginBottom: 10,
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
     modalText: {
       fontSize: 14,
-      marginBottom: 20,
+      marginBottom: 40,
       textAlign: 'center',
       color: theme === 'dark' ? '#FFFFFF' : '#000000',
     },
@@ -122,11 +121,18 @@ const FeedbackScreen = ({ navigation }) => {
       borderRadius: 50,
       alignItems: 'center',
       justifyContent: 'center',
-      width: '80%',
+      width: '90%',
     },
+    texture: {
+      ...StyleSheet.absoluteFillObject,
+      width: '100%',
+      height: '100%'
+    }
   });
 
   return (
+    <View style={{flex: 1, backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F5F5F5',}}>
+      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
     <View style={styles.container}>
       <Header navigation={navigation} />
       <Text style={styles.title}>{t("Feedback")}</Text>
@@ -173,15 +179,6 @@ const FeedbackScreen = ({ navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <TouchableOpacity 
-              style={{
-                position: 'absolute',
-                top: '5%',
-                left: '85%',
-              }}
-              onPress={() => setModalVisible(false)}>
-              <Icon name="close" size={30} color={theme === 'dark' ? '#FFFFFF' : '#000000'} />
-            </TouchableOpacity>
             <Image
               source={require('../../assets/images/noted.png')}
               style={styles.modalImage}
@@ -191,13 +188,14 @@ const FeedbackScreen = ({ navigation }) => {
             <Text style={styles.modalText}>
               {t("Thank you for your feedback! Your input helps us enhance our app to better meet your needs.")}
             </Text>
-            <TouchableOpacity onPress={() => {navigation.navigate('MainScreen'); setModalVisible(false); }} style={styles.modalGoHomeButton}>
-              <Text style={styles.buttonText}>{t("Go Home")}</Text>
+            <TouchableOpacity onPress={() => {navigation.navigate('MainTabScreen'); setModalVisible(false); }} style={styles.modalGoHomeButton}>
+              <Text style={styles.buttonText}>{t("Go Back")}</Text>
             </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
+    </View>
     </View>
   );
 };

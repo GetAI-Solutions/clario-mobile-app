@@ -34,7 +34,8 @@ const Footer = ({ onUpload, onScan }) => {
       tintColor: theme === 'dark' ? '#fff' : 'white',
     },
     label: {
-      fontSize: 14,
+      fontSize: 16,
+      fontWeight: '600',
       color: theme === 'dark' ? '#fff' : '#000',
     },
   });

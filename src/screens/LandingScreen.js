@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from '../context/ThemeContext';
 
 const Landing = () => {
-  const { theme } = useTheme();
   const navigation = useNavigation();
 
   const styles = StyleSheet.create({
@@ -34,10 +32,10 @@ const Landing = () => {
       fontWeight: 'bold',
       marginBottom: 16,
       textAlign: 'center',
-      color: theme === 'light' ? '#000' : '#daa163',
+      color:  '#000',
     },
     description: {
-      color: theme === 'light' ? '#000' : '#fff',
+      color: '#000',
       textAlign: 'center',
       marginBottom: 32,
       width: '80%',
@@ -59,13 +57,13 @@ const Landing = () => {
     loginButton: {
       width: 350,
       paddingVertical: 16,
-      borderColor: theme === 'light' ? '#15718E' : '#daa163',
+      borderColor: '#15718E',
       borderWidth: 2,
       borderRadius: 100,
       marginBottom: 20,
     },
     loginButtonText: {
-      color: theme === 'light' ? '#15718E' : '#daa163',
+      color: '#15718E',
       textAlign: 'center',
       fontWeight: '800',
       fontSize: 16,
@@ -73,7 +71,7 @@ const Landing = () => {
     footerText: {
       flexDirection: 'column',
       fontSize: 12,
-      color: theme === 'light' ? '#4a5568' : '#fff',
+      color: '#4a5568',
       textAlign: 'center',
     },
     link: {

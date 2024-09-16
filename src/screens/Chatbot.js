@@ -22,7 +22,6 @@ const ChatbotScreen = ({ navigation, route }) => {
     container: {
       flex: 1,
       backgroundColor: theme === 'dark' ? '#1E1E1E' : '#fff',
-      paddingHorizontal: 0, // Set to 0 to remove side padding
     },
     messageArea: {
       paddingHorizontal: 16,
@@ -70,7 +69,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       marginBottom: -5,
     },
     inputContainer: {
-      borderRadius: 20,
+      borderRadius: 30,
       borderWidth: 2,
       borderColor: theme === 'light' ? '#15718e' : '#daa163',
       width: '100%',
@@ -89,17 +88,16 @@ const ChatbotScreen = ({ navigation, route }) => {
       color: theme === 'dark' ? '#fff' : '#000',
     },
     sendButton: {
-      padding: 2,
       backgroundColor: theme === 'dark' ? '#daa163' : '#15718e',
-      width: 35,
-      height: 35,
+      width: 45,
+      height: 45,
       borderRadius: 100,
+      justifyContent: 'center',
     },
     sendIcon: {
       width: 20,
       height: 20,
       alignSelf: 'center',
-      marginTop: 4,
     },
     loadingIndicator: {
       position: 'absolute',
@@ -173,7 +171,7 @@ const ChatbotScreen = ({ navigation, route }) => {
       </View>
     ) : (
       <View style={[styles.messageContainer, styles.userMessage]}>
-        <Text style={styles.messageText}>{item.text}</Text>
+        <Text style={{color: '#fff', flexShrink: 1,}}>{item.text}</Text>
       </View>
     );
 
@@ -181,7 +179,7 @@ const ChatbotScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
       <Header navigation={navigation} />
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={50}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={40}>
         <FlatList
           ref={flatListRef}
           data={messages}

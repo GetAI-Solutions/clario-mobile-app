@@ -63,17 +63,17 @@ const SignupPhone = ({ navigation }) => {
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 8,
-      color: theme === 'light' ? '#000' : '#daa163',
+      color: '#000',
     },
     subtitle: {
-      color: theme === 'light' ? '#000' : '#fff',
+      color: '#000',
       marginBottom: 24,
     },
     inputWrapper: {
       flexDirection: 'row',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: theme === 'light' ? '#000' : '#fff',
+      borderColor: '#000',
       borderRadius: 10,
       paddingHorizontal: 8,
       marginBottom: 16,
@@ -118,7 +118,7 @@ const SignupPhone = ({ navigation }) => {
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-      backgroundColor: theme === 'light' ? 'white' : '#4f4f4f',
+      backgroundColor: 'white',
       borderRadius: 25,
       padding: 16,
       paddingBottom: 32,
@@ -132,7 +132,7 @@ const SignupPhone = ({ navigation }) => {
     },
     modalCloseText: {
       fontSize: 28,
-      color: theme === 'light' ? '#000' : '#fff',
+      color: '#000',
     },
     modalImage: {
       marginBottom: 16,
@@ -141,13 +141,13 @@ const SignupPhone = ({ navigation }) => {
       fontSize: 25,
       fontWeight: 'bold',
       marginBottom: 5,
-      color: theme === 'light' ? '#000' : '#daa163',
+      color: '#000',
       width: '90%',
       textAlign: 'center',
     },
     modalText: {
       fontSize: 14,
-      color: theme === 'light' ? '#000' : '#fff',
+      color: '#000',
       marginBottom: 16,
     },
     modalButton: {
@@ -158,7 +158,7 @@ const SignupPhone = ({ navigation }) => {
       fontWeight: '700',
     },
     modalOutlined: {
-      borderColor: theme === 'light' ? '#15718e' : '#daa163',
+      borderColor: '#15718e',
       borderWidth: 2,
     },
     texture: {
@@ -181,12 +181,12 @@ const SignupPhone = ({ navigation }) => {
             style={styles.countryPicker}
           >
             <Text
-            style={{color: theme === 'light' ? '#000' : '#daa163'}}>{selectedCountry.dial_code}</Text>
+            style={{color: '#000'}}>{selectedCountry.dial_code}</Text>
           </TouchableOpacity>
           <TextInput
             style={styles.input}
             placeholder="Mobile Number"
-            placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
+            placeholderTextColor={'#000'}
             value={phoneNumber}
             onChangeText={handlePhoneNumberChange}
             keyboardType="phone-pad"
@@ -197,13 +197,13 @@ const SignupPhone = ({ navigation }) => {
           <TextInput
             style={styles.input}
             placeholder="Password"
-            placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
+            placeholderTextColor={'#000'}
             secureTextEntry={!showPassword} 
             value={password}
             onChangeText={handlePasswordChange}
           />
           <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
-            <Icon name={showPassword ? "eye" : "eye-off"} size={24} color={theme === 'light' ? '#000' : '#daa163'} />
+            <Icon name={showPassword ? "eye" : "eye-off"} size={24} color={'#daa163'} />
           </TouchableOpacity>
         </View>
       </View>
@@ -244,7 +244,7 @@ const SignupPhone = ({ navigation }) => {
              onPress={handleEditClick}
              style={[styles.modalButton, styles.modalOutlined]}
              labelStyle={{
-              color: theme === 'light' ? '#15718e' : '#daa163',
+              color:  '#15718e',
               fontSize: 17,
               fontWeight: '700',
             }}

@@ -7,7 +7,6 @@ import { storeUserData } from '../utils/storageUtils';
 import UserContext from '../context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/AuthHeader';
-import { useTheme } from '../context/ThemeContext';
 
 const Login = ({ navigation }) => {
   const { theme } = useTheme();
@@ -98,7 +97,7 @@ const Login = ({ navigation }) => {
       flex: 1,
       backgroundColor: 'transparent',  // Transparent background to let the texture show through
       paddingHorizontal: 16,
-      paddingVertical: 16,
+      paddingVertical: 25,
     },
     head: {
       textAlign: 'left',
@@ -108,7 +107,7 @@ const Login = ({ navigation }) => {
       padding: 8,
     },
     title: {
-      color: theme === 'light' ? '#000' : '#daa163',
+      color:  '#000',
       fontSize: 22,
       fontWeight: '600',
       textAlign: 'left',
@@ -116,8 +115,8 @@ const Login = ({ navigation }) => {
     },
     subtitle: {
       fontSize: 14,
-      color: theme === 'light' ? '#000' : '#fff',
-      textAlign: 'left',
+      color,
+     textAlign: 'left',
       marginBottom: 24,
     },
     inputContainer: {
@@ -125,13 +124,13 @@ const Login = ({ navigation }) => {
     },
     label: {
       fontSize: 14,
-      color: theme === 'light' ? '#000' : '#fff',
+      color:  '#000',
       marginBottom: 8,
     },
     phoneInputContainer: {
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor: theme === 'light' ? '#000' : '#fff',
+      borderColor:  '#000',
       borderRadius: 8,
       alignItems: 'center',
       paddingHorizontal: 12,
@@ -148,13 +147,13 @@ const Login = ({ navigation }) => {
       paddingVertical: 10,
       paddingHorizontal: 12,
       fontSize: 14,
-      color: theme === 'light' ? '#000' : '#fff',
-    },
+      color,
+   },
     input: {
       borderWidth: 1,
-      color: theme === 'light' ? '#000' : '#fff',
-      borderColor: theme === 'light' ? '#000' : '#fff',
-      borderRadius: 8,
+      color:  '#000' ,
+     borderColor:  '#000' ,
+     borderRadius: 8,
       paddingHorizontal: 12,
       paddingVertical: 10,
       fontSize: 14,
@@ -162,8 +161,8 @@ const Login = ({ navigation }) => {
     passwordInputContainer: {
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor: theme === 'light' ? '#000' : '#fff',
-      borderRadius: 8,
+      borderColor:  '#000' ,
+     borderRadius: 8,
       alignItems: 'center',
       paddingHorizontal: 12,
     },
@@ -187,10 +186,10 @@ const Login = ({ navigation }) => {
       padding: 8,
     },
     linkText: {
-      color: theme === 'light' ? '#15718e' : '#daa163',
+      color:  '#15718e',
     },
     loginButton: {
-      backgroundColor: '#2c7391',
+      backgroundColor91,
       borderRadius: 100,
       alignItems: 'center',
       paddingVertical: 16,
@@ -201,12 +200,12 @@ const Login = ({ navigation }) => {
       marginHorizontal: 20,
     },
     buttonText: {
-      color: '#FFFFFF',
+      colorFF,
       fontWeight: '700',
       fontSize: 16,
     },
     disabledButton: {
-      backgroundColor: '#A1A1AA',
+      backgroundColorAA,
     },
     texture: {
       flex: 1,
@@ -236,7 +235,7 @@ const Login = ({ navigation }) => {
                 onPress={() => setShowCountryPicker(true)}
                 style={styles.countryPickerButton}
               >
-                <Text style={{color: theme === 'light' ? '#000' : '#daa163',}}>{selectedCountry.dial_code}</Text>
+                <Text style={{color:  '#000'}}>{selectedCountry.dial_code}</Text>
               </TouchableOpacity>
               <TextInput
                 id="phoneNumber"
@@ -245,8 +244,8 @@ const Login = ({ navigation }) => {
                 value={phoneNumber}
                 onChangeText={handlePhoneNumberChange}
                 keyboardType="phone-pad"
-                placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
-              />
+                placeholderTextColor={ '#000' }
+             />
             </View>
           </View>
         ) : (
@@ -259,8 +258,8 @@ const Login = ({ navigation }) => {
               value={email}
               onChangeText={handleEmailChange}
               keyboardType="email-address"
-              placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
-            />
+              placeholderTextColor={ '#000' }
+           />
           </View>
         )}
 
@@ -274,10 +273,10 @@ const Login = ({ navigation }) => {
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={handlePasswordChange}
-              placeholderTextColor={theme === 'light' ? '#000' : '#fff'}
-            />
+              placeholderTextColor={ '#000' }
+           />
             <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
-              <Icon name={showPassword ? 'eye' : 'eye-off'} size={20} color={theme === 'light' ? '#000' : '#fff'} />
+              <Icon name={showPassword ? 'eye' : 'eye-off'} size={20} color={ '#000' }/>
             </TouchableOpacity>
           </View>
         </View>
@@ -296,7 +295,7 @@ const Login = ({ navigation }) => {
         <Text style={styles.errorText}>{errorMessage}</Text>
 
         {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#15718e" />
         ) : (
           <TouchableOpacity
             onPress={handleLogin}
@@ -316,11 +315,11 @@ const Login = ({ navigation }) => {
           style={{
             modal: {
               height: '50%',
-              backgroundColor: '#fff',
-            },
+              backgroundColor,
+           },
             inputLabel: {
               color: '#000',
-            },
+           },
           }}
         />
       </View>
