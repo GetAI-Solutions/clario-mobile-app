@@ -138,6 +138,7 @@ const ChatbotScreen = ({ navigation, route }) => {
           bar_code: `${product.product_barcode}`,
           user_message: inputText,
           perplexity: product.perplexity || false,
+          noCode: product.noCode || false,
         });
 
         if (response.status === 200) {

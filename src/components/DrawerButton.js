@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     paddingVertical: 15,
     paddingHorizontal: 15,
-    borderBottomWidth: 1,
   },
   lightHeader: {
     backgroundColor: '#ffffff',

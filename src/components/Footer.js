@@ -1,11 +1,26 @@
-import React, { useContext, useState } from 'react';
-import { View, TouchableOpacity, Image, StyleSheet, Text } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { View, TouchableOpacity, Image, StyleSheet, Text, Keyboard } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../context/ThemeContext';
 
 const Footer = ({ onUpload, onScan }) => {
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   const styles = StyleSheet.create({
     footer: {
@@ -39,6 +54,11 @@ const Footer = ({ onUpload, onScan }) => {
       color: theme === 'dark' ? '#fff' : '#000',
     },
   });
+
+  // Conditionally render the footer based on keyboard visibility
+  if (keyboardVisible) {
+    return null; // Hide footer when keyboard is visible
+  }
 
   return (
     <View style={styles.footer}>

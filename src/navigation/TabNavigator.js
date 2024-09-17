@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState , useEffect }from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Fontisto, Ionicons } from '@expo/vector-icons';
 import MainDrawerNavigator from './DrawerNavigator'; 
@@ -7,12 +7,28 @@ import AccountScreen from '../screens/Accounts';
 import HomeScreen from '../screens/HomeScreen';
 import { useTheme } from '../context/ThemeContext'; 
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
+
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   const { theme } = useTheme();
   const { t } = useTranslation();
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   return (
     <Tab.Navigator
@@ -35,20 +51,22 @@ export default function TabNavigator() {
         },
         tabBarActiveTintColor: '#daa163',
         tabBarInactiveTintColor: '#fff',
-        tabBarStyle: {
-          border: 'none',
-          backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',
-          paddingBottom: 10,
-          height: 70,
-        },
+        tabBarStyle: [
+          {
+            border: 'none',
+            backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',
+            paddingBottom: 10,
+            height: 70,
+          },
+          keyboardVisible ? { display: 'none' } : {}, // Hide tab bar when keyboard is visible
+        ],
         tabBarLabelStyle: {
           fontSize: 14,
           fontWeight: '700',
         },
-        tabBarBackground: () => {
-          return(
-          <View style={{backgroundColor: '#15718e', width: '100%', height: '100%', borderTopLeftRadius: 30, borderTopRightRadius: 30,}}></View>
-        )},
+        tabBarBackground: () => (
+          <View style={{ backgroundColor: '#15718e', width: '100%', height: '100%', borderTopLeftRadius: 30, borderTopRightRadius: 30 }}></View>
+        ),
         headerShown: false,
       })}
     >
@@ -75,4 +93,3 @@ export default function TabNavigator() {
     </Tab.Navigator>
   );
 }
-

@@ -13,9 +13,11 @@ const CustomTabBarButton = ({ children, onPress }) => (
 
 const styles = StyleSheet.create({
   customTabBarButton: {
-    top: -20, // Adjust as needed
+    position: 'absolute', // Fix it to a specific position
+    bottom: 0, // Ensure it's at the bottom of the screen
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%', // Ensure it stretches across the width of the screen
   },
 });
 
