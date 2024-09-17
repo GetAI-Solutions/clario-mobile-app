@@ -34,6 +34,8 @@
     "install": "^0.13.0",
     "intl-pluralrules": "^2.0.1",
     "jsqr": "^1.4.0",
+    "lottie-react-native": "^7.0.0",
+    "native-base": "^3.4.28",
     "patch-package": "^8.0.0",
     "react": "^18.2.0",
     "react-async-hook": "^4.0.0",

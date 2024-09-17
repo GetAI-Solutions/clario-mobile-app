@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     textAlign: 'center',
     marginBottom: 24,
+    fontWeight: "500",
   },
   button: {
     backgroundColor: '#2c7391',
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 8,
     color: '#333',
+    fontWeight: "500",
   },
   languagePicker: {
     width: '100%',

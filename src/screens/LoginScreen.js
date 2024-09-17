@@ -7,9 +7,10 @@ import { storeUserData } from '../utils/storageUtils';
 import UserContext from '../context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../components/AuthHeader';
+import { useTheme } from '../context/ThemeContext'; // Import useTheme
 
 const Login = ({ navigation }) => {
-  const { theme } = useTheme();
+  const { theme } = useTheme(); // Use theme from context
   const [isPhoneLogin, setIsPhoneLogin] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
@@ -21,21 +22,10 @@ const Login = ({ navigation }) => {
   const { setUser } = useContext(UserContext);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handlePhoneNumberChange = (text) => {
-    setPhoneNumber(text);
-  };
-
-  const handleEmailChange = (text) => {
-    setEmail(text);
-  };
-
-  const handlePasswordChange = (text) => {
-    setPassword(text);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const handlePhoneNumberChange = (text) => setPhoneNumber(text);
+  const handleEmailChange = (text) => setEmail(text);
+  const handlePasswordChange = (text) => setPassword(text);
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleLogin = async () => {
     setIsLoading(true);
@@ -43,12 +33,10 @@ const Login = ({ navigation }) => {
     try {
       const loginData = {
         email: isPhoneLogin ? undefined : email,
-        password: password,
+        password,
         login_type: isPhoneLogin ? undefined : 'email',
         phone_no: isPhoneLogin ? `${selectedCountry.dial_code}${phoneNumber}` : '',
       };
-
-      console.log(loginData);
 
       const userData = await loginUser(loginData);
 
@@ -67,25 +55,25 @@ const Login = ({ navigation }) => {
 
   const handleError = (error) => {
     let errorMessage = 'An unexpected error occurred. Please try again.';
-  
     if (error.response) {
-      console.log('Error response status:', error.response.status);
-      
       switch (error.response.status) {
         case 400:
         case 401:
-          return setErrorMessage('Invalid email or password.');
+          setErrorMessage('Invalid email or password.');
+          break;
         case 500:
-          return setErrorMessage('Server error. Please try again later.');
+          setErrorMessage('Server error. Please try again later.');
+          break;
         case 404:
-          return setErrorMessage('User not found.');
+          setErrorMessage('User not found.');
+          break;
         default:
-          return setErrorMessage(error.response.data.message || errorMessage);
+          setErrorMessage(error.response.data.message || errorMessage);
       }
     } else if (error.request) {
-      return setErrorMessage('Network error. Please check your connection.');
+      setErrorMessage('Network error. Please check your connection.');
     } else {
-      return setErrorMessage(error.message || errorMessage);
+      setErrorMessage(error.message || errorMessage);
     }
   };
 
@@ -95,7 +83,7 @@ const Login = ({ navigation }) => {
     },
     contentContainer: {
       flex: 1,
-      backgroundColor: 'transparent',  // Transparent background to let the texture show through
+      backgroundColor: theme === 'dark' ? '#000' : 'transparent', // Change background based on theme
       paddingHorizontal: 16,
       paddingVertical: 25,
     },
@@ -107,7 +95,7 @@ const Login = ({ navigation }) => {
       padding: 8,
     },
     title: {
-      color:  '#000',
+      color: theme === 'dark' ? '#FFF' : '#000',
       fontSize: 22,
       fontWeight: '600',
       textAlign: 'left',
@@ -115,8 +103,8 @@ const Login = ({ navigation }) => {
     },
     subtitle: {
       fontSize: 14,
-      color,
-     textAlign: 'left',
+      color: theme === 'dark' ? '#FFF' : '#000',
+      textAlign: 'left',
       marginBottom: 24,
     },
     inputContainer: {
@@ -124,13 +112,13 @@ const Login = ({ navigation }) => {
     },
     label: {
       fontSize: 14,
-      color:  '#000',
+      color: theme === 'dark' ? '#FFF' : '#000',
       marginBottom: 8,
     },
     phoneInputContainer: {
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor:  '#000',
+      borderColor: theme === 'dark' ? '#FFF' : '#000',
       borderRadius: 8,
       alignItems: 'center',
       paddingHorizontal: 12,
@@ -141,19 +129,20 @@ const Login = ({ navigation }) => {
     callingCode: {
       paddingRight: 10,
       fontSize: 14,
+      color: theme === 'dark' ? '#FFF' : '#000',
     },
     phoneInput: {
       flex: 1,
       paddingVertical: 10,
       paddingHorizontal: 12,
       fontSize: 14,
-      color,
-   },
+      color: theme === 'dark' ? '#FFF' : '#000',
+    },
     input: {
       borderWidth: 1,
-      color:  '#000' ,
-     borderColor:  '#000' ,
-     borderRadius: 8,
+      color: theme === 'dark' ? '#FFF' : '#000',
+      borderColor: theme === 'dark' ? '#FFF' : '#000',
+      borderRadius: 8,
       paddingHorizontal: 12,
       paddingVertical: 10,
       fontSize: 14,
@@ -161,8 +150,8 @@ const Login = ({ navigation }) => {
     passwordInputContainer: {
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor:  '#000' ,
-     borderRadius: 8,
+      borderColor: theme === 'dark' ? '#FFF' : '#000',
+      borderRadius: 8,
       alignItems: 'center',
       paddingHorizontal: 12,
     },
@@ -170,6 +159,7 @@ const Login = ({ navigation }) => {
       flex: 1,
       paddingVertical: 10,
       fontSize: 14,
+      color: theme === 'dark' ? '#FFF' : '#000',
     },
     toggleButton: {
       padding: 8,
@@ -186,10 +176,10 @@ const Login = ({ navigation }) => {
       padding: 8,
     },
     linkText: {
-      color:  '#15718e',
+      color: '#15718e',
     },
     loginButton: {
-      backgroundColor91,
+      backgroundColor: '#91C3D1', // Assuming you want to use this color for the button
       borderRadius: 100,
       alignItems: 'center',
       paddingVertical: 16,
@@ -200,12 +190,12 @@ const Login = ({ navigation }) => {
       marginHorizontal: 20,
     },
     buttonText: {
-      colorFF,
+      color: '#FFF', // Assuming white text for the button
       fontWeight: '700',
       fontSize: 16,
     },
     disabledButton: {
-      backgroundColorAA,
+      backgroundColor: '#AAABAC', // Gray color for disabled button
     },
     texture: {
       flex: 1,
@@ -235,7 +225,7 @@ const Login = ({ navigation }) => {
                 onPress={() => setShowCountryPicker(true)}
                 style={styles.countryPickerButton}
               >
-                <Text style={{color:  '#000'}}>{selectedCountry.dial_code}</Text>
+                <Text style={{color: theme === 'dark' ? '#FFF' : '#000'}}>{selectedCountry.dial_code}</Text>
               </TouchableOpacity>
               <TextInput
                 id="phoneNumber"
@@ -244,9 +234,15 @@ const Login = ({ navigation }) => {
                 value={phoneNumber}
                 onChangeText={handlePhoneNumberChange}
                 keyboardType="phone-pad"
-                placeholderTextColor={ '#000' }
-             />
+              />
             </View>
+            {showCountryPicker && (
+              <CountryPicker
+                visible={showCountryPicker}
+                onClose={() => setShowCountryPicker(false)}
+                onSelect={setSelectedCountry}
+              />
+            )}
           </View>
         ) : (
           <View style={styles.inputContainer}>
@@ -254,12 +250,12 @@ const Login = ({ navigation }) => {
             <TextInput
               id="email"
               style={styles.input}
-              placeholder="name@example.com"
+              placeholder="Email Address"
               value={email}
               onChangeText={handleEmailChange}
               keyboardType="email-address"
-              placeholderTextColor={ '#000' }
-           />
+              autoCapitalize="none"
+            />
           </View>
         )}
 
@@ -269,59 +265,42 @@ const Login = ({ navigation }) => {
             <TextInput
               id="password"
               style={styles.passwordInput}
-              placeholder="Enter your password"
-              secureTextEntry={!showPassword}
+              placeholder="Password"
               value={password}
               onChangeText={handlePasswordChange}
-              placeholderTextColor={ '#000' }
-           />
-            <TouchableOpacity onPress={togglePasswordVisibility} style={styles.toggleButton}>
-              <Icon name={showPassword ? 'eye' : 'eye-off'} size={20} color={ '#000' }/>
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+            />
+            <TouchableOpacity
+              onPress={togglePasswordVisibility}
+              style={styles.toggleButton}
+            >
+              <Icon name={showPassword ? 'eye-off' : 'eye'} size={20} color={theme === 'dark' ? '#FFF' : '#000'} />
             </TouchableOpacity>
           </View>
         </View>
 
+        {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+
+        <TouchableOpacity
+          style={[styles.loginButton, isLoading ? styles.disabledButton : {}]}
+          onPress={handleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? <ActivityIndicator size="small" color="#FFF" /> : <Text style={styles.buttonText}>Log In</Text>}
+        </TouchableOpacity>
+
         <View style={styles.footer}>
-          <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')} style={styles.forgotPassword}>
-            <Text style={styles.linkText}>Forgot Password?</Text>
+          <TouchableOpacity style={styles.forgotPassword}>
+            <Text style={styles.linkText}>Forgot password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => setIsPhoneLogin(!isPhoneLogin)} style={styles.switchLoginMethod}>
-            <Text style={styles.linkText}>
-              {isPhoneLogin ? 'Login with email' : 'Login with phone'}
-            </Text>
+          <TouchableOpacity
+            onPress={() => setIsPhoneLogin(!isPhoneLogin)}
+            style={styles.switchLoginMethod}
+          >
+            <Text style={styles.linkText}>{isPhoneLogin ? 'Switch to Email' : 'Switch to Phone'}</Text>
           </TouchableOpacity>
         </View>
-
-        <Text style={styles.errorText}>{errorMessage}</Text>
-
-        {isLoading ? (
-          <ActivityIndicator size="large" color="#15718e" />
-        ) : (
-          <TouchableOpacity
-            onPress={handleLogin}
-            style={[styles.loginButton, (isPhoneLogin && phoneNumber === '') || (!isPhoneLogin && email === '' && password === '') ? styles.disabledButton : null]}
-            disabled={(isPhoneLogin && phoneNumber === '') || (!isPhoneLogin && email === '' && password === '')}
-          >
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-        )}
-
-        <CountryPicker
-          show={showCountryPicker}
-          pickerButtonOnPress={(item) => {
-            setSelectedCountry(item);
-            setShowCountryPicker(false);
-          }}
-          style={{
-            modal: {
-              height: '50%',
-              backgroundColor,
-           },
-            inputLabel: {
-              color: '#000',
-           },
-          }}
-        />
       </View>
     </ImageBackground>
   );

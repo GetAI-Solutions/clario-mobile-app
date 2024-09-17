@@ -53,6 +53,25 @@ export const getDetailsFromPerplexity = async (product_name, bar_code, userID) =
   return response;
 };
 
+export const searchDetailsFromPerplexity = async (product_name, userID) => {
+  try {
+    const response = await axios.post(`${BASEURL}/common/search-perplexity-by-name`, 
+      new URLSearchParams({ product_name, userID }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
+    return response;
+     // Return only the response data
+  } catch (error) {
+    console.error('Error searching product:', error.response);
+    throw error;
+  }
+};
+
+
 export const submitFeedback = async (userID, feedback) => {
   const response = await axios.post(
     `${BASEURL}/users/give-user-feedback`,

@@ -53,7 +53,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
     },
     productImage: {
       width: '100%',
-      height: 334,
+      height: 330,
       resizeMode: 'cover',
       borderRadius: 30,
     },

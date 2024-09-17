@@ -68,6 +68,7 @@ const SignupPhone = ({ navigation }) => {
     subtitle: {
       color: '#000',
       marginBottom: 24,
+      fontWeight: "500",
     },
     inputWrapper: {
       flexDirection: 'row',
