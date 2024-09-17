@@ -67,6 +67,7 @@ const MainScreen = ({ navigation }) => {
           product_barcode: response.data.product.product_code,
           perplexity: true,
           noCode: true,
+          noCode: true,
         };
         console.log('transformed product', transformedProduct);
         setProducts((prev) => [...prev, transformedProduct]);

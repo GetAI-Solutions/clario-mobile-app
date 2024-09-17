@@ -1,38 +1,49 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, ImageBackground } from 'react-native';
-import { CountryPicker } from 'react-native-country-codes-picker';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, ImageBackground, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Header from '../components/AuthHeader';
 import { useTheme } from '../context/ThemeContext';
+import { sendOtp } from '../services/authService'; // Ensure the OTP service sends OTP via email now
 
-const SignupPhone = ({ navigation }) => {
+const SignupEmail = ({ navigation }) => {
   const { theme } = useTheme();
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [showCountryPicker, setShowCountryPicker] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState({ dial_code: '+251', name: 'Ethiopia' });
+  const [otp, setOtp] = useState(null); // To store the OTP returned by the sendOtp function
 
-  const handlePhoneNumberChange = (text) => {
-    setPhoneNumber(text);
+  const handleEmailChange = (text) => {
+    setEmail(text);
   };
 
   const handlePasswordChange = (text) => {
     setPassword(text);
   };
 
-  const handleContinueClick = () => {
-    if (phoneNumber && password) {
-      setShowModal(true);
+  const handleContinueClick = async () => {
+    if (email && password) {
+      setIsLoading(true)
+      try {
+        // Request OTP for the entered email
+        const otpResponse = await sendOtp(email); // Update sendOtp to handle email logic
+        console.log('otpResponse', otpResponse)
+        if(otpResponse) {
+          setIsLoading(false)
+          const { otp } = otpResponse.data;
+          console.log('otp...', otp)
+          setOtp(otp);
+          setShowModal(true);
+        }
+        
+      } catch (error) {
+        alert('Failed to send OTP, please try again.');
+      }
     } else {
-      alert("Please enter a valid phone number and password.");
+      alert("Please enter a valid email and password.");
     }
-  };
-
-  const handleEditClick = () => {
-    setShowModal(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -41,11 +52,15 @@ const SignupPhone = ({ navigation }) => {
 
   const handleContinue = () => {
     setShowModal(false);
-    navigation.navigate('EmailSignup', {
-      phoneNumber,
-      dialCode: selectedCountry.dial_code,
-      password
+    navigation.navigate('VerifyEmail', {
+      email,
+      password,
+      otp,
     });
+  };
+
+  const handleEditClick = () => {
+    setShowModal(false);
   };
 
   const styles = StyleSheet.create({
@@ -53,7 +68,6 @@ const SignupPhone = ({ navigation }) => {
       flex: 1,
       paddingHorizontal: 16,
       paddingVertical: 16,
-      boxSize: 'border-box',
     },
     content: {
       marginTop: 8,
@@ -79,10 +93,6 @@ const SignupPhone = ({ navigation }) => {
       paddingHorizontal: 8,
       marginBottom: 16,
       backgroundColor: 'transparent',
-    },
-    countryPicker: {
-      marginRight: 8,
-      paddingVertical: 10,
     },
     input: {
       flex: 1,
@@ -174,23 +184,16 @@ const SignupPhone = ({ navigation }) => {
       <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
       <View style={styles.content}>
         <Text style={styles.title}>Create an Account</Text>
-        <Text style={styles.subtitle}>Enter your mobile number to verify your account</Text>
+        <Text style={styles.subtitle}>Enter your email to verify your account</Text>
 
         <View style={styles.inputWrapper}>
-          <TouchableOpacity
-            onPress={() => setShowCountryPicker(true)}
-            style={styles.countryPicker}
-          >
-            <Text
-            style={{color: '#000'}}>{selectedCountry.dial_code}</Text>
-          </TouchableOpacity>
           <TextInput
             style={styles.input}
-            placeholder="Mobile Number"
+            placeholder="Email Address"
             placeholderTextColor={'#000'}
-            value={phoneNumber}
-            onChangeText={handlePhoneNumberChange}
-            keyboardType="phone-pad"
+            value={email}
+            onChangeText={handleEmailChange}
+            keyboardType="email-address"
           />
         </View>
 
@@ -212,10 +215,10 @@ const SignupPhone = ({ navigation }) => {
       <TouchableOpacity
         mode="contained"
         onPress={handleContinueClick}
-        disabled={!phoneNumber || !password}
-        style={[styles.button, (!phoneNumber || !password) ? styles.disabledButton : styles.activeButton]}
+        disabled={!email || !password}
+        style={[styles.button, (!email || !password) ? styles.disabledButton : styles.activeButton]}
       >
-        <Text style={styles.buttonText}>Continue</Text>
+      {isLoading ? <ActivityIndicator color='#fff' /> : <Text style={styles.buttonText}>Continue</Text>}
       </TouchableOpacity>
 
       <Modal visible={showModal} transparent animationType="slide">
@@ -225,8 +228,8 @@ const SignupPhone = ({ navigation }) => {
               <Text style={styles.modalCloseText}>&times;</Text>
             </TouchableOpacity>
             <Image source={require('../../assets/images/pop.png')} style={styles.modalImage} />
-            <Text style={styles.modalTitle}>Confirm Your Phone Number</Text>
-            <Text style={styles.modalText}>Is this correct? {selectedCountry.dial_code} {phoneNumber}</Text>
+            <Text style={styles.modalTitle}>Confirm Your Email</Text>
+            <Text style={styles.modalText}>Is this correct? {email}</Text>
             <Button 
               mode="contained" 
               onPress={handleContinue} 
@@ -255,17 +258,8 @@ const SignupPhone = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-
-      <CountryPicker
-        show={showCountryPicker}
-        pickerButtonOnPress={(country) => {
-          setSelectedCountry({ dial_code: country.dial_code, name: country.name.en });
-          setShowCountryPicker(false);
-        }}
-        style={{ modal: { height: '80%' } }} // Adjust the modal height
-      />
     </View>
   );
 };
 
-export default SignupPhone;
+export default SignupEmail;

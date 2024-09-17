@@ -7,6 +7,7 @@ import { BASEURL } from '../services/api';
 import axios from 'axios';
 import PushNotification from 'react-native-push-notification';
 
+
 const SettingsScreen = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const { theme, toggleTheme } = useTheme();
@@ -29,6 +30,7 @@ const SettingsScreen = ({ navigation }) => {
       );
     }
   };
+
 
   const handleLanguageChange = async (language) => {
     i18n.changeLanguage(language); 

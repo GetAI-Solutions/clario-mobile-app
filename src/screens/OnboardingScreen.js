@@ -6,7 +6,7 @@ const OnboardingScreen = ({ navigation }) => {
   useEffect(() => {
     // Navigate to the LandingScreen after 3 seconds
     setTimeout(() => {
-      navigation.replace('OnboardingPages');
+      navigation.navigate('Landing');
     }, 3000);
   }, [navigation]);
 

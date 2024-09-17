@@ -1,4 +1,4 @@
-import React, { useState , useEffect }from 'react';
+import React, { useState, useEffect }from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Fontisto, Ionicons } from '@expo/vector-icons';
 import MainDrawerNavigator from './DrawerNavigator'; 
@@ -8,7 +8,6 @@ import HomeScreen from '../screens/HomeScreen';
 import { useTheme } from '../context/ThemeContext'; 
 import { useTranslation } from 'react-i18next';
 import { Keyboard, View } from 'react-native';
-
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
@@ -58,7 +57,7 @@ export default function TabNavigator() {
             paddingBottom: 10,
             height: 70,
           },
-          keyboardVisible ? { display: 'none' } : {}, // Hide tab bar when keyboard is visible
+          keyboardVisible ? { display: 'none' } : {}, 
         ],
         tabBarLabelStyle: {
           fontSize: 14,
@@ -93,3 +92,5 @@ export default function TabNavigator() {
     </Tab.Navigator>
   );
 }
+
+
