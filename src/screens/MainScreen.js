@@ -27,10 +27,10 @@ const MainScreen = ({ navigation }) => {
     let messageInterval;
     if (searching) {
       const messages = [
-        'Looking for your product...',
-        'Almost there! Sit back while we fetch the details...',
-        'Just a moment, we’re getting the information you need...',
-        'Hang tight, we’re locating your product details...'
+        t('Looking for your product...'),
+        t('Almost there! Sit back while we fetch the details...'),
+        t('Just a moment, we’re getting the information you need...'),
+        t('Hang tight, we’re locating your product details...')
       ];
       let messageIndex = 0;
 
@@ -39,8 +39,8 @@ const MainScreen = ({ navigation }) => {
         messageIndex = (messageIndex + 1) % messages.length;
       };
 
-      messageInterval = setInterval(updateMessage, 4000); // Change message every 2 seconds
-      updateMessage(); // Initial message set
+      messageInterval = setInterval(updateMessage, 4000); 
+      updateMessage(); 
 
     } else {
       setSearchMessage('');

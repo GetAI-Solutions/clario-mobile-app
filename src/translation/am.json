@@ -118,5 +118,10 @@
   "You must use the app in accordance with the law and refrain from submitting false or misleading data.": "መተግበሪያውን በህጉ መሰረት መጠቀም እና የውሸት ወይም አሳሳች ውሂብ ከማቅረብ መቆጠብ አለብዎት",
   "6. Changes to Terms": "6. ውሎች ላይ ለውጦች",
   "We reserve the right to modify these terms at any time. Please review them periodically to stay informed of updates": "እነዚህን ውሎች በማንኛውም ጊዜ የመቀየር መብታችን የተጠበቀ ነው። ስለ ዝመናዎች ለማወቅ እባክዎ በየጊዜው ይከልሷቸው።" ,
-  "Welcome to our barcode scanning app. By using our services, you agree to comply with the following terms:" : "ወደ ባርኮድ መቃኛ መተግበሪያ እንኳን በደህና መጡ። አገልግሎቶቻችንን በመጠቀም፣ የሚከተሉትን ውሎች ለማክበር ተስማምተሃል፡"
+  "Welcome to our barcode scanning app. By using our services, you agree to comply with the following terms:" : "ወደ ባርኮድ መቃኛ መተግበሪያ እንኳን በደህና መጡ። አገልግሎቶቻችንን በመጠቀም፣ የሚከተሉትን ውሎች ለማክበር ተስማምተሃል፡",
+  "Looking for your product...": "ምርትዎን በመፈለግ ላይ...",
+    "Almost there! Sit back while we fetch the details...": "ሊደርስ ነው! ዝርዝሩን ስናመጣ አርፈህ ተቀመጥ...",
+    "Just a moment, we’re getting the information you need..." : "ለአፍታ ያህል፣ የሚፈልጉትን መረጃ እያገኘን ነው...",
+    "Hang tight, we’re locating your product details...": "ይጠብቁን፣ የምርት ዝርዝሮችዎን እያገኘን ነው...",
+    "Scanned": "ተቃኝቷል።"
 }

@@ -117,6 +117,11 @@
   "You must use the app in accordance with the law and refrain from submitting false or misleading data": "Appicha akkaataa seeraatiin fayyadamuu fi daataa sobaa ykn dogoggorsu dhiyeessu irraa of qusachuu qabdu",
   "6. Changes to Terms": "6. Jijjiirama Jechoota",
   "We reserve the right to modify these terms at any time. Please review them periodically to stay informed of updates": "Yeroo barbaannetti haalawwan kana fooyyessuuf mirga qabna. Yeroo yeroon isaan ilaalaa, odeeffannoo haaraa akka argattan isin beeksifna",
-  "Welcome to our barcode scanning app. By using our services, you agree to comply with the following terms:" : "Baga gara appii barkoodii sakatta'uu keenyaatti dhuftan. Tajaajila keenya fayyadamuudhaan, haalawwan armaan gadii eeguuf walii galtee qabda:" 
+  "Welcome to our barcode scanning app. By using our services, you agree to comply with the following terms:" : "Baga gara appii barkoodii sakatta'uu keenyaatti dhuftan. Tajaajila keenya fayyadamuudhaan, haalawwan armaan gadii eeguuf walii galtee qabda:" ,
+  "Looking for your product...": "Omisha keessan barbaadaa jirtu...",
+    "Almost there! Sit back while we fetch the details...": "Achitti jechuun ni danda'ama! Bal'ina isaa osoo fidnu taa'aa...",
+    "Just a moment, we’re getting the information you need..." : "Yeroo muraasa qofa, odeeffannoo isin barbaachisu argachaa jirra...",
+    "Hang tight, we’re locating your product details...": "Hang tight, nuti ibsa oomisha keessanii barbaadaa jirra...",
+    "Scanned": "Scanned ta'eera"
 
 }

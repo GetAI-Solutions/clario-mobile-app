@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const ScannerScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
-  const { user, updateUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [scanned, setScanned] = useState(false);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -55,38 +55,9 @@ const ScannerScreen = ({ navigation }) => {
     if (err.response) {
       switch (err.response.status) {
         case 404:
-          console.log('Product not found, barcode:', bar_code);
-          navigation.navigate('ProductNotFound', { bar_code: bar_code });
-        case 400:
-          setError(t('Bad Request. Please check your input.'));
+          navigation.navigate('ProductNotFound', { bar_code });
           break;
-        case 401:
-          setError(t('Unauthorized access.'));
-          break;
-        case 403:
-          setError(t('Forbidden access.'));
-          break;
-        case 408:
-          setError(t('Request timeout.'));
-          break;
-        case 422:
-          setError(t('Validation error. Please check your input.'));
-          break;
-        case 429:
-          setError(t('Too many requests. Please try again later.'));
-          break;
-        case 500:
-          setError(t('Internal server error.'));
-          break;
-        case 502:
-          setError(t('Bad gateway.'));
-          break;
-        case 503:
-          setError(t('Service unavailable.'));
-          break;
-        case 504:
-          setError(t('Gateway timeout.'));
-          break;
+        // Add more cases here based on the error status
         default:
           setError(t('An error occurred. Please try again.'));
       }
@@ -95,11 +66,11 @@ const ScannerScreen = ({ navigation }) => {
     } else {
       setError(t('Unknown error. Please try again.'));
     }
-  
+
+    setLoading(false);
     navigation.navigate('MainScreen');
   };
-  
-  
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -111,7 +82,7 @@ const ScannerScreen = ({ navigation }) => {
     <View style={styles.container}>
       <BarCodeScanner
         style={styles.cameraView}
-        onBarCodeScanned={handleBarCodeScanned}
+        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         barCodeTypes={[
           BarCodeScanner.Constants.BarCodeType.aztec,
           BarCodeScanner.Constants.BarCodeType.codabar,
@@ -129,9 +100,15 @@ const ScannerScreen = ({ navigation }) => {
           BarCodeScanner.Constants.BarCodeType.interleaved2of5,
           BarCodeScanner.Constants.BarCodeType.rss14,
           BarCodeScanner.Constants.BarCodeType.rss_expanded,
-        ]} 
+        ]}
       >
-        {loading && <ActivityIndicator size="large" color="#fff" />}
+        {loading && (
+          <View style={styles.loadingOverlay}>
+            <ActivityIndicator size="large" color="#fff" />
+            <Text style={styles.loadingText}>{t('Scanning product...')}</Text>
+          </View>
+        )}
+
         {error && (
           <View style={styles.overlay}>
             <Text style={styles.errorText}>{error}</Text>
@@ -140,6 +117,7 @@ const ScannerScreen = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         )}
+
         {!loading && !error && (
           <View style={styles.scanPrompt}>
             <Text style={styles.scanText}>{t('Place the barcode inside the frame')}</Text>
@@ -162,15 +140,28 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   cameraView: {
-    overflow: 'hidden',
     height: '60%',
     width: '80%',
     borderRadius: 20,
     borderWidth: 2,
     borderColor: '#fff',
     marginTop: '20%',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: '40%',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
+  loadingText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
   },
   overlay: {
     position: 'absolute',
