@@ -222,7 +222,7 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={styles.footer}>
-          <TouchableOpacity style={styles.forgotPassword}>
+          <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.linkText}>Forgot password?</Text>
           </TouchableOpacity>
         </View>
