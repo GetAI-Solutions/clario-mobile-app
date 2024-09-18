@@ -6,12 +6,14 @@ import { UserProvider } from './src/context/UserContext';
 import { LanguageProvider } from './src/context/LanguageContext';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function App() {
 
   return (
     <SafeAreaProvider style={{flex: 1}}>
+      <StatusBar style="auto" />
         <LanguageProvider>
         <UserProvider>
         <ThemeProvider>
