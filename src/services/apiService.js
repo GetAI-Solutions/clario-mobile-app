@@ -82,3 +82,17 @@ export const submitFeedback = async (userID, feedback) => {
   );
   return response.data;
 };
+
+export const fetchHomePageProducts = async () => {
+  try {
+    const response = await axios.get(`${BASEURL}/products/get-home-page-products`, {}, {
+      headers: {
+        'accept': 'application/json',
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching homepage products:", error);
+    throw error;
+  }
+};

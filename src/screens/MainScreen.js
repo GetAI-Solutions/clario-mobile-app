@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ImageBackground, Alert } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ImageBackground, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import Footer from '../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
@@ -161,7 +161,12 @@ const MainScreen = ({ navigation }) => {
           <View style={styles.content}>
             {searching && <Text style={styles.searchMessage}>{searchMessage}</Text>}
             {products.length === 0 ? (
-              <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
+               <KeyboardAvoidingView
+               behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+               style={{ flex: 1 }}  // Ensure it takes up full height
+             >
+               <NoProductHistory onUpload={handleUpload} onScan={handleScan} />
+             </KeyboardAvoidingView>
             ) : (
               <>
                 <Text style={styles.title}>{t('Scanned Products') || 'Scanned Products'}</Text>

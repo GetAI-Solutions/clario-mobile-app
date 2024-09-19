@@ -63,7 +63,7 @@ const MediumCard = ({ name, brand, image, onPress }) => {
     return (
         <View>
         <TouchableOpacity style={styles.card} onPress={onPress}>
-            <Image source={image} style={styles.productImage} resizeMode="cover" />
+            <Image source={{ uri: image }} style={styles.productImage} resizeMode="cover" />
             <LinearGradient
             colors={['rgba(217, 217, 217, 0)', '#DAA163']}
             start={{ x: 0.5, y: 0.1}}
