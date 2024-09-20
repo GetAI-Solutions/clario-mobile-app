@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ScrollView, Modal, ImageBackground } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import FullNameInput from '../components/FullNameInput';
-import CountryPickerComponent from '../components/CountryPickerComponent';
+import FullNameInput from '../../components/FullNameInput';
+import CountryPickerComponent from '../../components/CountryPickerComponent';
 import countryList from 'react-select-country-list';
-import { signup } from '../services/authService';
-import Header from '../components/AuthHeader';
+import { signup } from '../../services/authService';
+import Header from '../../components/AuthHeader';
 
 const AddEmail = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,7 +85,7 @@ const AddEmail = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} />
       <Header navigation={navigation} />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Complete your signup</Text>

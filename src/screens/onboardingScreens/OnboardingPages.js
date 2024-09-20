@@ -122,8 +122,8 @@ const OnboardingScreen = ({ navigation }) => {
       removeClippedSubviews={false} // To prevent clipping issues
     >
       <View style={styles.slide}>
-        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
-        <Image source={require('../../assets/images/wondering.png')} style={styles.image1} />
+        <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} />
+        <Image source={require('../../../assets/images/wondering.png')} style={styles.image1} />
         <View style={styles.textContainer}>
           <Text style={[styles.title, { color: '#15718e' }]}>
             Explore Products with AI-Powered Insights
@@ -141,8 +141,8 @@ const OnboardingScreen = ({ navigation }) => {
       </View>
 
       <View style={[styles.slide, { backgroundColor: '#15718e' }]}>
-        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
-        <Image source={require('../../assets/images/searching.png')} style={styles.image2} />
+        <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} />
+        <Image source={require('../../../assets/images/searching.png')} style={styles.image2} />
         <View style={styles.textContainer}>
           <Text style={[styles.title, { color: '#daa163' }]}>Scan, Search, Discover!</Text>
           <Text style={[styles.subtitle, { color: '#fff' }]}>
@@ -158,8 +158,8 @@ const OnboardingScreen = ({ navigation }) => {
       </View>
 
       <View style={[styles.slide, { backgroundColor: '#daa163' }]}>
-        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
-        <Image source={require('../../assets/images/global.png')} style={styles.image3} />
+        <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} />
+        <Image source={require('../../../assets/images/global.png')} style={styles.image3} />
         <View style={styles.textContainer}>
           <Text style={[styles.title, { color: '#000' }]}>Speak Your Language, Anytime!</Text>
           <Text style={[styles.subtitle, { color: '#fff' }]}>

@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 
 const OTPPage  = ({ navigation }) => {
   const [entered_otp, setEnetered_otp] = useState(['', '', '', '', '', '']);

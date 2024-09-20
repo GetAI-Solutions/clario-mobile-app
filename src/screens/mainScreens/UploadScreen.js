@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator, ImageBackground, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadBarcode, getProductSummary } from '../services/apiService';
-import { fetchImageFromUri } from '../utils/imageUtils';
-import { registerForPushNotificationsAsync, sendNotification } from '../utils/notificationUtils';
+import { uploadBarcode, getProductSummary } from '../../services/apiService';
+import { fetchImageFromUri } from '../../utils/imageUtils';
+import { registerForPushNotificationsAsync, sendNotification } from '../../utils/notificationUtils';
 import { Platform } from 'react-native';
 import * as ImageManipulator from 'expo-image-manipulator';
-import Header from '../components/Header';
-import ProductContext from '../context/ProductContext';
-import UserContext from '../context/UserContext';
+import Header from '../../components/Header';
+import ProductContext from '../../context/ProductContext';
+import UserContext from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const UploadScreen = ({ navigation }) => {
   const { setProducts } = useContext(ProductContext);
@@ -236,11 +236,11 @@ const UploadScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} resizeMode="cover"/>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} resizeMode="cover"/>
       <Header navigation={navigation}/>
       <View style={styles.content}>
         <View style={styles.imgContainer}>
-          <Image source={require('../../assets/images/uploadArt.png')} style={styles.art}/>
+          <Image source={require('../../../assets/images/uploadArt.png')} style={styles.art}/>
           <Text style={styles.description}>Upload an image with your barcode and we'll do the rest</Text>
         </View>
         {!product && !loading && !error && (

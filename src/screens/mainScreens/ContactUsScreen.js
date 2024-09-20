@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
-import DrawerButton from "../components/DrawerButton"
+import DrawerButton from "../../components/DrawerButton"
 
-const RateGetAi = ({ navigation }) => {
+const ContactUsScreen = ({ navigation }) => {
     return (
         <View>
             <DrawerButton navigation={navigation} />
@@ -10,4 +10,4 @@ const RateGetAi = ({ navigation }) => {
     )
 }
 
-export default RateGetAi
+export default ContactUsScreen

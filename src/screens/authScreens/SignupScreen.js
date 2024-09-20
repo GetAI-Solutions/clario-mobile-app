@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, ImageBackground, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Header from '../components/AuthHeader';
-import { useTheme } from '../context/ThemeContext';
-import { sendOtp } from '../services/authService'; // Ensure the OTP service sends OTP via email now
+import Header from '../../components/AuthHeader';
+import { useTheme } from '../../context/ThemeContext';
+import { sendOtp } from '../../services/authService'; // Ensure the OTP service sends OTP via email now
 
 const SignupEmail = ({ navigation }) => {
   const { theme } = useTheme();
@@ -181,7 +181,7 @@ const SignupEmail = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header navigation={navigation} />
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}/>
       <View style={styles.content}>
         <Text style={styles.title}>Create an Account</Text>
         <Text style={styles.subtitle}>Enter your email to verify your account</Text>
@@ -227,7 +227,7 @@ const SignupEmail = ({ navigation }) => {
             <TouchableOpacity onPress={() => setShowModal(false)} style={styles.modalCloseButton}>
               <Text style={styles.modalCloseText}>&times;</Text>
             </TouchableOpacity>
-            <Image source={require('../../assets/images/pop.png')} style={styles.modalImage} />
+            <Image source={require('../../../assets/images/pop.png')} style={styles.modalImage} />
             <Text style={styles.modalTitle}>Confirm Your Email</Text>
             <Text style={styles.modalText}>Is this correct? {email}</Text>
             <Button 

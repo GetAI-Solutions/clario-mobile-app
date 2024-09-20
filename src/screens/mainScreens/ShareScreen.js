@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
-import DrawerButton from "../components/DrawerButton"
+import DrawerButton from "../../components/DrawerButton"
 
-const ContactUsScreen = ({ navigation }) => {
+const ShareScreen = ({ navigation }) => {
     return (
         <View>
             <DrawerButton navigation={navigation} />
@@ -10,4 +10,4 @@ const ContactUsScreen = ({ navigation }) => {
     )
 }
 
-export default ContactUsScreen
+export default ShareScreen

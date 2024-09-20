@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, SafeAreaView, ImageBackground, Alert, KeyboardAvoidingView, Platform } from 'react-native';
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
 import NoProductHistory from './NoProductHistoryScreen';
 import ProductList from './ProductList';
-import DrawerButton from '../components/DrawerButton';
-import ProductContext from '../context/ProductContext';
+import DrawerButton from '../../components/DrawerButton';
+import ProductContext from '../../context/ProductContext';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
-import SearchBar from '../components/SearchBar';
-import { searchDetailsFromPerplexity } from '../services/apiService';
-import UserContext from '../context/UserContext';
+import { useTheme } from '../../context/ThemeContext';
+import SearchBar from '../../components/SearchBar';
+import { searchDetailsFromPerplexity } from '../../services/apiService';
+import UserContext from '../../context/UserContext';
 
 const MainScreen = ({ navigation }) => {
   const { products, loading, setProducts } = useContext(ProductContext);
@@ -150,7 +150,7 @@ const MainScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.textureWrapper}>
-        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+        <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}>
           <View style={styles.headerContainer}>
             <View style={styles.header}>
               <DrawerButton navigation={navigation} style={styles.drawerButton} />

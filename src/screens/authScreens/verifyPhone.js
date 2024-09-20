@@ -10,8 +10,8 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import Header from '../components/Header';
-import { sendOtp } from '../services/authService'; 
+import Header from '../../components/Header';
+import { sendOtp } from '../../services/authService'; 
 
 const VerifyPhone = ({ navigation }) => {
   const [enteredOtp, setEnteredOtp] = useState(['', '', '', '', '', '']);
@@ -90,7 +90,7 @@ const VerifyPhone = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../assets/images/texture.png')}
+        source={require('../../../assets/images/texture.png')}
         style={styles.texture}
         resizeMode="cover"
       />

@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ActivityIndicator, ImageBackground, SafeAreaView } from 'react-native';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
-import { getDetailsFromPerplexity } from '../services/apiService';
-import UserContext from '../context/UserContext';
-import ProductContext from '../context/ProductContext';
+import { useTheme } from '../../context/ThemeContext';
+import { getDetailsFromPerplexity } from '../../services/apiService';
+import UserContext from '../../context/UserContext';
+import ProductContext from '../../context/ProductContext';
 
 const ProductNotFoundScreen = ({ navigation, route }) => {
   const { bar_code } = route.params;
@@ -169,14 +169,14 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground 
-        source={require('../../assets/images/texture.png')} 
+        source={require('../../../assets/images/texture.png')} 
         style={styles.background} 
       />
       <Header navigation={navigation} />
       <View style={styles.content}>
         <View style={styles.imageContainer}>
-          <Image source={require('../../assets/images/placard.png')} style={styles.placardImage} />
-          <Image source={require('../../assets/images/person.png')} style={styles.personImage} />
+          <Image source={require('../../../assets/images/placard.png')} style={styles.placardImage} />
+          <Image source={require('../../../assets/images/person.png')} style={styles.personImage} />
         </View>
         <Text style={styles.messageText}>{t("We Couldn't Find Your Product")}</Text>
         <Text style={styles.suggestionText}>
@@ -193,7 +193,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
         {error && <Text style={{ color: theme === 'dark' ? '#fff' : '#000' }}>{error}</Text>}
 
         <View style={styles.inputContainer}>
-          <Image source={require('../../assets/images/search.png')} style={styles.searchIcon} />
+          <Image source={require('../../../assets/images/search.png')} style={styles.searchIcon} />
           <TextInput
             style={styles.input}
             placeholder={t('Enter name of product')}
@@ -202,7 +202,7 @@ const ProductNotFoundScreen = ({ navigation, route }) => {
             onChangeText={setProductName}
           />
           <TouchableOpacity onPress={handleSearch} style={styles.searchButton}>
-            <Image source={require('../../assets/images/send.png')} style={styles.sendIcon} />
+            <Image source={require('../../../assets/images/send.png')} style={styles.sendIcon} />
           </TouchableOpacity>
         </View>
 

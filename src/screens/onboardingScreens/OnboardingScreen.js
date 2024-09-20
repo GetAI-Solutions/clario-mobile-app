@@ -12,8 +12,8 @@ const OnboardingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Image source={require('../../assets/images/logo2.png')} style={styles.logo} />
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}/>
+      <Image source={require('../../../assets/images/logo2.png')} style={styles.logo} />
       <Animatable.Text 
         animation="slideInLeft" 
         iterationCount={1} 

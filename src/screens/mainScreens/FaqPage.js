@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, ImageBackground, Dimensions } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useTheme } from '../context/ThemeContext';
-import Header from '../components/Header';
+import { useTheme } from '../../context/ThemeContext';
+import Header from '../../components/Header';
 import { useTranslation } from 'react-i18next';
 
 const FaqPage = ({navigation}) => {
@@ -102,7 +102,7 @@ const FaqPage = ({navigation}) => {
 
     return (
         <ScrollView contentContainerStyle={{          backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff',}}>
-            <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
+            <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
         <View style={styles.container}>
             <Header navigation={navigation} />
             <Text style={styles.title}>FAQ</Text>

@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, ImageBackground, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-import UserContext from '../context/UserContext';
+import UserContext from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
-import { updateUser } from '../services/apiService';
+import { useTheme } from '../../context/ThemeContext';
+import { updateUser } from '../../services/apiService';
 import * as ImagePicker from 'expo-image-picker';
 import { Platform } from 'react-native';
 
@@ -178,7 +178,7 @@ const AccountSecurityScreen = ({ navigation }) => {
 
   return (
     <View style={{flex: 1,  backgroundColor: theme === 'dark' ? '#1E1E1E' : '#FFF'}}>
-      <ImageBackground source={theme === 'dark' ? { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/7o9AAAAAElFTkSuQmCC' } : require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={theme === 'dark' ? { uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAwAB/7o9AAAAAElFTkSuQmCC' } : require('../../../assets/images/texture.png')} style={styles.texture}/>
     <View style={styles.container}>
       <Text style={styles.title}>{t('Account')}</Text>
 
@@ -197,7 +197,7 @@ const AccountSecurityScreen = ({ navigation }) => {
             value={fullName}
             onChangeText={setFullName}
           />
-          <Image source={require('../../assets/images/edit_icon.png')} style={styles.icon} />
+          <Image source={require('../../../assets/images/edit_icon.png')} style={styles.icon} />
         </View>
       </View>
 
@@ -210,7 +210,7 @@ const AccountSecurityScreen = ({ navigation }) => {
             onChangeText={setEmail}
             keyboardType="email-address"
           />
-          <Image source={require('../../assets/images/edit_icon.png')} style={styles.icon} />
+          <Image source={require('../../../assets/images/edit_icon.png')} style={styles.icon} />
         </View>
       </View>
 

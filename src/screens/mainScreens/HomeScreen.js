@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, ImageBackground } from 'react-native';
-import WideCard from '../components/WideCard';
-import NarrowCard from '../components/NarrowCard';
-import MediumCard from '../components/MediumCard';
-import { useTheme } from '../context/ThemeContext';
+import WideCard from '../../components/WideCard';
+import NarrowCard from '../../components/NarrowCard';
+import MediumCard from '../../components/MediumCard';
+import { useTheme } from '../../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
-import { fetchHomePageProducts } from '../services/apiService';
+import { fetchHomePageProducts } from '../../services/apiService';
 
 
 const HomeScreen = ({ navigation }) => {
@@ -148,12 +148,12 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView >
     <View style={styles.header}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
-      <Image source={require('../../assets/images/getai.png')} style={styles.logo}></Image>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
+      <Image source={require('../../../assets/images/getai.png')} style={styles.logo}></Image>
       <Text style={styles.headerText}>GetAI</Text>
     </View>
     <View style={{backgroundColor: theme === 'light' ? '#fff' : '#1e1e1e'}}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
     <View style={styles.container}>
     {products.map((category, categoryIndex) => (
       <View key={categoryIndex} style={styles.section}>

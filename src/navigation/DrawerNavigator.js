@@ -2,18 +2,16 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from '../components/CustomDrawerContent';
 import { useTheme } from '../context/ThemeContext';
-import RateGetAi from '../screens/RateGetAiScreen';
-import ContactUsScreen from '../screens/ContactUsScreen';
-import FeedbackScreen from '../screens/FeedbackScreen';
-import ShareScreen from '../screens/ShareScreen';
-import MainScreen from '../screens/MainScreen';
-import ProductDetailsScreen from '../screens/ProductDetailsScreen';
-import ProductNotFoundScreen from '../screens/ProductNotFoundScreen';
-import SettingsScreen from '../screens/Settings';
-import AccountScreen from '../screens/Accounts';
-import LandingScreen from '../screens/LandingScreen';
-import HomeScreen from '../screens/HomeScreen';
-import FaqPage from '../screens/FaqPage';
+import RateGetAi from '../screens/mainScreens/RateGetAiScreen';
+import ContactUsScreen from '../screens/mainScreens/ContactUsScreen';
+import FeedbackScreen from '../screens/mainScreens/FeedbackScreen';
+import ShareScreen from '../screens/mainScreens/ShareScreen';
+import MainScreen from '../screens/mainScreens/MainScreen';
+import ProductDetailsScreen from '../screens/mainScreens/ProductDetailsScreen';
+import SettingsScreen from '../screens/mainScreens/Settings';
+import AccountScreen from '../screens/mainScreens/Accounts';
+import HomeScreen from '../screens/mainScreens/HomeScreen';
+import FaqPage from '../screens/mainScreens/FaqPage';
 
 const Drawer = createDrawerNavigator();
 

@@ -1,7 +1,7 @@
 import { View, Text } from "react-native"
-import DrawerButton from "../components/DrawerButton"
+import DrawerButton from "../../components/DrawerButton"
 
-const ShareScreen = ({ navigation }) => {
+const RateGetAi = ({ navigation }) => {
     return (
         <View>
             <DrawerButton navigation={navigation} />
@@ -10,4 +10,4 @@ const ShareScreen = ({ navigation }) => {
     )
 }
 
-export default ShareScreen
+export default RateGetAi

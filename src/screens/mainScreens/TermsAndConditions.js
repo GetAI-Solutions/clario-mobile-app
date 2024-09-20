@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, ImageBackground, StyleSheet, Dimensions } from 'react-native';
-import { useTheme } from '../context/ThemeContext';
-import Header from '../components/Header';
+import { useTheme } from '../../context/ThemeContext';
+import Header from '../../components/Header';
 import { useTranslation } from 'react-i18next';
 
 const TermsPage = ({ navigation }) => {
@@ -41,7 +41,7 @@ const TermsPage = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
+        <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}></ImageBackground>
         <Header navigation={navigation} />
         <Text style={styles.title}>{t('Terms and Conditions')}</Text>
         <View style={{ height: height }}>

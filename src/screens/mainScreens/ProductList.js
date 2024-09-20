@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image,ImageBackground, Alert } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ProductContext from '../context/ProductContext';
-import { useTheme } from '../context/ThemeContext';
+import ProductContext from '../../context/ProductContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const ProductList = ({ navigation }) => {
   const { products, deleteProduct } = useContext(ProductContext);
@@ -40,7 +40,7 @@ const ProductList = ({ navigation }) => {
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => handleDelete(index)}>
           <Image
-            source={require('../../assets/images/delete.png')}
+            source={require('../../../assets/images/delete.png')}
             style={styles.icon}
           />
         </TouchableOpacity>

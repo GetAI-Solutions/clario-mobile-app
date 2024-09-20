@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator, ImageBackground } from 'react-native';
-import { loginUser } from '../services/authService';
-import { storeUserData } from '../utils/storageUtils';
-import UserContext from '../context/UserContext';
+import { loginUser } from '../../services/authService';
+import { storeUserData } from '../../utils/storageUtils';
+import UserContext from '../../context/UserContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from '../components/AuthHeader';
+import Header from '../../components/AuthHeader';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Login = ({ navigation }) => {
@@ -169,7 +169,7 @@ const Login = ({ navigation }) => {
   });
 
   return (
-    <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+    <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}>
       <View style={styles.contentContainer}>
         <Header navigation={navigation} />
         <View style={styles.head}>

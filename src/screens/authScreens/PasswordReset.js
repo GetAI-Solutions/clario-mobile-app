@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { updatePassword } from '../services/apiService';
-import Header from '../components/Header';
+import { updatePassword } from '../../services/apiService';
+import Header from '../../components/Header';
 import { useRoute } from '@react-navigation/native';
 
 const PasswordReset = ({ navigation }) => {

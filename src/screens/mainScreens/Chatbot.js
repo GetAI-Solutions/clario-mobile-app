@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ImageBackground, FlatList, KeyboardAvoidingView, Platform } from 'react-native';
-import Header from '../components/Header';
-import { useTheme } from '../context/ThemeContext';
-import { BASEURL } from '../services/api';
+import Header from '../../components/Header';
+import { useTheme } from '../../context/ThemeContext';
+import { BASEURL } from '../../services/api';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import UserContext from '../context/UserContext';
-import TypingIndicator from '../components/TypingIndicator';
+import UserContext from '../../context/UserContext';
+import TypingIndicator from '../../components/TypingIndicator';
 
 const ChatbotScreen = ({ navigation, route }) => {
   const { product } = route.params;
@@ -165,7 +165,7 @@ const ChatbotScreen = ({ navigation, route }) => {
   const renderMessage = ({ item }) =>
     item.type === 'bot' ? (
       <View style={{ flexDirection: 'row' }}>
-        <Image source={require('../../assets/images/chatbot1.png')} style={styles.botImage} />
+        <Image source={require('../../../assets/images/chatbot1.png')} style={styles.botImage} />
         <View style={[styles.messageContainer, styles.botMessage]}>
           <Text style={styles.messageText}>{item.text}</Text>
         </View>
@@ -178,7 +178,7 @@ const ChatbotScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} />
       <Header navigation={navigation} />
       <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={40}>
         <FlatList
@@ -202,7 +202,7 @@ const ChatbotScreen = ({ navigation, route }) => {
               onSubmitEditing={handleSend}
             />
             <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
-              <Image source={require('../../assets/images/send.png')} style={styles.sendIcon} />
+              <Image source={require('../../../assets/images/send.png')} style={styles.sendIcon} />
             </TouchableOpacity>
           </View>
         </View>

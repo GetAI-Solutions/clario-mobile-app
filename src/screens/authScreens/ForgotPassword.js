@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator, ScrollView, Alert, ImageBackground, KeyboardAvoidingView, Platform } from 'react-native';
-import EmailInput from '../components/EmailInput';
-import Header from '../components/AuthHeader';
-import { sendOtp } from '../services/authService';
+import EmailInput from '../../components/EmailInput';
+import Header from '../../components/AuthHeader';
+import { sendOtp } from '../../services/authService';
 
 const AddEmail = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -34,7 +34,7 @@ const AddEmail = ({ navigation }) => {
       <View style={{paddingHorizontal: 16}}>
         <Header navigation={navigation} />
       </View>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}/>
       <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps='handled'>
         
         <Text style={styles.title}>Forgot Password?</Text>
@@ -42,7 +42,7 @@ const AddEmail = ({ navigation }) => {
 
         <EmailInput email={email} onEmailChange={setEmail} />
         
-        <Image source={require('../../assets/images/Password.png')} style={styles.image}/>
+        <Image source={require('../../../assets/images/Password.png')} style={styles.image}/>
 
       </ScrollView>
         <TouchableOpacity

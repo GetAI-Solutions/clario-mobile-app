@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const NoProductHistory = ({ onUpload, onScan }) => {
   const { t } = useTranslation();
@@ -9,8 +9,8 @@ const NoProductHistory = ({ onUpload, onScan }) => {
 
   return (
     <View style={[styles.container, theme === 'dark' ? {backgroundColor: '#1e1e1e'} : {backgroundColor: '#FFF'}]}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
-      <Image source={require('../../assets/images/phone-barcode1.png')} style={styles.image} />
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}/>
+      <Image source={require('../../../assets/images/phone-barcode1.png')} style={styles.image} />
       <Text style={[styles.title, theme === 'dark' ? styles.darkTitle : styles.lightTitle]}>{t('No Product History')}</Text>
       <Text style={[styles.title, theme === 'dark' ? styles.darkTitle : styles.lightTitle]}>{t('Scan or upload to')}</Text>
       <Text style={[styles.title, theme === 'dark' ? styles.darkTitle : styles.lightTitle]}>{t('get started')}</Text>

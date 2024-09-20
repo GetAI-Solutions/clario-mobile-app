@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Platform } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import ProductContext from '../context/ProductContext';
-import UserContext from '../context/UserContext';
+import ProductContext from '../../context/ProductContext';
+import UserContext from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
-import { getProductSummary } from '../services/apiService';
+import { getProductSummary } from '../../services/apiService';
 import { Ionicons } from '@expo/vector-icons';
 
 const ScannerScreen = ({ navigation }) => {

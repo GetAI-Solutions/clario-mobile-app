@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, Image, Alert, ActivityIndicator, ImageBackground } from 'react-native';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { submitFeedback } from '../services/apiService';
-import UserContext from '../context/UserContext';
-import { useTheme } from '../context/ThemeContext';
+import { submitFeedback } from '../../services/apiService';
+import UserContext from '../../context/UserContext';
+import { useTheme } from '../../context/ThemeContext';
 import { useTranslation } from 'react-i18next';
 
 
@@ -132,7 +132,7 @@ const FeedbackScreen = ({ navigation }) => {
 
   return (
     <View style={{flex: 1, backgroundColor: theme === 'dark' ? '#1E1E1E' : '#F5F5F5',}}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}/>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}/>
     <View style={styles.container}>
       <Header navigation={navigation} />
       <Text style={styles.title}>{t("Feedback")}</Text>
@@ -180,7 +180,7 @@ const FeedbackScreen = ({ navigation }) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Image
-              source={require('../../assets/images/noted.png')}
+              source={require('../../../assets/images/noted.png')}
               style={styles.modalImage}
             />
             <View style={{marginTop: -100, width: '70%', alignItems: 'center'}}>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import Header from '../components/Header';
-import { useTheme } from '../context/ThemeContext';
+import Header from '../../components/Header';
+import { useTheme } from '../../context/ThemeContext';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const ProductDetailsScreen = ({ route, navigation }) => {
@@ -110,7 +110,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture}>
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture}>
         <Header navigation={navigation} />
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.productContainer}>
@@ -119,7 +119,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
               source={
                 typeof product.image_url === 'string' && product.image_url !== "" 
                   ? { uri: product.image_url } 
-                  : product.image_url || require('../../assets/images/else.png')
+                  : product.image_url || require('../../../assets/images/else.png')
               } 
               style={styles.productImage} 
             />

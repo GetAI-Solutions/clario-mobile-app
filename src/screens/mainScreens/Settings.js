@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, Switch, TouchableOpacity, Image, ImageBackground, StyleSheet, Modal, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from '../context/ThemeContext';
-import UserContext from '../context/UserContext';
-import { BASEURL } from '../services/api';
+import { useTheme } from '../../context/ThemeContext';
+import UserContext from '../../context/UserContext';
+import { BASEURL } from '../../services/api';
 import axios from 'axios';
 import PushNotification from 'react-native-push-notification';
 
@@ -57,13 +57,13 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={[{flex: 1}, theme === 'light' ? lightStyles.container : darkStyles.container]}>
-      <ImageBackground source={require('../../assets/images/texture.png')} style={styles.texture} />
+      <ImageBackground source={require('../../../assets/images/texture.png')} style={styles.texture} />
     <View style={styles.container}>
       <Text style={[styles.title, theme === 'light' ? lightStyles.title : darkStyles.title]}>{t('Settings')}</Text>
       
       <View style={styles.option}>
         <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/bell.png')} style={styles.icon} />
+          <Image source={require('../../../assets/images/bell.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Notifications')}</Text>
         </View>
         <Switch
@@ -77,10 +77,10 @@ const SettingsScreen = ({ navigation }) => {
 
       <TouchableOpacity style={styles.option} onPress={() => setLanguageModalVisible(true)}>
         <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/languages.png')} style={styles.icon} />
+          <Image source={require('../../../assets/images/languages.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Languages')}</Text>
         </View>
-        <Image source={require('../../assets/images/dropdown.png')} style={[styles.icon, { tintColor: theme === 'dark' ? '#fff' : '#000' }]} />
+        <Image source={require('../../../assets/images/dropdown.png')} style={[styles.icon, { tintColor: theme === 'dark' ? '#fff' : '#000' }]} />
       </TouchableOpacity>
 
       <Modal visible={languageModalVisible} transparent animationType="slide">
@@ -119,7 +119,7 @@ const SettingsScreen = ({ navigation }) => {
 
       <View style={styles.option}>
         <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/mode.png')} style={styles.icon} />
+          <Image source={require('../../../assets/images/mode.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Dark Mode')}</Text>
         </View>
         <Switch 
@@ -133,7 +133,7 @@ const SettingsScreen = ({ navigation }) => {
 
       <TouchableOpacity style={styles.option} onPress={() => navigation.navigate('Terms')}>
         <View style={styles.optionLeft}>
-          <Image source={require('../../assets/images/analyze.png')} style={styles.icon} />
+          <Image source={require('../../../assets/images/analyze.png')} style={styles.icon} />
           <Text style={[styles.optionText, theme === 'light' ? lightStyles.optionText : darkStyles.optionText]}>{t('Terms and Conditions')}</Text>
         </View>
       </TouchableOpacity>
