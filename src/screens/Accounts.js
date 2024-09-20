@@ -15,7 +15,6 @@ const AccountSecurityScreen = ({ navigation }) => {
   // Ensure default values if user is null/undefined
   const [fullName, setFullName] = useState(user?.user_name || '');
   const [email, setEmail] = useState(user?.email || '');
-  const [phoneNumber, setPhoneNumber] = useState(user?.phone_no || '');
   const [profileImage, setProfileImage] = useState(user?.profileImage || 'https://via.placeholder.com/100x100.png');
   const [loading, setLoading] = useState(false);
   
@@ -215,18 +214,6 @@ const AccountSecurityScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>{t('Phone Number')}</Text>
-        <View style={styles.inputWrapper}>
-          <TextInput
-            style={styles.input}
-            value={phoneNumber}
-            onChangeText={setPhoneNumber}
-            keyboardType="phone-pad"
-          />
-          <Image source={require('../../assets/images/edit_icon.png')} style={styles.icon} />
-        </View>
-      </View>
 
       <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
         {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveButtonText}>{t('Save Changes')}</Text>}

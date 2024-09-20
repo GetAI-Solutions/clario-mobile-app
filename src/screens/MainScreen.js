@@ -81,6 +81,7 @@ const MainScreen = ({ navigation }) => {
         Alert.alert('Error', 'Product not found');
       }
     } catch (error) {
+      
       setSearching(false);
       Alert.alert('Error', 'Failed to fetch product');
     }

@@ -169,7 +169,7 @@ const HomeScreen = ({ navigation }) => {
                   key={index}
                   name={product.product_name}
                   brand={product.product_brand}
-                  image={product.img_url}
+                  image={product.image_url}
                   onPress={() => handlePress(product)}
                   />
                 );
@@ -179,7 +179,7 @@ const HomeScreen = ({ navigation }) => {
                     key={index}
                     name={product.product_name}
                     brand={product.product_brand}
-                    image={product.img_url}
+                    image={product.image_url}
                     onPress={() => handlePress(product)}
                     />
                   );
@@ -189,7 +189,7 @@ const HomeScreen = ({ navigation }) => {
                   key={index}
                   name={product.product_name}
                   brand={product.product_brand}
-                  image={product.img_url}
+                  image={product.image_url}
                   onPress={() => handlePress(product)}
                   />
                 );
