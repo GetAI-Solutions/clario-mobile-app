@@ -96,3 +96,26 @@ export const fetchHomePageProducts = async () => {
     throw error;
   }
 };
+
+export const getSpeechFromText = async (text) => {
+  try {
+    const response = await axios.post(
+      `${BASEURL}/common/get-speech-from-text`,
+      new URLSearchParams({
+        'text': text, // Pass the text in the request body
+      }),
+      {
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        responseType: 'blob', 
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error in getSpeechFromText API:', error);
+    throw error; 
+  }
+};

@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Header from '../../components/Header';
 import { useTheme } from '../../context/ThemeContext';
 import { LinearGradient } from 'expo-linear-gradient';
+import Feather from 'react-native-vector-icons/Feather';  
+import { getSpeechFromText } from '../../services/apiService';
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { product } = route.params;
   const { t } = useTranslation();
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { theme } = useTheme();
+  const [playing, setPlaying] = useState(false);  
+  const audioRef = useRef(null);
 
   const cleanText = (text) => text.replace(/[#*]+/g, '');
 
@@ -24,7 +28,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: theme === 'dark' ? '#1e1e1e' : '#FFF', // Set background color based on theme
+      backgroundColor: theme === 'dark' ? '#1e1e1e' : '#FFF', 
     },
     content: {
       alignItems: 'center',
@@ -106,7 +110,35 @@ const ProductDetailsScreen = ({ route, navigation }) => {
       width: '100%',
       height: '100%',
     },
+    audioButton: {
+      marginTop: 20,
+      alignSelf: 'center',
+    },
   });
+
+  const toggleAudioPlayback = async () => {
+    try {
+      if (playing) {
+        if (audioRef.current) {
+          audioRef.current.pause();  
+          setPlaying(false);
+        }
+      } else {
+        // Fetch and play the product summary
+        const audioBlob = await getSpeechFromText(product.product_summary);  
+        const audioUrl = URL.createObjectURL(audioBlob);  
+        const audio = new Audio(audioUrl);
+        audioRef.current = audio;
+        audio.play();
+        setPlaying(true);
+
+        // When the audio ends, reset playing state
+        audio.onended = () => setPlaying(false);
+      }
+    } catch (error) {
+      console.error('Error playing speech:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -144,6 +176,13 @@ const ProductDetailsScreen = ({ route, navigation }) => {
                 </TouchableOpacity>
               )}
             </View>
+            <TouchableOpacity onPress={toggleAudioPlayback} style={styles.audioButton}>
+              <Feather
+                name={playing ? 'pause-circle' : 'play-circle'}
+                size={30}
+                color={theme === 'dark' ? '#FFF' : '#000'}
+              />
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('Chatbot', { product })}

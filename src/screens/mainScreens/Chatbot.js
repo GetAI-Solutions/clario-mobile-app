@@ -7,6 +7,9 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import UserContext from '../../context/UserContext';
 import TypingIndicator from '../../components/TypingIndicator';
+import { getSpeechFromText } from '../../services/apiService';
+import Feather from 'react-native-vector-icons/Feather';
+
 
 const ChatbotScreen = ({ navigation, route }) => {
   const { product } = route.params;
@@ -17,6 +20,8 @@ const ChatbotScreen = ({ navigation, route }) => {
   const { theme } = useTheme();
   const { user } = useContext(UserContext);
   const { t } = useTranslation();
+  const [playingIndex, setPlayingIndex] = useState(null);
+  const audioRef = useRef(null);
 
   const styles = StyleSheet.create({
     container: {
@@ -26,6 +31,11 @@ const ChatbotScreen = ({ navigation, route }) => {
     messageArea: {
       paddingHorizontal: 16,
       paddingBottom: 20,
+    },
+    audioButton: {
+      width: 25,
+      height: 25,
+      marginLeft: 10,
     },
     messageContainer: {
       marginVertical: 8,
@@ -122,6 +132,31 @@ const ChatbotScreen = ({ navigation, route }) => {
 
   const cleanText = (text) => text.replace(/[#*]+/g, '');
 
+  const toggleAudioPlayback = async (text, index) => {
+    try {
+      if (playingIndex === index) {
+        if (audioRef.current) {
+          audioRef.current.pause();
+          setPlayingIndex(null);
+        }
+      } else {
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+        const audioBlob = await getSpeechFromText(text);  
+        const audioUrl = URL.createObjectURL(audioBlob); 
+        const audio = new Audio(audioUrl);
+        audioRef.current = audio;
+        audio.play(); 
+        setPlayingIndex(index);
+
+        audio.onended = () => setPlayingIndex(null);
+      }
+    } catch (error) {
+      console.error('Error playing speech:', error);
+    }
+  };
+
   const handleSend = async () => {
     if (inputText.trim()) {
       const newMessage = {
@@ -162,13 +197,20 @@ const ChatbotScreen = ({ navigation, route }) => {
     }
   };
 
-  const renderMessage = ({ item }) =>
+  const renderMessage = ({ item, index }) =>
     item.type === 'bot' ? (
       <View style={{ flexDirection: 'row' }}>
         <Image source={require('../../../assets/images/chatbot1.png')} style={styles.botImage} />
         <View style={[styles.messageContainer, styles.botMessage]}>
           <Text style={styles.messageText}>{item.text}</Text>
         </View>
+        <TouchableOpacity onPress={() => toggleAudioPlayback(item.text, index)} style={styles.audioButton}>
+          <Feather
+            name={playingIndex === index ? 'pause-circle' : 'play-circle'}
+            size={25}  
+            color={theme === 'dark' ? '#fff' : '#000'}
+          />
+        </TouchableOpacity>
       </View>
     ) : (
       <View style={[styles.messageContainer, styles.userMessage]}>
