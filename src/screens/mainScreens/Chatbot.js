@@ -9,6 +9,8 @@ import UserContext from '../../context/UserContext';
 import TypingIndicator from '../../components/TypingIndicator';
 import { getSpeechFromText } from '../../services/apiService';
 import Feather from 'react-native-vector-icons/Feather';
+import { Audio } from 'expo-av';
+
 
 
 const ChatbotScreen = ({ navigation, route }) => {
@@ -22,6 +24,7 @@ const ChatbotScreen = ({ navigation, route }) => {
   const { t } = useTranslation();
   const [playingIndex, setPlayingIndex] = useState(null);
   const audioRef = useRef(null);
+
 
   const styles = StyleSheet.create({
     container: {
@@ -136,21 +139,30 @@ const ChatbotScreen = ({ navigation, route }) => {
     try {
       if (playingIndex === index) {
         if (audioRef.current) {
-          audioRef.current.pause();
-          setPlayingIndex(null);
+          await audioRef.current.pauseAsync();  // Pause audio playback
+          setPlayingIndex(null);  // Reset playing index
         }
       } else {
         if (audioRef.current) {
-          audioRef.current.pause();
+          await audioRef.current.unloadAsync();  // Unload any existing audio to avoid overlap
         }
-        const audioBlob = await getSpeechFromText(text);  
-        const audioUrl = URL.createObjectURL(audioBlob); 
-        const audio = new Audio(audioUrl);
-        audioRef.current = audio;
-        audio.play(); 
-        setPlayingIndex(index);
-
-        audio.onended = () => setPlayingIndex(null);
+  
+        // Fetch the product summary audio (TTS from API)
+        const audioBlob = await getSpeechFromText(text);
+        const audioUrl = URL.createObjectURL(audioBlob);  // Convert blob to URL
+  
+        // Load the new audio
+        const { sound } = await Audio.Sound.createAsync({ uri: audioUrl });
+        audioRef.current = sound;
+        await audioRef.current.playAsync();  // Play the audio
+        setPlayingIndex(index);  // Set the index to indicate which item is playing
+  
+        // Reset playingIndex when the audio finishes
+        audioRef.current.setOnPlaybackStatusUpdate((status) => {
+          if (status.didJustFinish) {
+            setPlayingIndex(null);  // Reset playing index after completion
+          }
+        });
       }
     } catch (error) {
       console.error('Error playing speech:', error);

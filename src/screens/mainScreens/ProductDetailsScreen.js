@@ -6,6 +6,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { LinearGradient } from 'expo-linear-gradient';
 import Feather from 'react-native-vector-icons/Feather';  
 import { getSpeechFromText } from '../../services/apiService';
+import { Audio } from 'expo-av';
 
 const ProductDetailsScreen = ({ route, navigation }) => {
   const { product } = route.params;
@@ -13,7 +14,7 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const { theme } = useTheme();
   const [playing, setPlaying] = useState(false);  
-  const audioRef = useRef(null);
+  const audioPlayer = useRef(new Audio.Sound());
 
   const cleanText = (text) => text.replace(/[#*]+/g, '');
 
@@ -119,26 +120,31 @@ const ProductDetailsScreen = ({ route, navigation }) => {
   const toggleAudioPlayback = async () => {
     try {
       if (playing) {
-        if (audioRef.current) {
-          audioRef.current.pause();  
-          setPlaying(false);
-        }
+        await audioPlayer.current.pauseAsync();  // Pause if currently playing
+        setPlaying(false);
       } else {
-        // Fetch and play the product summary
-        const audioBlob = await getSpeechFromText(product.product_summary);  
-        const audioUrl = URL.createObjectURL(audioBlob);  
-        const audio = new Audio(audioUrl);
-        audioRef.current = audio;
-        audio.play();
+        // Fetch the product summary audio
+        const audioBlob = await getSpeechFromText(product.product_summary);  // Call text-to-speech API
+        const audioUrl = URL.createObjectURL(audioBlob);  // Create an audio URL from blob
+
+        // Load and play the audio
+        await audioPlayer.current.unloadAsync();  // Unload any existing audio
+        await audioPlayer.current.loadAsync({ uri: audioUrl });
+        await audioPlayer.current.playAsync();  // Play the audio
         setPlaying(true);
 
-        // When the audio ends, reset playing state
-        audio.onended = () => setPlaying(false);
+        // Listen for audio to finish playing
+        audioPlayer.current.setOnPlaybackStatusUpdate((status) => {
+          if (status.didJustFinish) {
+            setPlaying(false);  // Reset playing state when finished
+          }
+        });
       }
     } catch (error) {
       console.error('Error playing speech:', error);
     }
   };
+
 
   return (
     <View style={styles.container}>

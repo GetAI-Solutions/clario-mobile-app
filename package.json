@@ -20,6 +20,7 @@
     "axios": "^1.7.7",
     "bar": "^0.1.2",
     "expo": "~51.0.31",
+    "expo-av": "^14.0.7",
     "expo-barcode-scanner": "~13.0.1",
     "expo-camera": "~15.0.15",
     "expo-constants": "^16.0.2",
@@ -79,7 +80,9 @@
   },
   "private": true,
   "jest": {
-  "preset": "jest-expo",
-  "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
-}
+    "preset": "jest-expo",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
+    ]
+  }
 }
